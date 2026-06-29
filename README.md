@@ -49,8 +49,15 @@ python $PV/set_privacy.py <videoId> public
 - **竖屏发视频号/抖音,横屏发 YouTube**,同内容不在 YouTube 双发。
 - 视频号/抖音/公众号目前无放开的视频发布 API,手动上传。
 
-## 已发布
+## 发布清单
 
-| 内容 | 平台 | 链接 |
-|---|---|---|
-| Higress prefix_cache 路由实测 | YouTube | https://youtu.be/x5ACtbvzI-c |
+每篇发到哪些平台、链接,见 **[PUBLISHED.md](PUBLISHED.md)**(发布后随手更新对应单元格)。
+
+## 新增一篇
+
+```bash
+cd ~/articles                                   # 本仓库的本地工作副本
+mkdir -p content/<YYYY-MM-slug>                 # 新文章一个目录
+# … 写 article.md → 生成视频(report-to-video)→ 发布(publish-video)…
+# 完成后在 PUBLISHED.md 加一行并填链接,git add/commit/push
+```
