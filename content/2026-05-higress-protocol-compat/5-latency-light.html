@@ -1,0 +1,54 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="style-light.css">
+<style>
+  .grid2{display:grid;grid-template-columns:1.05fr .95fr;gap:22px;margin-top:30px}
+  .mblock{background:var(--panel-solid);border:1px solid var(--line2);border-radius:var(--r);padding:26px 28px;box-shadow:var(--shadow)}
+  .mblock .head{display:flex;align-items:baseline;gap:12px}
+  .mblock .head .name{font-size:25px;font-weight:800}
+  .mblock .head .unit{font-size:16px;color:var(--ink3);font-weight:600}
+  .sub{font-size:18px;color:var(--ink3);font-weight:700;margin:18px 0 4px}
+  .sub .d{float:right;color:var(--ink3);font-weight:800}
+  .bar .tag{width:84px}
+  .fill.oa{background:linear-gradient(90deg,#0e7490,#0891b2)}
+  .fill.an{background:linear-gradient(90deg,#6d4bff,#8b6dff)}
+  .tail{margin-top:18px}
+  .tailrow{display:flex;align-items:center;gap:12px;background:#fff1f2;border:1px solid #fecdd3;border-radius:12px;padding:13px 16px;margin-top:10px}
+  .tailrow .v{font-size:26px;font-weight:850;color:var(--rose);width:120px}
+  .tailrow .x{font-size:16px;color:var(--ink2);font-weight:600;line-height:1.35}
+  .tailrow .x b{color:var(--ink)}
+  .ok{margin-top:14px;font-size:17px;color:var(--ink2);background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:14px 16px;line-height:1.5}
+  .ok b{color:var(--green)}
+  .note{margin-top:26px;font-size:19px;color:var(--ink2);background:#ecfeff;border:1px solid #a5f0fb;border-radius:16px;padding:18px 22px;line-height:1.55}
+  .note b{color:var(--cyan)}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>延迟分位数 & 长尾归因<span class="tag">raw → Tukey 滤波</span></div>
+  <h2 class="sec">长尾不在协议账上,<span class="hi">是网络 RTT 抖动</span></h2>
+  <div class="sec-sub">滤波后 P50/P95 几乎重合;原始数据里 Anthropic 的几个长尾点,经排查与协议路径无关。</div>
+
+  <div class="grid2">
+    <div class="mblock"><div class="head"><span class="name">TTFT 分位数</span><span class="unit">滤波后 · 越低越好</span></div>
+      <div class="sub">P50 <span class="d">Δ 6.6 ms</span></div>
+      <div class="bar"><span class="tag">OpenAI</span><div class="track"><div class="fill oa" style="width:54%">304.2 ms</div></div></div>
+      <div class="bar"><span class="tag">Anthropic</span><div class="track"><div class="fill an" style="width:53%">297.6 ms</div></div></div>
+      <div class="sub">P95 <span class="d">Δ 28.6 ms</span></div>
+      <div class="bar"><span class="tag">OpenAI</span><div class="track"><div class="fill oa" style="width:95%">594.6 ms</div></div></div>
+      <div class="bar"><span class="tag">Anthropic</span><div class="track"><div class="fill an" style="width:90%">566.0 ms</div></div></div>
+      <div class="ok"><b>OpenAI 一侧 0 长尾</b>,Anthropic 滤波后 P95 反而更低——两协议尾部体验同样平稳。</div>
+    </div>
+
+    <div class="mblock"><div class="head"><span class="name">Anthropic 的 3 个 TTFT 长尾</span></div>
+      <div class="tail">
+        <div class="tailrow"><div class="v">806 ms</div><div class="x">同期 OpenAI <b>正常 ~300ms</b></div></div>
+        <div class="tailrow"><div class="v">1170 ms</div><div class="x">无时间聚集 · <b>非 GC/冷调度</b></div></div>
+        <div class="tailrow"><div class="v">1390 ms</div><div class="x">40 次中 3 次(<b>7.5%</b>)稀疏</div></div>
+      </div>
+      <div class="ok">两条入口共用同一网关、同一鉴权、同一后端,协议侧路径几乎对称——长尾归因为<b>客户端→网关的 TCP 重传 / DNS 抖动</b>,不该记到协议头上。</div>
+    </div>
+  </div>
+
+  <div class="note">为什么用 Tukey 而非 Z-score:Tukey 围栏以四分位距(median+IQR)作判据,<b>本身不被离群点污染</b>;Z-score 的 mean/std 会被长尾拉偏,形成"鸡蛋问题"。长尾分布上 Tukey 更稳健。</div>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · 延迟与长尾</span>
+    <span class="right">TTFT P50/P95 · Tukey 1.5·IQR · n=40/协议</span></div>
+</div>
+</body></html>

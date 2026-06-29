@@ -1,0 +1,50 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8">
+<style>
+  :root{--violet:#6d4bff;--cyan:#0891b2;--green:#16a34a;--ink:#16161a;--ink2:#41414e;--ink3:#6b6b78;--ink4:#9a9aa8;--line:#ececf2;--line2:#e2e3ed}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;background:#fff;font-family:"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+  .card{width:1080px;position:relative;overflow:hidden;padding:52px 56px;background:#ffffff}
+  .card::before{content:none}
+  .row{position:relative;z-index:1;display:flex;gap:44px;align-items:center}
+  .left{flex:1;min-width:0}
+  .eye{display:flex;align-items:center;gap:10px;font-size:17px;font-weight:700;color:var(--violet)}
+  .eye .dot{width:8px;height:8px;border-radius:50%;background:var(--violet);box-shadow:0 0 12px #6d4bff66}
+  .name{font-size:42px;font-weight:850;letter-spacing:-1px;margin-top:14px}
+  .name .at{color:var(--violet)}
+  .tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
+  .tg{font-size:15px;font-weight:700;color:var(--ink2);background:#fff;border:1px solid var(--line2);border-radius:999px;padding:7px 14px}
+  .tg b{color:var(--violet)}
+  .desc{font-size:18px;line-height:1.75;color:var(--ink2);margin-top:18px}
+  .desc .hl{color:var(--ink);font-weight:800}
+  .desc .v{color:var(--violet);font-weight:700}
+  .qr{width:300px;flex-shrink:0;text-align:center}
+  .qr .box{background:#fff;border:1px solid var(--line2);border-radius:20px;padding:18px;box-shadow:0 10px 30px #12122610}
+  .qr img{width:100%;display:block;border-radius:10px}
+  .qr .cap{margin-top:14px;font-size:18px;font-weight:800;color:var(--ink)}
+  .qr .sub{font-size:14px;color:var(--ink3);margin-top:4px}
+  .foot{position:relative;z-index:1;display:flex;margin-top:34px;padding-top:20px;border-top:1px solid var(--line);font-size:16px;color:var(--ink3)}
+  .foot .b{font-weight:800;color:var(--ink)}.foot .b .md{color:var(--violet)}
+  .foot .r{margin-left:auto;color:var(--ink4)}
+</style></head><body>
+<div class="card">
+  <div class="row">
+    <div class="left">
+      <div class="eye"><span class="dot"></span>关于本号</div>
+      <div class="name">vLLM <span class="at">生产工程</span></div>
+      <div class="tags">
+        <span class="tg"><b>LLM SRE</b></span>
+        <span class="tg">高性能推理引擎 <b>vLLM / SGLang</b></span>
+        <span class="tg"><b>AI 网关</b>设计</span>
+        <span class="tg"><b>PD 分离</b> Prefill-Decode 调优</span>
+      </div>
+      <div class="desc">深耕 LLM SRE、高性能推理引擎(vLLM/SGLang)、AI 网关设计与 PD 分离(Prefill-Decode)架构调优。<span class="hl">拒绝 Demo,只谈实战</span>:从<span class="v">万级并发性能压测</span>、<span class="v">自动化发布门禁</span>,到<span class="v">算力成本极限压榨</span>与<span class="v">稳定性观测</span>。</div>
+    </div>
+    <div class="qr">
+      <div class="box"><img src="qrcode.png" alt="vLLM 生产工程 公众号"></div>
+      <div class="cap">长按识别 · 关注</div>
+      <div class="sub">vLLM 生产工程</div>
+    </div>
+  </div>
+  <div class="foot"><span class="b"><span class="md">ModelDoctor</span> · 多引擎推理可观测与压测</span><span class="r">mcpinfra.net · github.com/weetime</span></div>
+</div>
+</body></html>

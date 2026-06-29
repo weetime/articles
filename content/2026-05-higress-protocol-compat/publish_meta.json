@@ -1,0 +1,7 @@
+{
+  "wechat_title": "Higress 实测:OpenAI 与 Anthropic 协议转换,到底有没有损耗?",
+  "youtube_title": "Higress 双协议实测:同一个网关,OpenAI 与 Anthropic 转换零可测损耗",
+  "youtube_desc": "同一 endpoint、同一后端 Qwen3-32B、同一把 API Key,让 OpenAI /v1/chat/completions 与 Anthropic /v1/messages 两种协议并行承载——网关 ai-proxy 在中间做格式互转,客户端能感知到这层翻译吗?\n\n实测 80 次(40/协议 + warm-up,交错执行),经 Tukey 1.5·IQR 滤波:P50 TTFT 仅差 6.6ms(2.2%)、总时延 P50 差 28ms(0.1%),全部小于样本自身标准差。原因很朴素:输出 200 tokens 要 ~21.5 秒,99%+ 是后端推理,而协议转换在网关 wasm 层只花几毫秒,理论上根本测不出来。\n\n少量长尾点经排查全部来自客户端到网关的网络 RTT 抖动,与协议无关。客户接入 0 行代码——保留现有 OpenAI / Anthropic / LangChain / Claude Code SDK,只改 base_url。\n\n#大模型推理 #Higress #AI网关 #OpenAI #Anthropic #LLM #Qwen #AI基础设施",
+  "youtube_tags": ["Higress", "AI 网关", "OpenAI", "Anthropic", "协议兼容", "大模型推理", "LLM 推理", "Qwen", "ai-proxy", "AI 基础设施"],
+  "x_text": "Higress 双协议实测:同一个网关同时认 OpenAI 和 Anthropic,转换到底差多少?\n80 次实测,滤波后 P50 TTFT 差 6.6ms(2.2%)、总时延差 0.1%,全在样本标准差以内。\n因为输出 200 token 要 21.5 秒、99% 是推理,协议转换在 wasm 层只花几毫秒,根本测不出来。接入 0 行代码。\n\n#Higress #OpenAI #Anthropic #大模型推理"
+}

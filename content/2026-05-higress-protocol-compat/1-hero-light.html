@@ -1,0 +1,79 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8">
+<style>
+  :root{
+    --violet:#6d4bff; --violet2:#7c5cff; --cyan:#0891b2; --green:#16a34a;
+    --ink:#16161a; --ink2:#41414e; --ink3:#6b6b78; --ink4:#9a9aa8;
+    --off:#9aa0b4; --line:#ececf2; --line2:#e2e3ed; --r:22px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;background:#fff;font-family:"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+  .poster{width:1080px;position:relative;overflow:hidden;padding:60px 60px 40px;background:#ffffff}
+  .poster::before{content:none}
+  .poster>*{position:relative;z-index:1}
+  .eyebrow{display:flex;align-items:center;gap:12px;font-size:21px;font-weight:700;color:var(--violet);letter-spacing:.3px}
+  .eyebrow .dot{width:9px;height:9px;border-radius:50%;background:var(--violet);box-shadow:0 0 12px #6d4bff66}
+  .eyebrow .tag{margin-left:auto;font-size:15px;font-weight:600;color:var(--ink3);border:1px solid var(--line2);border-radius:999px;padding:6px 14px}
+  h1.title{font-size:58px;line-height:1.12;font-weight:800;letter-spacing:-1px;margin-top:20px}
+  h1.title .hi{background:linear-gradient(100deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .subtitle{font-size:24px;color:var(--ink2);margin-top:18px;font-weight:500;line-height:1.5}
+  .subtitle b{color:var(--ink);font-weight:700}
+  .arc{position:relative;margin-top:36px;height:196px}
+  .node{position:absolute;top:40px;width:312px;border-radius:20px;padding:24px 26px;border:1px solid var(--line2);background:#fff;box-shadow:0 8px 24px #1212260a}
+  .node .k{font-size:18px;font-weight:700;color:var(--ink3)}
+  .node .v{font-size:60px;font-weight:850;line-height:1;margin-top:10px;letter-spacing:-2px}
+  .node .v small{font-size:24px;font-weight:700;color:var(--ink4);margin-left:4px}
+  .node .s{font-size:16px;color:var(--ink3);margin-top:12px}
+  .node.lf{left:0;background:#f3f4f9}.node.lf .v{color:var(--cyan)}
+  .node.rt{right:0;background:linear-gradient(180deg,#f4f1ff,#eef5ff);border-color:#cdc0ff;box-shadow:0 10px 30px #6d4bff1f}
+  .node.rt .v{background:linear-gradient(100deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .mid{position:absolute;left:50%;top:34px;transform:translateX(-50%);text-align:center;width:300px}
+  .mid .eq{font-size:64px;font-weight:850;color:var(--green);line-height:1}
+  .mid .t{font-size:18px;color:var(--ink2);font-weight:700;margin-top:6px}
+  .mid .b{font-size:24px;font-weight:850;color:var(--green);margin-top:2px}
+  .kwbar{margin-top:18px;text-align:center}
+  .kwbar span{display:inline-block;font-size:18px;font-weight:700;color:var(--violet);background:#6d4bff12;border:1px solid #6d4bff33;border-radius:999px;padding:9px 22px}
+  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:30px}
+  .mcard{background:#fff;border:1px solid var(--line2);border-radius:var(--r);padding:24px 22px;position:relative;overflow:hidden;box-shadow:0 6px 20px #12122608}
+  .mcard .bar{position:absolute;left:0;top:0;width:100%;height:5px}
+  .mcard .lab{font-size:18px;color:var(--ink3);font-weight:600}
+  .mcard .big{font-size:46px;font-weight:850;line-height:1;margin-top:14px;letter-spacing:-1px}
+  .mcard .flow{font-size:17px;margin-top:12px;color:var(--ink2);font-weight:600}
+  .mcard .flow .o{color:var(--off)}.mcard .flow .n{color:var(--ink)}
+  .up{color:var(--green)}.down{color:var(--cyan)}
+  .chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+  .chip{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line2);border-radius:14px;padding:12px 18px;font-size:18px;font-weight:600;color:var(--ink2);box-shadow:0 3px 10px #12122606}
+  .chip b{color:var(--ink)}
+  .chip .cdot{width:7px;height:7px;border-radius:2px;background:var(--violet);flex-shrink:0}
+  .footer{display:flex;align-items:center;margin-top:34px;padding-top:22px;border-top:1px solid var(--line);font-size:18px;color:var(--ink3)}
+  .footer .brand{font-weight:800;color:var(--ink);font-size:20px}.footer .brand .md{color:var(--violet)}
+  .footer .right{margin-left:auto;color:var(--ink4)}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>ModelDoctor · 双协议兼容实测<span class="tag">Higress · ai-proxy 1.0.0</span></div>
+  <h1 class="title">同一网关并行承载两种协议<br><span class="hi">转换零可测损耗</span></h1>
+  <div class="subtitle">同一 endpoint、同一后端 <b>Qwen3-32B</b>、同一把 Key,<b>OpenAI</b> 与 <b>Anthropic</b> 协议并行接入;实测 80 次,网关完成协议互转,客户端无可测延迟差异。</div>
+
+  <div class="arc">
+    <div class="node lf"><div class="k">OpenAI · /v1/chat/completions</div><div class="v">304.2<small>ms</small></div><div class="s">原协议直通 · 仅路由与计量</div></div>
+    <div class="mid"><div class="eq">≈</div><div class="t">TTFT P50 · 滤波后</div><div class="b">差 6.6 ms · 2.2%</div></div>
+    <div class="node rt"><div class="k">Anthropic · /v1/messages</div><div class="v">297.6<small>ms</small></div><div class="s">网关请求↔响应双向互转</div></div>
+  </div>
+  <div class="kwbar"><span>同一后端 · ai-proxy 完成 Anthropic ↔ OpenAI 双向格式翻译</span></div>
+
+  <div class="metrics">
+    <div class="mcard"><div class="bar" style="background:var(--green)"></div><div class="lab">TTFT P50 差异</div><div class="big up">2.2%</div><div class="flow"><span class="o">304.2</span> ≈ <span class="n">297.6</span> ms</div></div>
+    <div class="mcard"><div class="bar" style="background:var(--green)"></div><div class="lab">总时延 P50 差异</div><div class="big up">0.1%</div><div class="flow"><span class="o">21.54</span> ≈ <span class="n">21.51</span> s</div></div>
+    <div class="mcard"><div class="bar" style="background:var(--violet)"></div><div class="lab">客户接入改造</div><div class="big">0<span style="font-size:24px"> 行</span></div><div class="flow">官方 SDK 即开即用</div></div>
+    <div class="mcard"><div class="bar" style="background:var(--cyan)"></div><div class="lab">调用成功率</div><div class="big">100%</div><div class="flow">80 / 80 次调用</div></div>
+  </div>
+
+  <div class="chips">
+    <div class="chip"><span class="cdot"></span>后端 <b>Qwen3-32B</b>(OpenAI 兼容)</div>
+    <div class="chip"><span class="cdot"></span>样本 <b>40/协议 × 2</b> + 3 warm-up</div>
+    <div class="chip"><span class="cdot"></span>交错执行 · <b>Tukey 1.5·IQR</b> 滤波</div>
+    <div class="chip"><span class="cdot"></span>输出 <b>200 tokens</b> · 流式</div>
+  </div>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · 多引擎推理可观测</span><span class="right">mcpinfra.net · github.com/weetime</span></div>
+</div>
+</body></html>

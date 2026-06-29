@@ -8,7 +8,7 @@
 node_modules/
 __pycache__/
 *.pyc
-anim/out/
+**/anim/out/
 # 配音/字幕/分镜中间文件
 s*.mp3
 s*.ass
