@@ -1,0 +1,124 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="style.css">
+<style>
+  code{font-family:"SF Mono",Menlo,Consolas,monospace;background:#6d4bff1f;border:1px solid #6d4bff44;border-radius:6px;padding:1px 7px;color:var(--violet2);font-size:.9em}
+  .sh{display:flex;align-items:center;gap:14px;margin:42px 0 18px}
+  .sh .nb{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--violet-deep),var(--violet2));display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:850;color:#fff;flex-shrink:0}
+  .sh .t{font-size:30px;font-weight:850}
+  .sh .line{flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
+  .lead{font-size:19px;color:var(--ink2);line-height:1.6;margin-top:-4px}
+  .lead b{color:var(--ink)} .lead .v{color:var(--violet2);font-weight:700} .lead .g{color:var(--green);font-weight:700}
+
+  /* problem strip */
+  .prob{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;margin-top:6px}
+  .pbx{background:var(--panel-solid);border:1px solid var(--line2);border-radius:16px;padding:18px 20px;font-size:17px;line-height:1.5;color:var(--ink2)}
+  .pbx .h{font-size:15px;font-weight:800;letter-spacing:.5px;margin-bottom:8px}
+  .pbx.bad .h{color:var(--rose)} .pbx.good .h{color:var(--green)} .pbx b{color:var(--ink)}
+  .parrow{font-size:26px;color:var(--violet2);font-weight:900}
+
+  /* metrics 5-up */
+  .m5{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:6px}
+  .m5 .mc{background:linear-gradient(180deg,#1c1b33,#141327);border:1px solid var(--line2);border-radius:18px;padding:20px 16px;position:relative;overflow:hidden}
+  .m5 .mc .bar{position:absolute;left:0;top:0;width:100%;height:4px}
+  .m5 .mc .lab{font-size:14px;color:var(--ink3);font-weight:600}
+  .m5 .mc .big{font-size:38px;font-weight:850;line-height:1;margin-top:10px;letter-spacing:-1px}
+  .m5 .mc .fl{font-size:14px;color:var(--ink3);margin-top:9px}
+  .up{color:var(--green)} .down{color:var(--cyan)}
+
+  /* mechanism chain */
+  .chain{display:flex;align-items:stretch;gap:8px;margin-top:6px}
+  .ci{flex:1;background:var(--panel-solid);border:1px solid var(--line2);border-radius:14px;padding:14px 10px;text-align:center}
+  .ci .n{font-size:13px;color:var(--violet2);font-weight:800}
+  .ci .x{font-size:14px;color:var(--ink2);margin-top:6px;line-height:1.4}
+  .ca{display:flex;align-items:center;color:var(--violet2);font-size:20px;font-weight:900}
+  .mech-note{margin-top:14px;font-size:16px;color:var(--ink2);background:#fb71850e;border:1px solid #fb718533;border-radius:12px;padding:13px 18px;line-height:1.55}
+  .mech-note b{color:var(--rose)}
+
+  /* kv bars */
+  .kvrow{margin-top:8px}
+  .kvbar{display:flex;align-items:center;gap:14px;margin-top:12px}
+  .kvbar .tg{width:120px;font-size:16px;font-weight:700;color:var(--ink3)}
+  .kvbar .tk{flex:1;height:40px;background:#ffffff08;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .kvbar .fl{height:100%;display:flex;align-items:center;justify-content:flex-end;padding-right:14px;font-size:16px;font-weight:850;color:#fff;border-radius:9px}
+  .kvbar .fl.o{background:linear-gradient(90deg,#3a3f5c,#6b7090)}
+  .kvbar .fl.n{background:linear-gradient(90deg,#0f9b6c,var(--green))}
+  .kvbar .badge{font-size:15px;font-weight:800;color:var(--green)}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:6px}
+  .card{background:var(--panel-solid);border:1px solid var(--line2);border-radius:16px;padding:20px 22px}
+  .card .t{font-size:18px;font-weight:800;margin-bottom:6px}
+  .card.g .t{color:var(--green)} .card.v .t{color:var(--violet2)}
+  .card .x{font-size:16px;color:var(--ink2);line-height:1.55}
+  .card .x b{color:var(--ink)}
+
+  .caveats{margin-top:6px}
+  .cv{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);font-size:17px;color:var(--ink2);line-height:1.5}
+  .cv:last-child{border-bottom:none}
+  .cv .k{color:var(--amber);font-weight:900;flex-shrink:0}
+  .cv b{color:var(--ink)}
+
+  .summary{margin-top:30px;font-size:21px;text-align:center;font-weight:700;color:var(--ink);background:linear-gradient(120deg,#6d4bff14,#2dd4ee10);border:1px solid #6d4bff45;border-radius:18px;padding:22px}
+  .summary b{color:var(--violet2)}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>ModelDoctor 实测 · 硬核一图流<span class="tag">Higress · lb_policy: prefix_cache</span></div>
+  <h1 class="title">一行负载均衡策略,<br><span class="hi">把 KV 命中率从 22% 拉到 65%</span></h1>
+  <div class="subtitle">同一个 <b>Qwen3-32B</b>、同样 <b>4 个 vLLM Pod</b>,只把网关从 cache-blind 改成 <b>KV-aware</b>。不加卡、不换模型、不动引擎参数。</div>
+
+  <div class="sh"><span class="nb">1</span><span class="t">问题:cache-blind 的网关</span><span class="line"></span></div>
+  <div class="prob">
+    <div class="pbx bad"><div class="h">默认轮询 / 哈希</div>相同前缀被<b>打散到 4 个 Pod</b>,每个 Pod 都得把同一段前缀<b>重新 prefill</b> → vLLM APC 几乎命中不了</div>
+    <div class="parrow">⇒</div>
+    <div class="pbx bad"><div class="h">结果</div>前缀缓存命中率只有 <b>22%</b>,算力大量浪费在重复劳动上</div>
+  </div>
+
+  <div class="sh"><span class="nb">2</span><span class="t">结果:四指标同向改善</span><span class="line"></span></div>
+  <div class="lead">OFF/ON 各跑 <b>5 次 × 480 请求</b>取均值。没有 trade-off —— 命中率↑ ⇒ 省 prefill ⇒ 吞吐↑ & 延迟↓。</div>
+  <div class="m5" style="margin-top:18px">
+    <div class="mc"><div class="bar" style="background:var(--green)"></div><div class="lab">前缀缓存命中率</div><div class="big up">+197%</div><div class="fl">22.0% → 65.4%</div></div>
+    <div class="mc"><div class="bar" style="background:var(--violet)"></div><div class="lab">吞吐量 req/s</div><div class="big up">+64%</div><div class="fl">2.88 → 4.73</div></div>
+    <div class="mc"><div class="bar" style="background:var(--cyan)"></div><div class="lab">TTFT P95</div><div class="big down">−40%</div><div class="fl">20.0s → 11.9s</div></div>
+    <div class="mc"><div class="bar" style="background:var(--cyan)"></div><div class="lab">E2E P95</div><div class="big down">−37%</div><div class="fl">45.1s → 28.4s</div></div>
+    <div class="mc"><div class="bar" style="background:var(--cyan)"></div><div class="lab">ITL P95</div><div class="big down">−37%</div><div class="fl">472.8 → 296.5ms</div></div>
+  </div>
+
+  <div class="sh"><span class="nb">3</span><span class="t">机制:Redis 全局前缀树</span><span class="line"></span></div>
+  <div class="lead">Higress <code>ai-load-balancer</code> 插件的 <code>prefix_cache</code> 策略 —— 不是 hash 取模,是最长前缀匹配。</div>
+  <div class="chain" style="margin-top:18px">
+    <div class="ci"><div class="n">① 分块</div><div class="x">prompt 切 block</div></div>
+    <div class="ca">→</div>
+    <div class="ci"><div class="n">② SHA-1</div><div class="x">每块取哈希</div></div>
+    <div class="ca">→</div>
+    <div class="ci"><div class="n">③ 累积 XOR</div><div class="x">生成前缀 key</div></div>
+    <div class="ca">→</div>
+    <div class="ci"><div class="n">④ 最长匹配</div><div class="x">Redis 查曾服务的 Pod</div></div>
+    <div class="ca">→</div>
+    <div class="ci"><div class="n">⑤ pin + APC</div><div class="x">命中同一 Pod 的 KV</div></div>
+  </div>
+  <div class="mech-note">未命中则回退 <b>global_least_request</b>;<b>failStrategy: FAIL_OPEN</b> —— Redis 挂了放行不阻断(退化为服务自身 LB)。这是插件自带 Redis 实现,<b>不是 GIE/EPP(llm-d)</b>那条路径。</div>
+
+  <div class="sh"><span class="nb">4</span><span class="t">证据:block 级 KV 缓存</span><span class="line"></span></div>
+  <div class="kvrow">
+    <div class="kvbar"><span class="tg">OFF 命中</span><div class="tk"><div class="fl o" style="width:27%">91 万</div></div></div>
+    <div class="kvbar"><span class="tg">ON 命中</span><div class="tk"><div class="fl n" style="width:92%">336 万</div></div><span class="badge">×3.7</span></div>
+  </div>
+  <div class="lead" style="margin-top:14px">引擎上报的 block 查询/命中:ON 让每个 Pod 少做了<b>几百万个 block 的重复 prefill</b>。这才是命中率 22%→65% 底下真正发生的事。</div>
+
+  <div class="sh"><span class="nb">5</span><span class="t">关键:靠调度,不靠堆负载</span><span class="line"></span></div>
+  <div class="grid2">
+    <div class="card g"><div class="t">✓ 命中率均匀抬高</div><div class="x">4 个 Pod 的 ON 命中率全部落在 <b>58–70%</b>,没有谁被冷落。</div></div>
+    <div class="card v"><div class="t">✓ 流量没有热点</div><div class="x">最大 Pod 份额 OFF/ON 都在 <b>27–29%</b>,开关前后几乎不变。增益纯来自调度。</div></div>
+  </div>
+
+  <div class="sh"><span class="nb">6</span><span class="t">会踩的坑</span><span class="line"></span></div>
+  <div class="caveats">
+    <div class="cv"><span class="k">!</span><div><b>只在共享前缀负载上赢。</b>短/随机前缀几乎无收益,还要付 Redis 查询 + 回退开销。</div></div>
+    <div class="cv"><span class="k">!</span><div><b>Redis 是全局状态单点。</b><code>redisKeyTTL</code> 要按前缀热度调;FAIL_OPEN 下 Redis 抖动会悄悄吃命中率。</div></div>
+    <div class="cv"><span class="k">!</span><div><b>块粒度要对齐。</b>插件 block 级 SHA-1 与 vLLM KV block 粒度不匹配会压低命中(Mooncake 教训)。</div></div>
+    <div class="cv"><span class="k">!</span><div><b>小规模结论。</b>本测仅 4 Pod;扩容后前缀树命中分布、Redis 压力都会变,需重压测。</div></div>
+  </div>
+
+  <div class="summary">一句话:<b>prefix_cache = 把「请求该去哪个 Pod」从 cache-blind 改成 KV-aware</b>。在对的负载上,这几乎是一顿免费的午餐。</div>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · 多引擎推理可观测与压测</span><span class="right">Qwen3-32B · Higress ai-load-balancer · aiperf · mcpinfra.net</span></div>
+</div>
+</body></html>

@@ -1,0 +1,41 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="style-light.css">
+<style>
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:34px}
+  .mblock{background:var(--panel-solid);border:1px solid var(--line2);border-radius:var(--r);padding:26px 28px;box-shadow:var(--shadow)}
+  .mblock .head{display:flex;align-items:baseline;gap:12px}
+  .mblock .head .name{font-size:25px;font-weight:800}
+  .mblock .head .unit{font-size:16px;color:var(--ink3);font-weight:600}
+  .sub{font-size:18px;color:var(--ink3);font-weight:700;margin:18px 0 4px}
+  .sub .d{float:right;color:var(--cyan);font-weight:800}
+  .note{margin-top:30px;font-size:19px;color:var(--ink2);background:#ecfeff;border:1px solid #a5f0fb;border-radius:16px;padding:18px 22px;line-height:1.55}
+  .note b{color:var(--cyan)}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>延迟分位数 · P50 / P95<span class="tag">5 次运行均值</span></div>
+  <h2 class="sec">不只是均值好看,<span class="hi">尾部延迟也降了</span></h2>
+  <div class="sec-sub">命中率上去后,首 token(TTFT)和端到端(E2E)在 P50 和 P95 上全面下降,长尾没有被牺牲。</div>
+
+  <div class="grid2">
+    <div class="mblock"><div class="head"><span class="name">TTFT</span><span class="unit">首 token 延迟 · 越低越好</span></div>
+      <div class="sub">P50 <span class="d">▼ −35%</span></div>
+      <div class="bar"><span class="tag">OFF</span><div class="track"><div class="fill off" style="width:39%">7.8s</div></div></div>
+      <div class="bar"><span class="tag">ON</span><div class="track"><div class="fill on c" style="width:26%">5.1s</div></div></div>
+      <div class="sub">P95 <span class="d">▼ −40%</span></div>
+      <div class="bar"><span class="tag">OFF</span><div class="track"><div class="fill off" style="width:91%">20.0s</div></div></div>
+      <div class="bar"><span class="tag">ON</span><div class="track"><div class="fill on c" style="width:54%">11.9s</div></div></div></div>
+
+    <div class="mblock"><div class="head"><span class="name">E2E</span><span class="unit">端到端延迟 · 越低越好</span></div>
+      <div class="sub">P50 <span class="d">▼ −41%</span></div>
+      <div class="bar"><span class="tag">OFF</span><div class="track"><div class="fill off" style="width:62%">29.7s</div></div></div>
+      <div class="bar"><span class="tag">ON</span><div class="track"><div class="fill on c" style="width:37%">17.6s</div></div></div>
+      <div class="sub">P95 <span class="d">▼ −37%</span></div>
+      <div class="bar"><span class="tag">OFF</span><div class="track"><div class="fill off" style="width:94%">45.1s</div></div></div>
+      <div class="bar"><span class="tag">ON</span><div class="track"><div class="fill on c" style="width:59%">28.4s</div></div></div></div>
+  </div>
+
+  <div class="note">值得注意:<b>P50 的改善幅度(−35% / −41%)比 P95 还大</b>。说明大多数请求都吃到了缓存红利,而不是只优化了个别慢请求——体验是普遍变快,不是平均数的障眼法。</div>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · 延迟分位数</span>
+    <span class="right">TTFT & E2E · P50 / P95 · OFF vs ON</span></div>
+</div>
+</body></html>
