@@ -45,7 +45,7 @@ Create a per-report folder (gitignored): `modeldoctor/.experiments/wechat-report
 6. **(可选)直接推到公众号草稿/发布.** Use `assets/publish_wechat.py` — it uploads the cover + 6 正文图 to WeChat media servers, converts `article.md` to inline-styled 公众号 HTML (no `<style>`/class allowed), creates a draft, and optionally publishes:
    ```bash
    source ~/.secrets   # 提供 WECHAT_APPID / WECHAT_APPSECRET
-   python3 ~/.claude/skills/report-to-wechat/assets/publish_wechat.py \
+   python3 ~/articles/.claude/skills/report-to-wechat/assets/publish_wechat.py \
      --dir modeldoctor/.experiments/wechat-reports/<reportId> \
      --title "<标题>" --author "ModelDoctor"          # 仅建草稿
    # 确认草稿无误后,加 --publish 正式发布(freepublish,会过一次审核)

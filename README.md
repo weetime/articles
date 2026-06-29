@@ -38,7 +38,7 @@ python build_video.py .                 # → video-portrait.mp4(竖屏)
 python build_video.py . --land          # 另出横屏
 
 # ③ 发布(凭证一次性配好后)
-PV=~/.claude/skills/publish-video/assets/scripts
+PV=~/articles/.claude/skills/publish-video/assets/scripts
 python $PV/upload_youtube.py video-landscape.mp4 --privacy unlisted
 python $PV/set_privacy.py <videoId> public
 ```
