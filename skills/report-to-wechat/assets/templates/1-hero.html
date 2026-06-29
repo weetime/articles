@@ -1,0 +1,62 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="style.css">
+<style>
+  .arc{position:relative;margin-top:40px;height:230px}
+  .node{position:absolute;top:46px;width:300px;border-radius:20px;padding:24px 26px;border:1px solid var(--line2)}
+  .node .k{font-size:18px;font-weight:600;color:var(--ink3)}
+  .node .v{font-size:74px;font-weight:850;line-height:1;margin-top:8px;letter-spacing:-2px}
+  .node .s{font-size:17px;color:var(--ink3);margin-top:12px}
+  .node.off{left:0;background:linear-gradient(180deg,#1a1c2b,#13141f)}
+  .node.off .v{color:var(--off)}
+  .node.on{right:0;background:linear-gradient(180deg,#221d3e,#171331);border-color:#6d4bff66;box-shadow:0 0 40px #6d4bff22}
+  .node.on .v{background:linear-gradient(100deg,var(--violet2),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .arcsvg{position:absolute;left:280px;right:280px;top:0;height:230px;width:auto}
+  .arclabel{position:absolute;left:50%;top:2px;transform:translateX(-50%);text-align:center}
+  .arclabel .t{font-size:20px;color:var(--ink2);font-weight:700}
+  .arclabel .b{font-size:40px;font-weight:850;color:var(--green);margin-top:2px}
+  .keyword{position:absolute;left:50%;top:150px;transform:translateX(-50%);font-size:19px;font-weight:700;color:var(--violet2);background:#6d4bff1c;border:1px solid #6d4bff55;border-radius:999px;padding:8px 20px;white-space:nowrap}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>ModelDoctor · 路由策略实测<span class="tag">aiperf · lb-strategy</span></div>
+  <h1 class="title">只改一个路由开关<br><span class="hi">缓存命中率 ×3,吞吐 +64%</span></h1>
+  <div class="subtitle">同一个 <b>Qwen3-32B</b>,同样 <b>4 个推理 Pod</b>,长前缀场景下打开<b>前缀感知路由</b>——什么都没多花,只是让请求去对的 Pod。</div>
+
+  <div class="arc">
+    <div class="node off"><div class="k">前缀感知路由 OFF</div><div class="v">22%</div><div class="s">轮询/哈希 · 缓存被打散</div></div>
+    <svg class="arcsvg" viewBox="0 0 520 230" preserveAspectRatio="none">
+      <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#6b7090"/><stop offset="1" stop-color="#34d399"/></linearGradient>
+        <marker id="ah" markerWidth="14" markerHeight="14" refX="7" refY="7" orient="auto">
+        <path d="M1,1 L13,7 L1,13 Z" fill="#34d399"/></marker></defs>
+      <path d="M10,150 C160,20 360,20 505,108" fill="none" stroke="url(#g)" stroke-width="6" marker-end="url(#ah)"/>
+    </svg>
+    <div class="arclabel"><div class="t">前缀缓存命中率</div><div class="b">+197%</div></div>
+    <div class="keyword">相同前缀 → 命中同一 Pod 的 KV 缓存</div>
+    <div class="node on"><div class="k">前缀感知路由 ON</div><div class="v">65%</div><div class="s">5 次运行均值 · 58–68%</div></div>
+  </div>
+
+  <div class="metrics">
+    <div class="mcard"><div class="glow" style="background:var(--green)"></div>
+      <div class="lab">前缀缓存命中率</div><div class="big up">+197%</div>
+      <div class="flow"><span class="o">22.0%</span> → <span class="n">65.4%</span></div></div>
+    <div class="mcard"><div class="glow" style="background:var(--violet)"></div>
+      <div class="lab">吞吐量 req/s</div><div class="big up">+64%</div>
+      <div class="flow"><span class="o">2.88</span> → <span class="n">4.73</span></div></div>
+    <div class="mcard"><div class="glow" style="background:var(--cyan)"></div>
+      <div class="lab">TTFT P95</div><div class="big down">−40%</div>
+      <div class="flow"><span class="o">20.0s</span> → <span class="n">11.9s</span></div></div>
+    <div class="mcard"><div class="glow" style="background:var(--cyan)"></div>
+      <div class="lab">E2E P95</div><div class="big down">−37%</div>
+      <div class="flow"><span class="o">45.1s</span> → <span class="n">28.4s</span></div></div>
+  </div>
+
+  <div class="chips">
+    <div class="chip"><span class="cdot"></span>场景 <b>RAG/Agent 长上下文</b></div>
+    <div class="chip"><span class="cdot"></span><b>4 Pods</b> · Qwen3-32B</div>
+    <div class="chip"><span class="cdot"></span>OFF/ON 各 <b>5 次 × 480 请求</b></div>
+    <div class="chip"><span class="cdot"></span>流量份额 <b>27–29% 无热点</b></div>
+  </div>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · 多引擎推理可观测</span>
+    <span class="right">mcpinfra.net · github.com/weetime</span></div>
+</div>
+</body></html>

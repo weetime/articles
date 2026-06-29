@@ -1,0 +1,40 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="style.css">
+<style>
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:34px}
+  .mblock{background:var(--panel-solid);border:1px solid var(--line2);border-radius:var(--r);padding:26px 28px}
+  .mblock .head{display:flex;align-items:baseline;gap:12px}
+  .mblock .head .name{font-size:25px;font-weight:800}
+  .mblock .head .unit{font-size:16px;color:var(--ink3);font-weight:600}
+  .mblock .head .delta{margin-left:auto}
+  .note{margin-top:30px;font-size:19px;color:var(--ink2);background:#6d4bff12;border:1px solid #6d4bff40;border-radius:16px;padding:18px 22px;line-height:1.55}
+  .note b{color:var(--violet2)}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>OFF vs ON · 四个核心指标<span class="tag">5 次运行均值</span></div>
+  <h2 class="sec">打开开关后,<span class="hi">四项指标同向改善</span></h2>
+  <div class="sec-sub">灰色 = 前缀感知路由 OFF　|　亮色 = ON。同一套硬件与负载,唯一变量就是路由策略。</div>
+
+  <div class="grid2">
+    <div class="mblock"><div class="head"><span class="name">前缀缓存命中率</span><span class="unit">越高越好</span><span class="delta good">▲ +197%</span></div>
+      <div class="bar"><span class="tag">OFF</span><div class="track"><div class="fill off" style="width:31%">22.0%</div></div></div>
+      <div class="bar"><span class="tag">ON</span><div class="track"><div class="fill on g" style="width:93%">65.4%</div></div></div></div>
+
+    <div class="mblock"><div class="head"><span class="name">吞吐量</span><span class="unit">req/s · 越高越好</span><span class="delta good">▲ +64%</span></div>
+      <div class="bar"><span class="tag">OFF</span><div class="track"><div class="fill off" style="width:58%">2.88</div></div></div>
+      <div class="bar"><span class="tag">ON</span><div class="track"><div class="fill on" style="width:95%">4.73</div></div></div></div>
+
+    <div class="mblock"><div class="head"><span class="name">TTFT P95</span><span class="unit">首 token 延迟 · 越低越好</span><span class="delta cool">▼ −40%</span></div>
+      <div class="bar"><span class="tag">OFF</span><div class="track"><div class="fill off" style="width:91%">20.0s</div></div></div>
+      <div class="bar"><span class="tag">ON</span><div class="track"><div class="fill on c" style="width:54%">11.9s</div></div></div></div>
+
+    <div class="mblock"><div class="head"><span class="name">E2E P95</span><span class="unit">端到端延迟 · 越低越好</span><span class="delta cool">▼ −37%</span></div>
+      <div class="bar"><span class="tag">OFF</span><div class="track"><div class="fill off" style="width:94%">45.1s</div></div></div>
+      <div class="bar"><span class="tag">ON</span><div class="track"><div class="fill on c" style="width:59%">28.4s</div></div></div></div>
+  </div>
+
+  <div class="note">命中率从 22% 跳到 65%,直接<b>省下了重复 prefill 的算力</b>——于是吞吐涨、延迟降,四个指标一起变好。这不是调参玄学,而是一条清晰的因果链。</div>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · 路由策略对比</span>
+    <span class="right">Qwen3-32B · RAG/Agent 长上下文 · 4 Pods · aiperf</span></div>
+</div>
+</body></html>

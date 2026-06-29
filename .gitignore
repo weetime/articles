@@ -1,0 +1,21 @@
+# 凭证 / 密钥 —— 绝不入库
+**/client_secret*.json
+**/token_*.json
+**/x.env
+.secrets
+
+# 构建产物 / 中间态
+node_modules/
+__pycache__/
+*.pyc
+anim/out/
+# 配音/字幕/分镜中间文件
+s*.mp3
+s*.ass
+c*.mp4
+_vo*.mp4
+bgm.wav
+
+# 系统
+.DS_Store
+Thumbs.db

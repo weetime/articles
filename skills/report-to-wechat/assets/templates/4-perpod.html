@@ -1,0 +1,49 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="style.css">
+<style>
+  .pods{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:34px}
+  .pod{background:var(--panel-solid);border:1px solid var(--line2);border-radius:var(--r);padding:22px 20px}
+  .pod .name{font-size:22px;font-weight:800}
+  .pod .name span{font-size:15px;color:var(--ink3);font-weight:600}
+  .gauge{margin-top:18px}
+  .gauge .k{font-size:15px;color:var(--ink3);font-weight:600}
+  .vtrack{height:150px;background:#ffffff08;border:1px solid var(--line);border-radius:12px;margin-top:8px;display:flex;align-items:flex-end;overflow:hidden}
+  .vfill{width:100%;background:linear-gradient(0deg,#0f9b6c,var(--green));display:flex;align-items:flex-start;justify-content:center;padding-top:8px;font-size:19px;font-weight:850;color:#04140d}
+  .share{display:flex;justify-content:space-between;margin-top:16px;font-size:16px}
+  .share .o{color:var(--off);font-weight:700}
+  .share .n{color:var(--violet2);font-weight:800}
+  .share .lab{color:var(--ink3);font-weight:600}
+  .callout{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:26px}
+  .co{border-radius:18px;padding:22px 24px;border:1px solid var(--line2)}
+  .co .t{font-size:21px;font-weight:800} .co .d{font-size:18px;color:var(--ink2);margin-top:10px;line-height:1.55}
+  .co.a{background:#34d39912;border-color:#34d39940} .co.a .t{color:var(--green)}
+  .co.b{background:#6d4bff12;border-color:#6d4bff40} .co.b .t{color:var(--violet2)}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>逐 Pod 拆解 · 命中率 vs 流量<span class="tag">ON · 代表值</span></div>
+  <h2 class="sec">提升靠<span class="hi">路由智能</span>,不是靠<span class="off">流量倾斜</span></h2>
+  <div class="sec-sub">如果命中率是靠把请求挤到某个 Pod 换来的,那就是热点。但 4 个 Pod 流量依旧均匀,命中率却整体抬高了。</div>
+
+  <div class="pods">
+    <div class="pod"><div class="name">P1 <span>vLLM</span></div>
+      <div class="gauge"><div class="k">ON 命中率</div><div class="vtrack"><div class="vfill" style="height:67%">67%</div></div></div>
+      <div class="share"><span class="lab">流量</span><span><span class="o">28%</span> → <span class="n">27%</span></span></div></div>
+    <div class="pod"><div class="name">P2 <span>vLLM</span></div>
+      <div class="gauge"><div class="k">ON 命中率</div><div class="vtrack"><div class="vfill" style="height:63%">63%</div></div></div>
+      <div class="share"><span class="lab">流量</span><span><span class="o">26%</span> → <span class="n">29%</span></span></div></div>
+    <div class="pod"><div class="name">P3 <span>vLLM</span></div>
+      <div class="gauge"><div class="k">ON 命中率</div><div class="vtrack"><div class="vfill" style="height:68%">68%</div></div></div>
+      <div class="share"><span class="lab">流量</span><span><span class="o">24%</span> → <span class="n">23%</span></span></div></div>
+    <div class="pod"><div class="name">P4 <span>vLLM</span></div>
+      <div class="gauge"><div class="k">ON 命中率</div><div class="vtrack"><div class="vfill" style="height:59%">59%</div></div></div>
+      <div class="share"><span class="lab">流量</span><span><span class="o">22%</span> → <span class="n">21%</span></span></div></div>
+  </div>
+
+  <div class="callout">
+    <div class="co a"><div class="t">✓ 命中率均匀抬高</div><div class="d">4 个 Pod 的 ON 命中率全部落在 <b>58–70%</b> 区间,没有一个 Pod 被冷落,说明相同前缀被稳定导向了对的 Pod。</div></div>
+    <div class="co b"><div class="t">✓ 流量没有热点</div><div class="d">最大 Pod 份额 OFF/ON 都在 <b>27–29%</b>,开关前后几乎不变——增益纯粹来自调度,不是把负载堆给某个 Pod。</div></div>
+  </div>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · 逐 Pod 流量拓扑</span>
+    <span class="right">4 Pods · 命中率 58–70% · 份额 27–29%</span></div>
+</div>
+</body></html>

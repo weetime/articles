@@ -1,0 +1,70 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="style.css">
+<style>
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:32px}
+  .col{border-radius:var(--r);padding:26px 24px;border:1px solid var(--line2)}
+  .col.off{background:linear-gradient(180deg,#1a1c2b,#12131e)}
+  .col.on{background:linear-gradient(180deg,#201b3a,#161230);border-color:#6d4bff55}
+  .col .ttl{font-size:23px;font-weight:850}
+  .col.off .ttl{color:var(--off)} .col.on .ttl{color:var(--violet2)}
+  .col .ttl small{display:block;font-size:15px;color:var(--ink3);font-weight:600;margin-top:4px}
+  .reqs{display:flex;gap:8px;margin-top:18px}
+  .req{flex:1;background:#ffffff0c;border:1px solid var(--line);border-radius:9px;padding:8px 4px;text-align:center;font-size:14px;color:var(--ink2)}
+  .req b{display:block;font-size:13px;color:var(--violet2)}
+  .route{height:54px;margin:6px 0;position:relative}
+  .podrow{display:flex;gap:8px}
+  .pbox{flex:1;border-radius:10px;padding:12px 6px;text-align:center;border:1px solid var(--line2)}
+  .pbox .pn{font-size:15px;font-weight:800}
+  .pbox .st{font-size:13px;margin-top:6px;font-weight:700}
+  .pbox.cold{background:#1c1d2b} .pbox.cold .st{color:var(--rose)}
+  .pbox.hit{background:#34d39915;border-color:#34d39955} .pbox.hit .st{color:var(--green)}
+  .pbox.idle{background:#16162400;opacity:.45} .pbox.idle .st{color:var(--ink3)}
+  .res{margin-top:16px;font-size:18px;font-weight:700}
+  .res .o{color:var(--off)} .res .n{color:var(--green)}
+  .chain{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:30px;flex-wrap:wrap}
+  .ci{background:var(--panel-solid);border:1px solid var(--line2);border-radius:14px;padding:14px 20px;font-size:20px;font-weight:800}
+  .ci.hl{color:var(--green);border-color:#34d39955;background:#34d39912}
+  .ci.hl2{color:var(--cyan);border-color:#2dd4ee55;background:#2dd4ee12}
+  .arr{font-size:24px;color:var(--violet2);font-weight:900}
+  .sum{margin-top:26px;font-size:21px;text-align:center;color:var(--ink);font-weight:700;background:#6d4bff14;border:1px solid #6d4bff45;border-radius:16px;padding:18px}
+  .sum b{color:var(--violet2)}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>机制拆解 · 为什么能快这么多<span class="tag">原理</span></div>
+  <h2 class="sec">同样的请求,<span class="hi">去对的 Pod 就不用重算</span></h2>
+  <div class="sec-sub">长前缀场景里,几千条请求共享同一段开头。问题不在算力,而在于——它们有没有被送到那个"已经算过"的 Pod。</div>
+
+  <div class="two">
+    <div class="col off"><div class="ttl">轮询路由 OFF<small>相同前缀被打散到不同 Pod</small></div>
+      <div class="reqs"><div class="req"><b>同前缀</b>req A</div><div class="req"><b>同前缀</b>req B</div><div class="req"><b>同前缀</b>req C</div></div>
+      <div style="text-align:center;font-size:22px;color:var(--off);margin:10px 0">↓ 分散 ↓</div>
+      <div class="podrow">
+        <div class="pbox cold"><div class="pn">P1</div><div class="st">✗ 重算 prefill</div></div>
+        <div class="pbox cold"><div class="pn">P2</div><div class="st">✗ 重算 prefill</div></div>
+        <div class="pbox cold"><div class="pn">P3</div><div class="st">✗ 重算 prefill</div></div>
+      </div>
+      <div class="res">结果:命中率 <span class="o">22%</span> · 每个 Pod 都在做重复功</div></div>
+
+    <div class="col on"><div class="ttl">前缀感知路由 ON<small>按前缀哈希 → 命中同一 Pod 的 KV</small></div>
+      <div class="reqs"><div class="req"><b>同前缀</b>req A</div><div class="req"><b>同前缀</b>req B</div><div class="req"><b>同前缀</b>req C</div></div>
+      <div style="text-align:center;font-size:22px;color:var(--violet2);margin:10px 0">↓ 哈希同向 ↓</div>
+      <div class="podrow">
+        <div class="pbox idle"><div class="pn">P1</div><div class="st">空闲</div></div>
+        <div class="pbox hit"><div class="pn">P2</div><div class="st">✓ 复用 KV · 跳过 prefill</div></div>
+        <div class="pbox idle"><div class="pn">P3</div><div class="st">空闲</div></div>
+      </div>
+      <div class="res">结果:命中率 <span class="n">65%</span> · 前缀只算一次</div></div>
+  </div>
+
+  <div class="chain">
+    <div class="ci">前缀缓存命中率 ↑</div><span class="arr">→</span>
+    <div class="ci">重复 prefill 计算 ↓</div><span class="arr">→</span>
+    <div class="ci hl2">TTFT 延迟 ↓</div><span class="arr">&</span>
+    <div class="ci hl">吞吐量 ↑</div>
+  </div>
+
+  <div class="sum">一句话:<b>前缀感知路由 = 让相同开头的请求复用已算好的 KV 缓存</b>,省掉的不是带宽,是 GPU 的 prefill 算力。</div>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · 机制原理</span>
+    <span class="right">KV-Cache 感知路由 · prefill 复用</span></div>
+</div>
+</body></html>

@@ -1,0 +1,149 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="style.css">
+<style>
+  .sh{display:flex;align-items:center;gap:14px;margin:44px 0 20px}
+  .sh .nb{width:10px;height:30px;border-radius:4px;background:linear-gradient(180deg,var(--violet2),var(--cyan));flex-shrink:0}
+  .sh .t{font-size:32px;font-weight:850}
+  .sh .tag{font-size:14px;font-weight:700;color:var(--ink3);border:1px solid var(--line2);border-radius:999px;padding:5px 13px}
+  .sh .line{flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
+  .lead{font-size:19px;color:var(--ink2);line-height:1.6}.lead b{color:var(--ink)} .lead .v{color:var(--violet2);font-weight:700}
+
+  /* OFF vs ON compare bars */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .mblock{background:var(--panel-solid);border:1px solid var(--line2);border-radius:18px;padding:22px 24px}
+  .mblock .head{display:flex;align-items:baseline;gap:10px}
+  .mblock .head .name{font-size:22px;font-weight:800}
+  .mblock .head .unit{font-size:14px;color:var(--ink3);font-weight:600}
+  .mblock .head .delta{margin-left:auto;font-size:19px;font-weight:850;padding:5px 14px;border-radius:999px}
+  .delta.good{color:var(--green);background:#34d39918;border:1px solid #34d39940}
+  .delta.cool{color:var(--cyan);background:#2dd4ee18;border:1px solid #2dd4ee40}
+  .bar{display:flex;align-items:center;gap:14px;margin-top:13px}
+  .bar .tg{width:42px;font-size:16px;font-weight:800;text-align:right;color:var(--ink3)}
+  .bar .track{flex:1;height:32px;background:#ffffff08;border-radius:9px;overflow:hidden;border:1px solid var(--line)}
+  .bar .fill{height:100%;border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:13px;font-size:16px;font-weight:850;color:#fff}
+  .fill.off{background:linear-gradient(90deg,#3a3f5c,#6b7090)}
+  .fill.on{background:linear-gradient(90deg,var(--violet-deep),var(--violet2))}
+  .fill.on.g{background:linear-gradient(90deg,#0f9b6c,var(--green))}
+  .fill.on.c{background:linear-gradient(90deg,#0e7e96,var(--cyan))}
+
+  /* pod mechanism compare */
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .col{border-radius:18px;padding:22px 22px;border:1px solid var(--line2)}
+  .col.off{background:linear-gradient(180deg,#1a1c2b,#12131e)}
+  .col.on{background:linear-gradient(180deg,#201b3a,#161230);border-color:#6d4bff55}
+  .col .ttl{font-size:20px;font-weight:850}.col.off .ttl{color:var(--off)}.col.on .ttl{color:var(--violet2)}
+  .col .ttl small{display:block;font-size:14px;color:var(--ink3);font-weight:600;margin-top:3px}
+  .reqs{display:flex;gap:7px;margin-top:16px}
+  .req{flex:1;background:#ffffff0c;border:1px solid var(--line);border-radius:8px;padding:7px 3px;text-align:center;font-size:13px;color:var(--ink2)}
+  .req b{display:block;font-size:11px;color:var(--violet2)}
+  .dir{text-align:center;font-size:20px;margin:8px 0;font-weight:800}
+  .col.off .dir{color:var(--off)} .col.on .dir{color:var(--violet2)}
+  .podrow{display:flex;gap:7px}
+  .pb{flex:1;border-radius:9px;padding:11px 4px;text-align:center;border:1px solid var(--line2)}
+  .pb .pn{font-size:14px;font-weight:800}.pb .st{font-size:11px;margin-top:5px;font-weight:700}
+  .pb.cold{background:#1c1d2b}.pb.cold .st{color:var(--rose)}
+  .pb.hit{background:#34d39915;border-color:#34d39955}.pb.hit .st{color:var(--green)}
+  .pb.idle{background:#16162400;opacity:.45}.pb.idle .st{color:var(--ink3)}
+  .res{margin-top:14px;font-size:16px;font-weight:700}.res .o{color:var(--off)}.res .n{color:var(--green)}
+  .analogy{margin-top:18px;font-size:20px;text-align:center;color:var(--ink);background:#6d4bff12;border:1px solid #6d4bff40;border-radius:16px;padding:18px 24px;line-height:1.6}
+  .analogy b{color:var(--violet2)}
+
+  .cred{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .cd{background:var(--panel-solid);border:1px solid var(--line2);border-radius:16px;padding:22px 22px}
+  .cd .ic{font-size:15px;font-weight:800;color:var(--green);letter-spacing:.5px}
+  .cd .t{font-size:19px;font-weight:800;margin-top:8px}
+  .cd .x{font-size:16px;color:var(--ink2);margin-top:8px;line-height:1.55}.cd .x b{color:var(--ink)}
+
+  .biz{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .bz{background:var(--panel-solid);border:1px solid var(--line2);border-radius:16px;padding:22px 22px}
+  .bz .ic{font-size:20px;font-weight:850;color:var(--violet2)}
+  .bz .t{font-size:20px;font-weight:800;margin-top:8px}.bz .x{font-size:16px;color:var(--ink2);margin-top:7px;line-height:1.5}
+
+  .fit{background:var(--panel-solid);border:1px solid var(--line2);border-radius:18px;padding:24px 30px}
+  .fit .row{display:flex;gap:16px;align-items:baseline;margin-bottom:16px}.fit .row:last-child{margin-bottom:0}
+  .fit .k{font-size:18px;font-weight:800;color:var(--green);width:120px;flex-shrink:0}.fit .k.r{color:var(--cyan)}
+  .fit .v{font-size:18px;color:var(--ink2);line-height:1.55}.fit .v b{color:var(--ink)}
+  .scenes{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+  .scene{font-size:18px;font-weight:700;color:var(--ink);background:#34d39912;border:1px solid #34d39940;border-radius:12px;padding:9px 18px}
+
+  .summary{margin-top:36px;font-size:24px;text-align:center;font-weight:800;color:var(--ink);background:linear-gradient(120deg,#6d4bff18,#2dd4ee12);border:1px solid #6d4bff55;border-radius:20px;padding:26px}
+  .summary b{background:linear-gradient(100deg,var(--violet2),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  .qrfoot{display:flex;align-items:center;gap:34px;margin-top:34px;background:linear-gradient(135deg,#1a1930,#121120);border:1px solid var(--line2);border-radius:22px;padding:30px 34px}
+  .qf-left{flex:1}.qf-name{font-size:32px;font-weight:850}.qf-name .at{color:var(--violet2)}
+  .qf-desc{font-size:17px;color:var(--ink2);margin-top:12px;line-height:1.6}.qf-desc b{color:var(--ink)}
+  .qf-cta{font-size:16px;color:var(--violet2);font-weight:700;margin-top:14px}
+  .qf-box{width:184px;flex-shrink:0;text-align:center}.qf-box .b{background:#fff;border-radius:16px;padding:12px}
+  .qf-box img{width:100%;display:block;border-radius:8px}.qf-box .c{font-size:15px;color:var(--ink3);font-weight:700;margin-top:10px}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>ModelDoctor 实测 · 一图读懂<span class="tag">Higress 缓存感知路由</span></div>
+  <h1 class="title">不加一张 GPU,<br><span class="hi">推理服务多扛 64% 流量</span></h1>
+  <div class="subtitle">同样的模型、同样的机器,只把网关从「随机分发」改成<b>「缓存感知」</b> —— 让相同前缀的请求复用已算好的缓存,不再重复计算。</div>
+
+  <div class="sh"><span class="nb"></span><span class="t">实测对比 · 开关前后</span><span class="tag">5 次运行均值</span><span class="line"></span></div>
+  <div class="grid2">
+    <div class="mblock"><div class="head"><span class="name">前缀缓存命中率</span><span class="unit">越高越好</span><span class="delta good">▲ +197%</span></div>
+      <div class="bar"><span class="tg">OFF</span><div class="track"><div class="fill off" style="width:31%">22%</div></div></div>
+      <div class="bar"><span class="tg">ON</span><div class="track"><div class="fill on g" style="width:93%">65%</div></div></div></div>
+    <div class="mblock"><div class="head"><span class="name">吞吐量</span><span class="unit">req/s · 越高越好</span><span class="delta good">▲ +64%</span></div>
+      <div class="bar"><span class="tg">OFF</span><div class="track"><div class="fill off" style="width:58%">2.88</div></div></div>
+      <div class="bar"><span class="tg">ON</span><div class="track"><div class="fill on" style="width:95%">4.73</div></div></div></div>
+    <div class="mblock"><div class="head"><span class="name">首字延迟 TTFT</span><span class="unit">P95 · 越低越好</span><span class="delta cool">▼ −40%</span></div>
+      <div class="bar"><span class="tg">OFF</span><div class="track"><div class="fill off" style="width:91%">20.0s</div></div></div>
+      <div class="bar"><span class="tg">ON</span><div class="track"><div class="fill on c" style="width:54%">11.9s</div></div></div></div>
+    <div class="mblock"><div class="head"><span class="name">端到端 E2E</span><span class="unit">P95 · 越低越好</span><span class="delta cool">▼ −37%</span></div>
+      <div class="bar"><span class="tg">OFF</span><div class="track"><div class="fill off" style="width:94%">45.1s</div></div></div>
+      <div class="bar"><span class="tg">ON</span><div class="track"><div class="fill on c" style="width:59%">28.4s</div></div></div></div>
+  </div>
+  <div class="lead" style="margin-top:18px">四个指标<b>同向改善,没有 trade-off</b> —— 命中率↑ 省下重复计算 ⇒ 吞吐↑ & 延迟↓,而硬件成本 <span class="v">不增加一分</span>。</div>
+
+  <div class="sh"><span class="nb"></span><span class="t">怎么做到的 · 机制对比</span><span class="line"></span></div>
+  <div class="two">
+    <div class="col off"><div class="ttl">以前 · 随机分发<small>相同前缀被打散到不同节点</small></div>
+      <div class="reqs"><div class="req"><b>同前缀</b>请求A</div><div class="req"><b>同前缀</b>请求B</div><div class="req"><b>同前缀</b>请求C</div></div>
+      <div class="dir">↓ 散开 ↓</div>
+      <div class="podrow"><div class="pb cold"><div class="pn">节点1</div><div class="st">✗ 重算</div></div><div class="pb cold"><div class="pn">节点2</div><div class="st">✗ 重算</div></div><div class="pb cold"><div class="pn">节点3</div><div class="st">✗ 重算</div></div></div>
+      <div class="res">命中率 <span class="o">22%</span> · 每台都在做重复功</div></div>
+    <div class="col on"><div class="ttl">现在 · 缓存感知<small>相同前缀 → 路由到同一节点</small></div>
+      <div class="reqs"><div class="req"><b>同前缀</b>请求A</div><div class="req"><b>同前缀</b>请求B</div><div class="req"><b>同前缀</b>请求C</div></div>
+      <div class="dir">↓ 同向 ↓</div>
+      <div class="podrow"><div class="pb idle"><div class="pn">节点1</div><div class="st">空闲</div></div><div class="pb hit"><div class="pn">节点2</div><div class="st">✓ 复用·跳过重算</div></div><div class="pb idle"><div class="pn">节点3</div><div class="st">空闲</div></div></div>
+      <div class="res">命中率 <span class="n">65%</span> · 前缀只算一次</div></div>
+  </div>
+  <div class="analogy">就像把同类问题<b>分给同一位专家</b>,而不是让每个人都从零研究一遍。</div>
+
+  <div class="sh"><span class="nb"></span><span class="t">这不是 Demo,是实测</span><span class="tag">Qwen3-32B · 4 节点 · aiperf</span><span class="line"></span></div>
+  <div class="cred">
+    <div class="cd"><div class="ic">真实负载</div><div class="t">RAG/Agent 形态</div><div class="x">3000 token 大上下文 + 4 轮多轮对话,贴近<b>知识库问答 / 智能体</b>真实流量。</div></div>
+    <div class="cd"><div class="ic">不靠堆负载</div><div class="t">4 节点流量均匀</div><div class="x">各节点份额都在 <b>27–29%</b>,<b>没有热点</b> —— 提升纯来自智能调度,不是把活堆给某台。</div></div>
+    <div class="cd"><div class="ic">可复现</div><div class="t">跑 10 轮取均值</div><div class="x">每一轮开启后都<b>稳定甩开 2.5 倍以上</b>,方差极小,不是某次走运。</div></div>
+  </div>
+
+  <div class="sh"><span class="nb"></span><span class="t">对业务意味着什么</span><span class="line"></span></div>
+  <div class="biz">
+    <div class="bz"><div class="ic">01</div><div class="t">省扩容预算</div><div class="x">不加机器就能扛更多并发,把扩容的钱省下来。</div></div>
+    <div class="bz"><div class="ic">02</div><div class="t">降单位成本</div><div class="x">同一批算力服务更多用户,每个请求更便宜。</div></div>
+    <div class="bz"><div class="ic">03</div><div class="t">体验更好</div><div class="x">高峰期更稳、响应更快,用户更少流失。</div></div>
+  </div>
+
+  <div class="sh"><span class="nb"></span><span class="t">适合什么业务</span><span class="line"></span></div>
+  <div class="fit">
+    <div class="row"><span class="k">收益最大</span><span class="v"><b>重复上下文越多,省得越多。</b>典型场景:</span></div>
+    <div class="scenes"><span class="scene">智能客服</span><span class="scene">知识库 / 文档问答</span><span class="scene">多轮对话</span><span class="scene">AI Agent</span></div>
+    <div class="row" style="margin-top:18px"><span class="k r">低风险</span><span class="v">网关配置级改动、<b>可热插拔</b>、失败自动放行,<b>不影响线上可用性</b>。</span></div>
+  </div>
+
+  <div class="summary">同样的算力,把<b>浪费在重复计算上的部分</b>,换成实打实的服务能力。</div>
+
+  <div class="qrfoot">
+    <div class="qf-left">
+      <div class="qf-name">vLLM <span class="at">生产工程</span></div>
+      <div class="qf-desc">深耕 LLM SRE、高性能推理引擎(vLLM/SGLang)、AI 网关与 PD 分离架构调优。<b>拒绝 Demo,只谈实战</b>。</div>
+      <div class="qf-cta">扫码关注 · 更多推理降本增效实战</div>
+    </div>
+    <div class="qf-box"><div class="b"><img src="qrcode.png" alt="vLLM 生产工程"></div><div class="c">长按识别关注</div></div>
+  </div>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · 多引擎推理可观测与压测</span><span class="right">基于 Higress 网关 · 缓存感知路由 · Qwen3-32B 实测</span></div>
+</div>
+</body></html>

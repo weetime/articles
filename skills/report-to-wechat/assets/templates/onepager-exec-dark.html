@@ -1,0 +1,115 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="style.css">
+<style>
+  .sh{display:flex;align-items:center;gap:14px;margin:44px 0 20px}
+  .sh .nb{width:10px;height:30px;border-radius:4px;background:linear-gradient(180deg,var(--violet2),var(--cyan));flex-shrink:0}
+  .sh .t{font-size:32px;font-weight:850}
+  .sh .line{flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
+
+  .val{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:6px}
+  .vc{background:linear-gradient(180deg,#1c1b33,#141327);border:1px solid var(--line2);border-radius:20px;padding:28px 30px;position:relative;overflow:hidden}
+  .vc .glow{position:absolute;right:-30px;top:-30px;width:150px;height:150px;border-radius:50%;filter:blur(40px);opacity:.5}
+  .vc .lab{font-size:19px;color:var(--ink2);font-weight:600}
+  .vc .big{font-size:64px;font-weight:850;line-height:1;margin-top:12px;letter-spacing:-2px}
+  .vc .sub{font-size:17px;color:var(--ink3);margin-top:12px;line-height:1.5}
+  .up{color:var(--green)} .down{color:var(--cyan)} .vio{color:var(--violet2)} .free{color:var(--amber)}
+
+  .how{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:6px}
+  .hb{border-radius:18px;padding:24px 26px;border:1px solid var(--line2)}
+  .hb.bad{background:linear-gradient(180deg,#1f1a26,#15131c)}
+  .hb.good{background:linear-gradient(180deg,#1a2630,#13202a);border-color:#22d3ee44}
+  .hb .h{font-size:18px;font-weight:800;margin-bottom:10px}
+  .hb.bad .h{color:var(--rose)} .hb.good .h{color:var(--cyan)}
+  .hb .x{font-size:18px;color:var(--ink2);line-height:1.6}
+  .hb .x b{color:var(--ink)}
+  .analogy{margin-top:18px;font-size:20px;text-align:center;color:var(--ink);background:#6d4bff12;border:1px solid #6d4bff40;border-radius:16px;padding:20px 24px;line-height:1.6}
+  .analogy b{color:var(--violet2)}
+
+  .biz{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:6px}
+  .bz{background:var(--panel-solid);border:1px solid var(--line2);border-radius:16px;padding:24px 22px}
+  .bz .ic{font-size:20px;font-weight:850;color:var(--violet2)}
+  .bz .t{font-size:21px;font-weight:800;margin-top:10px}
+  .bz .x{font-size:17px;color:var(--ink2);margin-top:8px;line-height:1.55}
+
+  .fit{background:var(--panel-solid);border:1px solid var(--line2);border-radius:18px;padding:26px 30px;margin-top:6px}
+  .fit .row{display:flex;gap:16px;align-items:baseline;margin-bottom:16px}
+  .fit .row:last-child{margin-bottom:0}
+  .fit .k{font-size:18px;font-weight:800;color:var(--green);width:130px;flex-shrink:0}
+  .fit .k.r{color:var(--cyan)}
+  .fit .v{font-size:19px;color:var(--ink2);line-height:1.55}
+  .fit .v b{color:var(--ink)}
+  .scenes{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+  .scene{font-size:18px;font-weight:700;color:var(--ink);background:#34d39912;border:1px solid #34d39940;border-radius:12px;padding:9px 18px}
+
+  .summary{margin-top:36px;font-size:24px;text-align:center;font-weight:800;color:var(--ink);background:linear-gradient(120deg,#6d4bff18,#2dd4ee12);border:1px solid #6d4bff55;border-radius:20px;padding:28px}
+  .summary b{background:linear-gradient(100deg,var(--violet2),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* QR footer */
+  .qrfoot{display:flex;align-items:center;gap:34px;margin-top:34px;background:linear-gradient(135deg,#1a1930,#121120);border:1px solid var(--line2);border-radius:22px;padding:30px 34px}
+  .qf-left{flex:1}
+  .qf-name{font-size:32px;font-weight:850}.qf-name .at{color:var(--violet2)}
+  .qf-desc{font-size:17px;color:var(--ink2);margin-top:12px;line-height:1.6}
+  .qf-desc b{color:var(--ink)}
+  .qf-cta{font-size:16px;color:var(--violet2);font-weight:700;margin-top:14px}
+  .qf-box{width:184px;flex-shrink:0;text-align:center}
+  .qf-box .b{background:#fff;border-radius:16px;padding:12px}
+  .qf-box img{width:100%;display:block;border-radius:8px}
+  .qf-box .c{font-size:15px;color:var(--ink3);font-weight:700;margin-top:10px}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>ModelDoctor 实测 · 给决策者的一页纸<span class="tag">推理降本增效</span></div>
+  <h1 class="title">不加一张 GPU,<br><span class="hi">推理服务多扛 64% 流量</span></h1>
+  <div class="subtitle">同样的模型、同样的机器,只调了<b>一处网关配置</b> —— 用户更快、算力不浪费、成本不增加。</div>
+
+  <div class="sh"><span class="nb"></span><span class="t">一次配置,四个成效</span><span class="line"></span></div>
+  <div class="val">
+    <div class="vc"><div class="glow" style="background:var(--green)"></div>
+      <div class="lab">处理能力</div><div class="big up">+64%</div>
+      <div class="sub">同样的卡,每秒能多处理 64% 的请求</div></div>
+    <div class="vc"><div class="glow" style="background:var(--cyan)"></div>
+      <div class="lab">用户响应</div><div class="big down">快 40%</div>
+      <div class="sub">用户拿到回复的等待时间缩短约四成</div></div>
+    <div class="vc"><div class="glow" style="background:var(--violet)"></div>
+      <div class="lab">重复计算复用率</div><div class="big vio">22%→65%</div>
+      <div class="sub">近 2/3 的重复计算被直接复用,不再白算</div></div>
+    <div class="vc"><div class="glow" style="background:var(--amber)"></div>
+      <div class="lab">新增硬件成本</div><div class="big free">¥0</div>
+      <div class="sub">不买卡、不扩容,纯软件配置即可</div></div>
+  </div>
+
+  <div class="sh"><span class="nb"></span><span class="t">一句话说清原理</span><span class="line"></span></div>
+  <div class="how">
+    <div class="hb bad"><div class="h">以前</div><div class="x">同样的问题被<b>反复发给不同机器</b>,每台都从头算一遍 —— 算力大量花在重复劳动上。</div></div>
+    <div class="hb good"><div class="h">现在</div><div class="x">让网关<b>记住"哪台机器刚算过"</b>,把相似请求送到它那儿,<b>直接复用结果</b> —— 不重复算。</div></div>
+  </div>
+  <div class="analogy">就像把同类问题<b>分给同一位专家</b>,而不是让每个人都从零研究一遍。</div>
+
+  <div class="sh"><span class="nb"></span><span class="t">对业务意味着什么</span><span class="line"></span></div>
+  <div class="biz">
+    <div class="bz"><div class="ic">01</div><div class="t">省扩容预算</div><div class="x">不加机器就能扛更多并发,把扩容的钱省下来。</div></div>
+    <div class="bz"><div class="ic">02</div><div class="t">降单位成本</div><div class="x">同一批算力服务更多用户,每个请求更便宜。</div></div>
+    <div class="bz"><div class="ic">03</div><div class="t">体验更好</div><div class="x">高峰期更稳、响应更快,用户更少流失。</div></div>
+  </div>
+
+  <div class="sh"><span class="nb"></span><span class="t">适合什么业务</span><span class="line"></span></div>
+  <div class="fit">
+    <div class="row"><span class="k">收益最大</span><span class="v"><b>重复上下文越多,省得越多。</b>典型场景:</span></div>
+    <div class="scenes">
+      <span class="scene">智能客服</span><span class="scene">知识库 / 文档问答</span><span class="scene">多轮对话</span><span class="scene">AI Agent</span>
+    </div>
+    <div class="row" style="margin-top:18px"><span class="k r">风险</span><span class="v">配置级改动、<b>可热插拔</b>、失败自动放行,<b>不影响线上可用性</b>。</span></div>
+  </div>
+
+  <div class="summary">同样的算力,把<b>浪费在重复计算上的部分</b>,换成实打实的服务能力。</div>
+
+  <div class="qrfoot">
+    <div class="qf-left">
+      <div class="qf-name">vLLM <span class="at">生产工程</span></div>
+      <div class="qf-desc">深耕 LLM SRE、高性能推理引擎(vLLM/SGLang)、AI 网关与 PD 分离架构调优。<b>拒绝 Demo,只谈实战</b>。</div>
+      <div class="qf-cta">扫码关注 · 更多推理降本增效实战</div>
+    </div>
+    <div class="qf-box"><div class="b"><img src="qrcode.png" alt="vLLM 生产工程"></div><div class="c">长按识别关注</div></div>
+  </div>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · 多引擎推理可观测与压测</span><span class="right">实测数据 · Qwen3-32B · mcpinfra.net</span></div>
+</div>
+</body></html>

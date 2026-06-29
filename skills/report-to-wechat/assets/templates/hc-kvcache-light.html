@@ -1,0 +1,79 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="style-light.css">
+<style>
+  .cmp2{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:30px}
+  .kc{border-radius:var(--r);padding:24px 26px;border:1px solid var(--line2)}
+  .kc.off{background:#f3f4f9}
+  .kc.on{background:linear-gradient(180deg,#f0fdf4,#ecfdf5);border-color:#bbf7d0;box-shadow:0 10px 30px #16a34a14}
+  .kc .lab{font-size:20px;font-weight:850}
+  .kc.off .lab{color:var(--off)} .kc.on .lab{color:var(--green)}
+  .kc .lab .badge{float:right;font-size:15px;font-weight:800;color:var(--green);background:#dcfce7;border:1px solid #86efac;border-radius:999px;padding:4px 12px}
+  .qbar{margin-top:18px}
+  .qbar .k{font-size:15px;color:var(--ink3);font-weight:600;display:flex;justify-content:space-between}
+  .qtrack{height:40px;background:#eef0f5;border:1px solid var(--line);border-radius:10px;margin-top:8px;overflow:hidden;position:relative}
+  .qfill{height:100%;display:flex;align-items:center;justify-content:flex-end;padding-right:14px;font-size:16px;font-weight:850;color:#06351c}
+  .qfill.o{background:linear-gradient(90deg,#aab0c0,#8b91a8);color:#fff}
+  .qfill.n{background:linear-gradient(90deg,#15a04a,#22c55e)}
+  .kc .big{font-size:30px;font-weight:850;margin-top:16px}
+  .kc.off .big{color:var(--ink2)} .kc.on .big .h{color:var(--green)}
+  .kc .sub{font-size:14px;color:var(--ink3);margin-top:4px}
+
+  .tbl{margin-top:24px;width:100%;border-collapse:collapse}
+  .tbl th,.tbl td{padding:11px 14px;font-size:16px;text-align:right;border-bottom:1px solid var(--line)}
+  .tbl th{color:var(--ink3);font-weight:700;font-size:14px}
+  .tbl td:first-child,.tbl th:first-child{text-align:left;color:var(--ink2);font-weight:700}
+  .tbl .on{color:var(--green);font-weight:800}
+  .tbl .off{color:var(--off);font-weight:700}
+
+  .decode{margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .dch{background:var(--panel-solid);border:1px solid var(--line2);border-radius:16px;padding:20px 22px;box-shadow:var(--shadow)}
+  .dch .t{font-size:17px;color:var(--ink3);font-weight:700}
+  .dch .v{font-size:30px;font-weight:850;margin-top:8px}
+  .dch .v .o{color:var(--off)} .dch .v .a{color:var(--cyan);font-size:22px;margin:0 8px} .dch .v .n{color:var(--ink)}
+  .dch .d{margin-left:auto;font-size:16px;font-weight:800}
+  .dch .row{display:flex;align-items:baseline}
+  .down{color:var(--cyan)} .up{color:var(--green)}
+  .note{margin-top:22px;font-size:16px;color:var(--ink2);background:#f0fdf4;border:1px solid #bbf7d0;border-radius:14px;padding:16px 20px;line-height:1.6}
+  .note b{color:var(--green)}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>原始引擎数据 · block 级 KV 缓存<span class="tag">单条 run 实测</span></div>
+  <h2 class="sec">命中率的真相:<span class="hi">每个 Pod 少重算了几百万个 block</span></h2>
+  <div class="sec-sub">把命中率拆到 KV 缓存 block 这一层 —— OFF 在反复 prefill,ON 在复用。数字来自引擎上报的 QUERIES / HITS。</div>
+
+  <div class="cmp2">
+    <div class="kc off"><div class="lab">prefix_cache OFF</div>
+      <div class="qbar"><div class="k"><span>block 查询 411 万</span><span>命中 22.2%</span></div>
+        <div class="qtrack"><div class="qfill o" style="width:22%">91 万</div></div></div>
+      <div class="big">命中 <b>91 万</b> / 查询 411 万</div>
+      <div class="sub">4 个 Pod 各自重算,缓存几乎用不上</div></div>
+
+    <div class="kc on"><div class="lab">prefix_cache ON<span class="badge">命中 ×3.7</span></div>
+      <div class="qbar"><div class="k"><span>block 查询 497 万</span><span>命中 67.4%</span></div>
+        <div class="qtrack"><div class="qfill n" style="width:68%">336 万</div></div></div>
+      <div class="big"><span class="h">命中 <b>336 万</b></span> / 查询 497 万</div>
+      <div class="sub">更长前缀参与匹配 → 查得更多,命中也翻番</div></div>
+  </div>
+
+  <table class="tbl">
+    <thead><tr><th>Pod</th><th>OFF 命中 / 查询</th><th>OFF 命中率</th><th>ON 命中 / 查询</th><th>ON 命中率</th></tr></thead>
+    <tbody>
+      <tr><td>infer-…-0</td><td>22.5万 / 113万</td><td class="off">20.0%</td><td>81.0万 / 116万</td><td class="on">69.7%</td></tr>
+      <tr><td>infer-…-1</td><td>26.7万 / 106万</td><td class="off">25.3%</td><td>90.4万 / 134万</td><td class="on">67.4%</td></tr>
+      <tr><td>infer-…-2</td><td>23.4万 / 97万</td><td class="off">24.2%</td><td>88.6万 / 130万</td><td class="on">68.3%</td></tr>
+      <tr><td>infer-…-3</td><td>18.7万 / 96万</td><td class="off">19.4%</td><td>75.5万 / 117万</td><td class="on">64.3%</td></tr>
+    </tbody>
+  </table>
+
+  <div class="decode">
+    <div class="dch"><div class="row"><span class="t">ITL P95(每 token 间隔)</span><span class="d down">▼ −37%</span></div>
+      <div class="v"><span class="o">472.8ms</span><span class="a">→</span><span class="n">296.5ms</span></div></div>
+    <div class="dch"><div class="row"><span class="t">Output TPS(输出吞吐)</span><span class="d up">▲ +67%</span></div>
+      <div class="v"><span class="o">186</span><span class="a">→</span><span class="n">310</span> <span style="font-size:16px;color:var(--ink3)">tok/s</span></div></div>
+  </div>
+
+  <div class="note">注意:报告说"未测 TPOT",但引擎其实上报了 <b>ITL(≈TPOT)</b>——而且它也降了 37%。原因是 OFF 的 Pod 忙于重算 prefill、decode 被挤;<b>ON 把算力释放出来,token 吐得更快。</b>缓存命中省的不只是首 token,是整条解码链路。</div>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · block 级 KV 缓存(硬核版)</span>
+    <span class="right">QUERIES / HITS · ITL · 引擎上报 · ON-r3 vs OFF-r3</span></div>
+</div>
+</body></html>

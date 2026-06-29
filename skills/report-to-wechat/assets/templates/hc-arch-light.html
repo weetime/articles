@@ -1,0 +1,86 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="style-light.css">
+<style>
+  code{font-family:"SF Mono",Menlo,Consolas,monospace;background:#f1eeff;border:1px solid #d8d2ff;border-radius:6px;padding:2px 8px;color:#6d4bff;font-size:.92em}
+  .flow{margin-top:30px}
+  .box{background:var(--panel-solid);border:1px solid var(--line2);border-radius:18px;padding:20px 24px;box-shadow:var(--shadow)}
+  .client{width:420px;margin:0 auto;text-align:center}
+  .client .t{font-size:22px;font-weight:800}.client .s{font-size:15px;color:var(--ink3);margin-top:6px}
+  .down{text-align:center;color:var(--violet);font-size:26px;font-weight:900;margin:10px 0}
+  .gwrap{display:grid;grid-template-columns:1fr 300px;gap:18px;align-items:stretch;margin-top:4px}
+  .gw{background:linear-gradient(180deg,#f4f1ff,#eef5ff);border:1px solid #cdc0ff;border-radius:20px;padding:22px 24px;box-shadow:0 10px 30px #6d4bff1a}
+  .gw .hd{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .gw .hd .nm{font-size:23px;font-weight:850}
+  .gw .hd .pl{font-size:13px;font-weight:700;color:var(--cyan);border:1px solid #a5f0fb;background:#ecfeff;border-radius:999px;padding:4px 12px}
+  .steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+  .s3{background:#fff;border:1px solid var(--line2);border-radius:12px;padding:14px 12px}
+  .s3 .n{font-size:14px;color:var(--violet);font-weight:800}
+  .s3 .x{font-size:15px;color:var(--ink2);margin-top:6px;line-height:1.5}
+  .redis{background:#fff1f2;border:1px solid #fecdd3;border-radius:20px;padding:22px 20px;display:flex;flex-direction:column;justify-content:center}
+  .redis .nm{font-size:20px;font-weight:850;color:#e11d48}
+  .redis .x{font-size:14px;color:var(--ink2);margin-top:10px;line-height:1.6}
+  .redis .x b{color:var(--ink)}
+  .qa{text-align:center;font-size:13px;color:var(--rose);font-weight:700;margin:6px 0}
+  .decide{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+  .dc{border-radius:14px;padding:16px 20px;border:1px solid var(--line2);font-size:16px;line-height:1.5}
+  .dc.hit{background:#f0fdf4;border-color:#bbf7d0}.dc.hit b{color:var(--green)}
+  .dc.miss{background:#f3f4f9}.dc.miss b{color:var(--off)}
+  .pool{margin-top:18px;background:#f7f8fb;border:1px dashed var(--line2);border-radius:20px;padding:20px}
+  .pool .pl{font-size:14px;color:var(--ink3);font-weight:700;margin-bottom:14px}
+  .pods{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .pod{background:var(--panel-solid);border:1px solid var(--line2);border-radius:14px;padding:16px 12px;text-align:center;box-shadow:var(--shadow)}
+  .pod .pn{font-size:18px;font-weight:850}.pod .e{font-size:12px;color:var(--ink3)}
+  .pod .kv{margin-top:10px;font-size:12px;font-weight:700;border-radius:8px;padding:6px 4px}
+  .pod.h{border-color:#86efac;background:#f0fdf4}
+  .pod.h .kv{background:#dcfce7;color:var(--green)} .pod.h .pn{color:var(--green)}
+  .pod .kv.cold{background:#eef0f5;color:var(--ink3)}
+  .note{margin-top:22px;font-size:16px;color:var(--ink2);background:#ecfeff;border:1px solid #a5f0fb;border-radius:14px;padding:16px 20px;line-height:1.6}
+  .note b{color:var(--cyan)}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>机制拆解 · Higress ai-load-balancer<span class="tag">lb_policy: prefix_cache</span></div>
+  <h2 class="sec">相同前缀,<span class="hi">在 Redis 前缀树里找回那个 Pod</span></h2>
+  <div class="sec-sub">这一版讲清楚开关背后到底发生了什么 —— 不是 hash 取模,是一棵全局前缀树 + 最长匹配。</div>
+
+  <div class="flow">
+    <div class="box client"><div class="t">客户端 / Agent</div><div class="s">OpenAI / Anthropic 兼容 API · 长前缀请求</div></div>
+    <div class="down">↓</div>
+
+    <div class="gwrap">
+      <div class="gw">
+        <div class="hd"><span class="nm">Higress AI 网关</span><span class="pl">ai-load-balancer · WASM 插件</span></div>
+        <div class="steps3">
+          <div class="s3"><div class="n">① 分块</div><div class="x">prompt 切成 block</div></div>
+          <div class="s3"><div class="n">② SHA-1</div><div class="x">每个 block 取哈希</div></div>
+          <div class="s3"><div class="n">③ 累积 XOR</div><div class="x">生成前缀 key 序列</div></div>
+        </div>
+        <div class="decide">
+          <div class="dc hit">命中:<b>pin 到曾服务该前缀的 Pod</b> → 触发 vLLM APC</div>
+          <div class="dc miss">未命中:<b>回退 global_least_request</b>(全局最少请求)</div>
+        </div>
+      </div>
+      <div class="redis">
+        <div class="nm">Redis</div>
+        <div class="x"><b>全局前缀树</b><br>key = sha1(b1)、sha1(b1)⊕sha1(b2) …<br>查<b>最长匹配前缀</b> → 返回 Pod</div>
+        <div class="qa">↑ 查询 / 回写 ↓</div>
+      </div>
+    </div>
+
+    <div class="down">↓ 按决策路由 ↓</div>
+
+    <div class="pool">
+      <div class="pl">InferencePool · 4 × vLLM(Automatic Prefix Caching 开启)</div>
+      <div class="pods">
+        <div class="pod"><div class="pn">P1</div><div class="e">GPU · HBM KV</div><div class="kv cold">空闲</div></div>
+        <div class="pod h"><div class="pn">P2</div><div class="e">GPU · HBM KV</div><div class="kv">✓ KV 命中 · 跳过 prefill</div></div>
+        <div class="pod"><div class="pn">P3</div><div class="e">GPU · HBM KV</div><div class="kv cold">空闲</div></div>
+        <div class="pod"><div class="pn">P4</div><div class="e">GPU · HBM KV</div><div class="kv cold">空闲</div></div>
+      </div>
+    </div>
+
+    <div class="note">注意区分:这是 Higress <b>自带 WASM 插件</b>的 Redis 实现,与 Gateway API Inference Extension(<b>GIE / llm-d EPP</b>,v2.2.0 的 ext-proc 调度)是<b>两条独立路径</b>。本实验切换的是插件的 <code>prefix_cache</code> 策略。</div>
+  </div>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · 机制拆解(硬核版)</span>
+    <span class="right">Higress ai-load-balancer · vLLM APC · Redis 前缀树</span></div>
+</div>
+</body></html>

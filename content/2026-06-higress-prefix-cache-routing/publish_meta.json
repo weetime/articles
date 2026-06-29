@@ -1,0 +1,6 @@
+{
+  "youtube_title": "只改一个网关路由开关:vLLM 前缀缓存命中率 22%→65%、吞吐 +64%",
+  "youtube_desc": "不加一张卡、不换模型、不动引擎参数——只把网关负载均衡从「轮询」换成 prefix_cache,vLLM 前缀缓存命中率就从 22% 拉到 65%(×3),吞吐 +64%、首 token 延迟 TTFT P95 −40%。\n\n原因很朴素:轮询会把「相同前缀」的请求随机打散到不同 Pod,每个 Pod 都得把同一段长上下文各自重算一遍;而 KV 感知路由用「最长前缀匹配」,把同前缀请求稳定送到同一个 Pod,直接命中已经算好的 KV cache,省掉重复 prefill。\n\n实测:Qwen3-32B × 4 Pods,RAG / Agent 长上下文场景,OFF / ON 各 5 轮 × 480 请求,十次方差极小、可复现。\n\n#大模型推理 #vLLM #Higress #前缀缓存 #推理优化 #LLM #Qwen #AI基础设施",
+  "youtube_tags": ["vLLM", "Higress", "前缀缓存", "prefix cache", "大模型推理", "LLM 推理", "Qwen", "推理优化", "KV cache", "AI 基础设施"],
+  "x_text": "只改了网关一个路由开关,vLLM 前缀缓存命中率 22%→65%,吞吐 +64%。\n秘密:别让相同前缀被轮询打散,用最长前缀匹配把它们送回同一个 Pod,直接命中已经算好的 KV cache。\nQwen3-32B × 4 Pods 实测可复现。\n\n#vLLM #Higress #前缀缓存 #大模型推理"
+}

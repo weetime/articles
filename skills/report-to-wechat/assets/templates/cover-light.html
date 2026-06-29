@@ -1,0 +1,47 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="style-light.css">
+<style>
+  html,body{width:1080px}
+  .cover{width:1080px;height:460px;display:flex;align-items:center;gap:34px;padding:44px 52px}
+  .cover::before{background-size:46px 46px}
+  .left{flex:1.15;min-width:0}
+  .ml-eye{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:700;color:var(--violet)}
+  .ml-eye .dot{width:8px;height:8px;border-radius:50%;background:var(--violet);box-shadow:0 0 12px #6d4bff66}
+  .ml-eye .b{margin-left:6px;font-size:14px;color:var(--ink3);border:1px solid var(--line2);border-radius:999px;padding:4px 12px}
+  h1.cv{font-size:52px;line-height:1.12;font-weight:850;letter-spacing:-1.5px;margin-top:14px}
+  h1.cv .hi{background:linear-gradient(100deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .cv-sub{font-size:19px;color:var(--ink2);margin-top:14px;font-weight:500}
+  .cv-sub b{color:var(--ink)}
+  .cv-chips{display:flex;gap:10px;margin-top:18px}
+  .cv-chip{font-size:16px;font-weight:800;border-radius:10px;padding:7px 14px;border:1px solid}
+  .cc-g{color:var(--green);border-color:#86efac;background:#f0fdf4}
+  .cc-c{color:var(--cyan);border-color:#a5f0fb;background:#ecfeff}
+
+  .right{width:330px;flex-shrink:0;background:linear-gradient(180deg,#f4f1ff,#eef5ff);border:1px solid #cdc0ff;border-radius:22px;padding:26px 24px;box-shadow:0 10px 30px #6d4bff1a}
+  .rk{font-size:16px;color:var(--ink3);font-weight:600}
+  .trans{display:flex;align-items:baseline;gap:12px;margin-top:8px}
+  .trans .o{font-size:40px;font-weight:850;color:var(--off)}
+  .trans .arr{font-size:26px;color:var(--violet);font-weight:900}
+  .trans .n{font-size:64px;font-weight:850;letter-spacing:-2px;background:linear-gradient(100deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .rbadge{margin-top:14px;display:inline-block;font-size:19px;font-weight:850;color:var(--green);background:#dcfce7;border:1px solid #86efac;border-radius:999px;padding:6px 16px}
+  .rfoot{margin-top:16px;font-size:14px;color:var(--ink4);border-top:1px solid var(--line);padding-top:12px}
+  .rfoot b{color:var(--violet)}
+</style></head><body>
+<div class="poster cover">
+  <div class="left">
+    <div class="ml-eye"><span class="dot"></span>ModelDoctor 实测<span class="b">前缀感知路由</span></div>
+    <h1 class="cv">只改一个路由开关<br><span class="hi">缓存命中率 ×3</span></h1>
+    <div class="cv-sub">同一个 <b>Qwen3-32B</b> · 同样 <b>4 Pods</b> · 长前缀场景</div>
+    <div class="cv-chips">
+      <div class="cv-chip cc-g">吞吐 +64%</div>
+      <div class="cv-chip cc-c">TTFT P95 −40%</div>
+      <div class="cv-chip cc-c">E2E P95 −37%</div>
+    </div>
+  </div>
+  <div class="right">
+    <div class="rk">前缀缓存命中率</div>
+    <div class="trans"><span class="o">22%</span><span class="arr">→</span><span class="n">65%</span></div>
+    <div class="rbadge">▲ +197%</div>
+    <div class="rfoot">5 次运行均值 · <b>mcpinfra.net</b></div>
+  </div>
+</div>
+</body></html>
