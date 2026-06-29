@@ -20,8 +20,8 @@ Turn one report into a fluid, code-driven explainer video. Like [report-to-wecha
 Copy the worked example into a per-report folder (same folder as the 一图流 article is fine):
 ```bash
 DIR=modeldoctor/.experiments/wechat-reports/<reportId>
-mkdir -p $DIR/anim && cp -r ~/.claude/skills/report-to-video/assets/remotion/* $DIR/anim/
-cp ~/.claude/skills/report-to-video/assets/scripts/*.py $DIR/
+mkdir -p $DIR/anim && cp -r ~/articles/.claude/skills/report-to-video/assets/remotion/* $DIR/anim/
+cp ~/articles/.claude/skills/report-to-video/assets/scripts/*.py $DIR/
 cd $DIR/anim && npm install     # pulls Remotion + bundled Chromium (~2 min)
 ```
 Needs `ffmpeg` + `edge-tts` (`pip install edge-tts`) + `numpy`/`scipy` on PATH (conda base works).

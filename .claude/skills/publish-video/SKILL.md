@@ -38,12 +38,12 @@ description: Use when publishing/distributing an already-rendered video (e.g. th
 cd <视频所在目录>   # 含 publish_meta.json
 
 # 1) YouTube:先传 unlisted 自己看(首次弹浏览器授权一次)
-python ~/.claude/skills/publish-video/assets/scripts/upload_youtube.py video-landscape.mp4 --privacy unlisted
+python ~/articles/.claude/skills/publish-video/assets/scripts/upload_youtube.py video-landscape.mp4 --privacy unlisted
 #   确认无误 → 改公开(首次需再授权一次「管理」权限)
-python ~/.claude/skills/publish-video/assets/scripts/set_privacy.py <videoId> public
+python ~/articles/.claude/skills/publish-video/assets/scripts/set_privacy.py <videoId> public
 
 # 2) X(配好 x.env 后)
-python ~/.claude/skills/publish-video/assets/scripts/upload_x.py video-portrait.mp4
+python ~/articles/.claude/skills/publish-video/assets/scripts/upload_x.py video-portrait.mp4
 ```
 
 ## 约定
