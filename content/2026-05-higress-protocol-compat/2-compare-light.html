@@ -1,0 +1,46 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="style-light.css">
+<style>
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:30px}
+  .mblock{background:var(--panel-solid);border:1px solid var(--line2);border-radius:var(--r);padding:26px 28px;box-shadow:var(--shadow)}
+  .mblock .head{display:flex;align-items:baseline;gap:12px}
+  .mblock .head .name{font-size:25px;font-weight:800}
+  .mblock .head .unit{font-size:16px;color:var(--ink3);font-weight:600}
+  .mblock .head .delta{margin-left:auto;font-size:20px;font-weight:800;padding:6px 16px;border-radius:999px}
+  .delta.flat{color:var(--ink3);background:#eef0f5;border:1px solid var(--line2)}
+  .bar .tag{width:84px}
+  .fill.oa{background:linear-gradient(90deg,#0e7490,#0891b2)}
+  .fill.an{background:linear-gradient(90deg,#6d4bff,#8b6dff)}
+  .legend i.sw-oa{background:var(--cyan)} .legend i.sw-an{background:var(--violet)}
+  .note{margin-top:28px;font-size:19px;color:var(--ink2);background:#f1eeff;border:1px solid #d8d2ff;border-radius:16px;padding:18px 22px;line-height:1.55}
+  .note b{color:var(--violet)}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>OpenAI vs Anthropic · 四个核心指标<span class="tag">Tukey 滤波后</span></div>
+  <h2 class="sec">两条协议入口,<span class="hi">四项指标几乎重合</span></h2>
+  <div class="sec-sub">青色 = OpenAI 直通　|　紫色 = Anthropic 经网关转换。同一后端、同一负载,差异全部落在 <b>|Δ%| &lt; 5%</b>。</div>
+  <div class="legend"><span><i class="sw-oa"></i>OpenAI /v1/chat/completions</span><span><i class="sw-an"></i>Anthropic /v1/messages</span></div>
+
+  <div class="grid2">
+    <div class="mblock"><div class="head"><span class="name">TTFT P50</span><span class="unit">首 token · 越低越好</span><span class="delta flat">Δ 2.2%</span></div>
+      <div class="bar"><span class="tag">OpenAI</span><div class="track"><div class="fill oa" style="width:95%">304.2 ms</div></div></div>
+      <div class="bar"><span class="tag">Anthropic</span><div class="track"><div class="fill an" style="width:93%">297.6 ms</div></div></div></div>
+
+    <div class="mblock"><div class="head"><span class="name">TTFT P95</span><span class="unit">尾部 · 越低越好</span><span class="delta flat">Δ 4.8%</span></div>
+      <div class="bar"><span class="tag">OpenAI</span><div class="track"><div class="fill oa" style="width:95%">594.6 ms</div></div></div>
+      <div class="bar"><span class="tag">Anthropic</span><div class="track"><div class="fill an" style="width:90%">566.0 ms</div></div></div></div>
+
+    <div class="mblock"><div class="head"><span class="name">总时延 P50</span><span class="unit">流式结束 · 越低越好</span><span class="delta flat">Δ 0.1%</span></div>
+      <div class="bar"><span class="tag">OpenAI</span><div class="track"><div class="fill oa" style="width:94%">21 538 ms</div></div></div>
+      <div class="bar"><span class="tag">Anthropic</span><div class="track"><div class="fill an" style="width:94%">21 510 ms</div></div></div></div>
+
+    <div class="mblock"><div class="head"><span class="name">总时延 P95</span><span class="unit">尾部 · 越低越好</span><span class="delta flat">Δ 0.5%</span></div>
+      <div class="bar"><span class="tag">OpenAI</span><div class="track"><div class="fill oa" style="width:94%">21 779 ms</div></div></div>
+      <div class="bar"><span class="tag">Anthropic</span><div class="track"><div class="fill an" style="width:93%">21 680 ms</div></div></div></div>
+  </div>
+
+  <div class="note">所有 Δ 幅度均 <b>小于样本自身标准差(σ≈109 ms)</b>,统计上判定为<b>两协议无可测差异</b>。</div>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · 双协议指标对比</span>
+    <span class="right">Qwen3-32B · n=40/协议 · Tukey 1.5·IQR</span></div>
+</div>
+</body></html>

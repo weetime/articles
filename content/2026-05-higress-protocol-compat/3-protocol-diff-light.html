@@ -1,0 +1,39 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="style-light.css">
+<style>
+  .ptab{margin-top:30px;border:1px solid var(--line2);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);background:#fff}
+  .ptab .r{display:grid;grid-template-columns:200px 1fr 1fr;align-items:center}
+  .ptab .r + .r{border-top:1px solid var(--line)}
+  .ptab .r.h{background:#f7f7fb}
+  .ptab .c{padding:15px 22px;font-size:18px;line-height:1.4}
+  .ptab .dim{font-weight:800;color:var(--ink2);background:#fafafe;border-right:1px solid var(--line)}
+  .ptab .h .c{font-size:20px;font-weight:850}
+  .ptab .h .oa{color:var(--cyan)} .ptab .h .an{color:var(--violet)}
+  .ptab .oa,.ptab .an{border-right:1px solid var(--line)}
+  .ptab .an:last-child{border-right:none}
+  .mono{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:15px;color:var(--ink)}
+  .must{display:inline-block;font-size:13px;font-weight:800;color:var(--rose);background:#fff1f2;border:1px solid #fecdd3;border-radius:6px;padding:1px 7px;margin-left:6px}
+  .note{margin-top:26px;font-size:20px;color:var(--ink2);background:#ecfeff;border:1px solid #a5f0fb;border-radius:16px;padding:18px 22px;line-height:1.55}
+  .note b{color:var(--cyan)}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>协议规范差异 · 开发者视角<span class="tag">网关层抹平</span></div>
+  <h2 class="sec">两套协议设计取舍不同,<span class="hi">客户端却 0 改造</span></h2>
+  <div class="sec-sub">OpenAI 与 Anthropic 在鉴权、字段、流式格式上各走各的;Higress ai-proxy 在网关把这些差异全部翻译掉。</div>
+
+  <div class="ptab">
+    <div class="r h"><div class="c dim">维度</div><div class="c oa">OpenAI Chat Completions</div><div class="c an">Anthropic Messages</div></div>
+    <div class="r"><div class="c dim">Endpoint</div><div class="c oa mono">/v1/chat/completions</div><div class="c an mono">/v1/messages</div></div>
+    <div class="r"><div class="c dim">鉴权 Header</div><div class="c oa mono">Authorization: Bearer</div><div class="c an mono">x-api-key + anthropic-version</div></div>
+    <div class="r"><div class="c dim">system 提示词</div><div class="c oa">messages[] 内 role:"system"</div><div class="c an">顶层独立字段 system</div></div>
+    <div class="r"><div class="c dim">max_tokens</div><div class="c oa">可选</div><div class="c an"><span class="must">必填</span> 不可省略</div></div>
+    <div class="r"><div class="c dim">内容结构</div><div class="c oa">字符串 / 多模态数组</div><div class="c an">强类型 block(text/image/tool)</div></div>
+    <div class="r"><div class="c dim">终止字段</div><div class="c oa mono">finish_reason</div><div class="c an mono">stop_reason</div></div>
+    <div class="r"><div class="c dim">流式格式</div><div class="c oa">扁平 data: 块 + [DONE]</div><div class="c an">类型化事件 message_*/content_block_*</div></div>
+  </div>
+
+  <div class="note">对客户的影响:<b>可保留任一现有 SDK</b>——OpenAI Python/Node、Anthropic SDK、LangChain、Cursor、Claude Code——无需为协议适配编写中间层。差异都在网关里被翻译。</div>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · 协议规范差异</span>
+    <span class="right">ai-proxy 双向互转 · 入口路径判别</span></div>
+</div>
+</body></html>

@@ -1,0 +1,65 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="style-light.css">
+<style>
+  .flow{margin-top:30px;display:flex;flex-direction:column;gap:18px}
+  .lane{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line2);border-radius:18px;padding:20px 22px;box-shadow:var(--shadow)}
+  .lane .badge{flex-shrink:0;width:150px;font-size:19px;font-weight:850;padding:10px 0;text-align:center;border-radius:12px}
+  .lane.oa .badge{color:var(--cyan);background:#ecfeff;border:1px solid #a5f0fb}
+  .lane.an .badge{color:var(--violet);background:#f1eeff;border:1px solid #d8d2ff}
+  .stp{flex:1;display:flex;align-items:center;gap:10px;flex-wrap:nowrap}
+  .box{flex:1;background:#fafafe;border:1px solid var(--line2);border-radius:12px;padding:12px 14px;text-align:center;font-size:16px;font-weight:700;color:var(--ink2);line-height:1.35}
+  .box small{display:block;font-size:13px;color:var(--ink3);font-weight:600;margin-top:3px}
+  .box.hl{background:#f1eeff;border-color:#cdc0ff;color:var(--violet)}
+  .arr{flex-shrink:0;font-size:22px;color:var(--violet);font-weight:900}
+  .chain{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:30px;flex-wrap:wrap}
+  .ci{background:var(--panel-solid);border:1px solid var(--line2);border-radius:14px;padding:13px 18px;font-size:19px;font-weight:800;box-shadow:var(--shadow)}
+  .ci.hl{color:var(--green);border-color:#bbf7d0;background:#f0fdf4}
+  .ci.hl2{color:var(--cyan);border-color:#a5f0fb;background:#ecfeff}
+  .carr{font-size:22px;color:var(--violet);font-weight:900}
+  .sum{margin-top:26px;font-size:20px;text-align:center;color:var(--ink);font-weight:700;background:#f1eeff;border:1px solid #d8d2ff;border-radius:16px;padding:18px}
+  .sum b{color:var(--violet)}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>机制拆解 · 为什么零损耗<span class="tag">ai-proxy WasmPlugin</span></div>
+  <h2 class="sec">转换发生在网关 wasm 层,<span class="hi">耗时是毫秒量级</span></h2>
+  <div class="sec-sub">两条入口共用同一后端;OpenAI 原样直通,Anthropic 进来先翻成 OpenAI 形态、上游返回后再翻回 Anthropic 事件流。</div>
+
+  <div class="flow">
+    <div class="lane oa">
+      <div class="badge">OpenAI</div>
+      <div class="stp">
+        <div class="box">客户端请求<small>/v1/chat/completions</small></div>
+        <span class="arr">→</span>
+        <div class="box">网关直通<small>仅路由 + 计量</small></div>
+        <span class="arr">→</span>
+        <div class="box">Qwen3-32B<small>OpenAI 兼容后端</small></div>
+        <span class="arr">→</span>
+        <div class="box">原样流式返回<small>data: 块 + [DONE]</small></div>
+      </div>
+    </div>
+    <div class="lane an">
+      <div class="badge">Anthropic</div>
+      <div class="stp">
+        <div class="box">客户端请求<small>/v1/messages</small></div>
+        <span class="arr">→</span>
+        <div class="box hl">转为 OpenAI 形态<small>ms 级 · wasm</small></div>
+        <span class="arr">→</span>
+        <div class="box">Qwen3-32B<small>同一后端</small></div>
+        <span class="arr">→</span>
+        <div class="box hl">翻回 Anthropic 事件<small>message_* 增量</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chain">
+    <div class="ci">总时延 21.5s</div><span class="carr">=</span>
+    <div class="ci hl2">后端推理 ~99%</div><span class="carr">+</span>
+    <div class="ci">网关转换 ms 级</div><span class="carr">→</span>
+    <div class="ci hl">差异淹没在噪声里</div>
+  </div>
+
+  <div class="sum"><b>输出 200 tokens 约 21.5 秒,99% 来自后端推理</b>;转换在 wasm 层仅毫秒级,无法在该量级总时延中体现。</div>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · 机制原理</span>
+    <span class="right">ai-proxy 1.0.0 · 协议双向互转</span></div>
+</div>
+</body></html>
