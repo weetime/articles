@@ -1,0 +1,45 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="style-light.css">
+<style>
+  h1.title{font-size:58px}
+  .rank{margin-top:34px;background:#fff;border:1px solid var(--line2);border-radius:var(--r);padding:28px 30px;box-shadow:var(--shadow)}
+  .rank .rt{display:flex;align-items:baseline;gap:12px;font-size:20px;font-weight:700;color:var(--ink2)}
+  .rank .rt b{color:var(--ink);font-size:22px}
+  .rank .rt .u{margin-left:auto;font-size:16px;color:var(--ink3);font-weight:600}
+  .rrow{display:flex;align-items:center;gap:16px;margin-top:16px}
+  .rrow .nm{width:128px;font-size:21px;font-weight:800;text-align:right}
+  .rrow .nm.v{color:var(--violet)} .rrow .nm.m{color:var(--amber)} .rrow .nm.s{color:var(--ink3)}
+  .rrow .track{flex:1;height:38px;background:#eef0f5;border-radius:11px;overflow:hidden;border:1px solid var(--line)}
+  .rrow .fill{height:100%;border-radius:10px;display:flex;align-items:center;justify-content:flex-end;padding-right:16px;font-size:20px;font-weight:850;color:#fff}
+  .fv{background:linear-gradient(90deg,#6d4bff,#8b6dff)}
+  .fm{background:linear-gradient(90deg,#d97706,#f59e0b)}
+  .fs{background:linear-gradient(90deg,#9aa0b4,#b6bccb)}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>ModelDoctor · 昇腾三引擎横评<span class="tag">Qwen3-32B · ShareGPT</span></div>
+  <h1 class="title">c128 高压档,<span class="hi">三引擎吞吐相差 2.2 倍</span></h1>
+  <div class="subtitle">同一台 <b>Ascend 910B4</b>(每引擎 TP=4)、同一个 <b>Qwen3-32B</b>、同一份 <b>ShareGPT 真实流量</b>,prefix caching 三家全开。8→128 五档并发,每档跑 3 次取中位数,全部 45 轮 0 错误。</div>
+
+  <div class="rank">
+    <div class="rt"><b>c128 高压档</b> 输出吞吐<span class="u">tokens/s · 越高越好</span></div>
+    <div class="rrow"><span class="nm v">vLLM-Ascend</span><div class="track"><div class="fill fv" style="width:100%">1228</div></div></div>
+    <div class="rrow"><span class="nm m">MindIE</span><div class="track"><div class="fill fm" style="width:62%">764</div></div></div>
+    <div class="rrow"><span class="nm s">SGLang</span><div class="track"><div class="fill fs" style="width:45%">550</div></div></div>
+  </div>
+
+  <div class="metrics">
+    <div class="mcard"><div class="glow" style="background:var(--violet)"></div><div class="lab">vLLM 输出吞吐</div><div class="big" style="color:var(--violet)">1228</div><div class="flow">领先 MindIE <span class="n">+61%</span> · SGLang <span class="n">2.2×</span></div></div>
+    <div class="mcard"><div class="glow" style="background:var(--amber)"></div><div class="lab">MindIE 首字 p50</div><div class="big" style="color:var(--amber)">25.3s</div><div class="flow">对应排队深度 <span class="n">34</span></div></div>
+    <div class="mcard"><div class="glow" style="background:var(--off)"></div><div class="lab">SGLang KV 峰值</div><div class="big" style="color:var(--ink3)">100%</div><div class="flow">吞吐回退 <span class="o">721</span> → <span class="n">550</span></div></div>
+    <div class="mcard"><div class="glow" style="background:var(--green)"></div><div class="lab">全量轮次错误率</div><div class="big up">0.00%</div><div class="flow">3 引擎 × 5 档 × 3 次 = <span class="n">45 轮全绿</span></div></div>
+  </div>
+
+  <div class="chips">
+    <div class="chip"><span class="cdot"></span>硬件 <b>Ascend 910B4 ×4 · TP=4</b></div>
+    <div class="chip"><span class="cdot"></span>数据集 <b>ShareGPT · max_tokens 512</b></div>
+    <div class="chip"><span class="cdot"></span>压测 <b>evalscope perf</b></div>
+    <div class="chip"><span class="cdot"></span>并发档 <b>8 / 16 / 32 / 64 / 128</b></div>
+  </div>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · 多引擎推理可观测</span><span class="right">mcpinfra.net · github.com/weetime</span></div>
+</div>
+</body></html>

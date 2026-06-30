@@ -1,0 +1,8 @@
+{
+  "wechat_title": "昇腾 910B4 实测:Qwen3-32B 三推理引擎吞吐、延迟与内部指标",
+  "wechat_digest": "同硬件同模型同负载,只换引擎。c8–c128 五档,每档 3 次中位数。c128:vLLM 1228 tok/s、MindIE 764、SGLang 550;附 KV-cache 与排队深度归因及全量数据矩阵。",
+  "youtube_title": "昇腾 910B4 实测:Qwen3-32B 上 vLLM / MindIE / SGLang 高并发横评",
+  "youtube_desc": "同一台 Ascend 910B4(每引擎 TP=4)、同一个 Qwen3-32B、同一份 ShareGPT 真实流量,prefix caching 三家全开,8→128 五档并发各跑 3 次取中位数。\n\nc128 高压档:vLLM-Ascend 输出吞吐 1228 tok/s,领先 MindIE 61%、是 SGLang 的 2.2×,且曲线仍未见顶。MindIE 首字延迟 TTFT p50 飙到 25.3 秒——根因是调度 waiting 队列深度爆到 34(KV 只用了 51.9%,瓶颈不在显存)。SGLang 吞吐从 c64 的 721 回退到 550——根因是 KV-cache 峰值打满 100%、无法再扩 batch。\n\n反直觉点:c8 低并发档 MindIE 吞吐反而最高(+22%)。结论:vLLM 全场景默认推荐,MindIE 低并发有条件次选,SGLang 本轮不作生产默认。45 轮 0 错误。\n\n#大模型推理 #vLLM #MindIE #SGLang #昇腾 #Ascend #Qwen3 #推理引擎 #LLM #AI基础设施",
+  "youtube_tags": ["vLLM", "MindIE", "SGLang", "昇腾", "Ascend 910B4", "Qwen3-32B", "大模型推理", "推理引擎横评", "KV cache", "AI 基础设施"],
+  "x_text": "昇腾 910B4 实测:同一个 Qwen3-32B,三大引擎在 128 并发下差出了一个量级。\nvLLM 吞吐 1228 tok/s 第一且未见顶;MindIE 首字 25.3s(排队深度 34);SGLang KV 打满 100% 吞吐回退。\n两个塌点都用引擎内部指标讲清了根因。\n\n#vLLM #MindIE #SGLang #昇腾 #Qwen3"
+}

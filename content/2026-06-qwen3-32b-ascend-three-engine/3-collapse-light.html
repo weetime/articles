@@ -1,0 +1,56 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="style-light.css">
+<style>
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:30px}
+  .diag{background:#fff;border:1px solid var(--line2);border-radius:var(--r);padding:26px 26px 24px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .diag .top{height:5px;position:absolute;left:0;top:0;width:100%}
+  .diag.m .top{background:var(--amber)} .diag.s .top{background:var(--off)}
+  .diag .eng{font-size:24px;font-weight:850;margin-bottom:4px}
+  .diag.m .eng{color:var(--amber)} .diag.s .eng{color:var(--ink3)}
+  .diag .sym{font-size:18px;color:var(--ink3);font-weight:600}
+  .diag .big{font-size:50px;font-weight:850;line-height:1;margin-top:10px;letter-spacing:-1px}
+  .diag .sub{font-size:17px;color:var(--ink2);margin-top:8px;line-height:1.5}
+  .cause{margin-top:18px;border-top:1px dashed var(--line2);padding-top:16px}
+  .cause .ck{font-size:15px;font-weight:800;color:var(--violet);letter-spacing:.5px}
+  .cause .root{display:flex;align-items:baseline;gap:10px;margin-top:8px}
+  .cause .root .num{font-size:40px;font-weight:850;letter-spacing:-1px}
+  .diag.m .root .num{color:var(--amber)} .diag.s .root .num{color:var(--ink2)}
+  .cause .root .vs{font-size:16px;color:var(--ink3);font-weight:600}
+  .cause .why{font-size:17px;color:var(--ink2);margin-top:10px;line-height:1.55}
+  .cause .why b{color:var(--ink)}
+  .hold{margin-top:22px;background:linear-gradient(100deg,#f4f1ff,#eef5ff);border:1px solid #cdc0ff;border-radius:18px;padding:20px 24px;display:flex;align-items:center;gap:20px;box-shadow:0 10px 30px #6d4bff14}
+  .hold .lab{font-size:21px;font-weight:850;color:var(--violet);white-space:nowrap}
+  .hold .txt{font-size:18px;color:var(--ink2);line-height:1.5}
+  .hold .txt b{color:var(--ink)}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>引擎内部归因 · 定位瓶颈<span class="tag">Prometheus infer:*</span></div>
+  <h2 class="sec">两处性能拐点,<span class="hi">归因到引擎内部</span></h2>
+  <div class="sec-sub">客户端指标只反映结果,引擎内部的 KV-cache 使用率与调度排队深度才能定位根因。</div>
+
+  <div class="grid2">
+    <div class="diag m"><div class="top"></div>
+      <div class="eng">MindIE · 首字延迟劣化</div>
+      <div class="sym">c128 TTFT p50</div>
+      <div class="big" style="color:var(--amber)">25.3s</div>
+      <div class="sub">是 vLLM(1.2s)的 <b>21 倍</b></div>
+      <div class="cause"><div class="ck">根因 · 调度排队</div>
+        <div class="root"><span class="num">34</span><span class="vs">waiting 队列深度 · vLLM 仅 3</span></div>
+        <div class="why">请求全挤在 waiting 队列里进不了 batch。KV 用量只有 <b>51.9%</b>,瓶颈不在显存,在<b>调度准入策略</b>偏保守。</div></div>
+    </div>
+
+    <div class="diag s"><div class="top"></div>
+      <div class="eng">SGLang · 吞吐回退</div>
+      <div class="sym">c128 输出吞吐(vs c64)</div>
+      <div class="big" style="color:var(--ink2)">721<span style="font-size:30px;color:var(--ink3)"> → </span>550</div>
+      <div class="sub">并发升高吞吐回退,ITL 同时翻倍至 <b>202ms</b></div>
+      <div class="cause"><div class="ck">根因 · 显存撞墙</div>
+        <div class="root"><span class="num">100%</span><span class="vs">KV-cache 峰值打满 · 均值 73.7%</span></div>
+        <div class="why">KV 一旦打满就无法继续扩 batch。这是典型的 <b>KV 容量瓶颈</b>,而非调度问题(排队深度只有 8)。</div></div>
+    </div>
+  </div>
+
+  <div class="hold"><span class="lab">vLLM · 仍有余量</span><span class="txt">c128 时排队深度仅 <b>3.1</b>、KV 均值 <b>44.6%</b>(峰值 87.7%,未持续打满)—— 连续批处理 + KV 分页在高并发下仍有余量,对应其吞吐持续增长、延迟可控。</span></div>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · 根因归因</span><span class="right">c128 · KV-cache 使用率 + 调度排队深度</span></div>
+</div>
+</body></html>

@@ -1,0 +1,47 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="style-light.css">
+<style>
+  html,body{width:1080px}
+  .cover{width:1080px;height:460px;display:flex;align-items:center;gap:38px;padding:44px 52px}
+  .cover::before{background-size:46px 46px}
+  .left{flex:1.2;min-width:0}
+  .ml-eye{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:700;color:var(--violet)}
+  .ml-eye .dot{width:8px;height:8px;border-radius:50%;background:var(--violet);box-shadow:0 0 12px #6d4bff66}
+  .ml-eye .b{margin-left:6px;font-size:14px;color:var(--ink3);border:1px solid var(--line2);border-radius:999px;padding:4px 12px}
+  h1.cv{font-size:50px;line-height:1.14;font-weight:850;letter-spacing:-1.5px;margin-top:14px}
+  h1.cv .hi{background:linear-gradient(100deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .cv-sub{font-size:19px;color:var(--ink2);margin-top:14px;font-weight:500}
+  .cv-sub b{color:var(--ink)}
+  .cv-chips{display:flex;gap:10px;margin-top:18px}
+  .cv-chip{font-size:16px;font-weight:800;border-radius:10px;padding:7px 14px;border:1px solid}
+  .cc-v{color:var(--violet);border-color:#6d4bff55;background:#6d4bff10}
+  .cc-c{color:var(--cyan);border-color:#0891b255;background:#0891b210}
+  .right{width:340px;flex-shrink:0;background:#fff;border:1px solid var(--line2);border-radius:22px;padding:24px 26px;box-shadow:0 12px 34px #6d4bff16}
+  .rk{font-size:16px;color:var(--ink3);font-weight:700}
+  .pod{display:flex;align-items:center;gap:12px;margin-top:14px}
+  .pod .nm{width:84px;font-size:17px;font-weight:800;text-align:right}
+  .pod .nm.v{color:var(--violet)} .pod .nm.m{color:var(--amber)} .pod .nm.s{color:var(--ink3)}
+  .pod .tk{flex:1;height:26px;background:#eef0f5;border-radius:8px;overflow:hidden;border:1px solid var(--line)}
+  .pod .fl{height:100%;border-radius:7px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;font-size:15px;font-weight:850;color:#fff}
+  .flv{background:linear-gradient(90deg,#8b6dff,#6d4bff)} .flm{background:linear-gradient(90deg,#fbbf24,#f59e0b)} .fls{background:linear-gradient(90deg,#c2c6d4,#9aa0b4)}
+  .rfoot{margin-top:16px;font-size:14px;color:var(--ink4);border-top:1px solid var(--line);padding-top:12px}
+  .rfoot b{color:var(--violet)}
+</style></head><body>
+<div class="poster cover">
+  <div class="left">
+    <div class="ml-eye"><span class="dot"></span>ModelDoctor 实测<span class="b">昇腾三引擎横评</span></div>
+    <h1 class="cv">Qwen3-32B<br><span class="hi">三推理引擎实测数据</span></h1>
+    <div class="cv-sub">Ascend 910B4 ×4 · ShareGPT 真实流量 · <b>c8–c128 五档</b></div>
+    <div class="cv-chips">
+      <div class="cv-chip cc-v">吞吐 / 延迟全量</div>
+      <div class="cv-chip cc-c">引擎内部归因</div>
+    </div>
+  </div>
+  <div class="right">
+    <div class="rk">c128 输出吞吐 · tokens/s</div>
+    <div class="pod"><span class="nm v">vLLM</span><div class="tk"><div class="fl flv" style="width:100%">1228</div></div></div>
+    <div class="pod"><span class="nm m">MindIE</span><div class="tk"><div class="fl flm" style="width:62%">764</div></div></div>
+    <div class="pod"><span class="nm s">SGLang</span><div class="tk"><div class="fl fls" style="width:45%">550</div></div></div>
+    <div class="rfoot">45 轮 0 错误 · <b>mcpinfra.net</b></div>
+  </div>
+</div>
+</body></html>
