@@ -6,6 +6,7 @@
 
 | 文章 | 公众号 | 视频号 | 抖音 | B站 | YouTube | X |
 |---|---|---|---|---|---|---|
+| [Qwen3-32B 昇腾三引擎横评](content/2026-06-qwen3-32b-ascend-three-engine/) | ✅ 已发 | ✅ 已发 | ✅ 已发 | ⚪ | [✅ 公开](https://youtu.be/MWPS-YX8714) | ⚪ |
 | [Higress prefix_cache 路由实测](content/2026-06-higress-prefix-cache-routing/) | ⚪ | ⚪ | ⚪ | ⚪ | [✅ 公开](https://youtu.be/x5ACtbvzI-c) | ⚪ |
 | [Higress 双协议兼容实测](content/2026-05-higress-protocol-compat/) | ⚪ | ⚪ | ⚪ | ⚪ | ⚪ | ⚪ |
 

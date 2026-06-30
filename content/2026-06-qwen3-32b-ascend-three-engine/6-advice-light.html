@@ -1,0 +1,40 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="style-light.css">
+<style>
+  .rows{display:flex;flex-direction:column;gap:16px;margin-top:30px}
+  .arow{display:flex;align-items:center;gap:22px;background:#fff;border:1px solid var(--line2);border-radius:18px;padding:22px 26px;box-shadow:var(--shadow)}
+  .arow .scn{width:288px;flex-shrink:0;font-size:21px;font-weight:800;color:var(--ink);line-height:1.4}
+  .arow .scn .s2{display:block;font-size:16px;color:var(--ink3);font-weight:600;margin-top:4px}
+  .pick{flex-shrink:0;width:158px;text-align:center;font-size:22px;font-weight:850;border-radius:14px;padding:14px 8px;border:1px solid}
+  .pick.v{color:var(--violet);background:#6d4bff10;border-color:#6d4bff44}
+  .pick.m{color:var(--amber);background:#f59e0b12;border-color:#f59e0b44}
+  .pick.no{color:var(--ink3);background:#f3f4f9;border-color:var(--line2);font-size:19px}
+  .arow .rsn{flex:1;font-size:17px;color:var(--ink2);line-height:1.5}
+  .arow .rsn b{color:var(--ink)}
+  .sum{margin-top:26px;font-size:19px;color:var(--ink2);background:#f1eeff;border:1px solid #d8d2ff;border-radius:16px;padding:18px 22px;line-height:1.6}
+  .sum b{color:var(--violet)}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>选型建议 · 按场景对号入座<span class="tag">基线 vLLM-Ascend</span></div>
+  <h2 class="sec">这套栈上,<span class="hi">vLLM 是唯一全场景默认推荐</span></h2>
+  <div class="sec-sub">高并发吞吐、首字延迟、调度排队、KV 余量四个维度同时领先;但低并发另有侧重。</div>
+
+  <div class="rows">
+    <div class="arow"><div class="scn">高并发在线 / 吞吐优先<span class="s2">c64–c128</span></div>
+      <div class="pick v">vLLM</div>
+      <div class="rsn">c128 吞吐 <b>1228 tok/s</b> 全场第一且仍在涨,排队深度仅 3、首字 1.2s 可控。</div></div>
+    <div class="arow"><div class="scn">延迟敏感 / 首字 SLO<span class="s2">在线对话</span></div>
+      <div class="pick v">vLLM</div>
+      <div class="rsn">c8 TTFT p50 <b>283ms</b> 三家最低;c64 以上更是只有它首字可用。</div></div>
+    <div class="arow"><div class="scn">低流量 / 纯吞吐离线<span class="s2">c8 小并发</span></div>
+      <div class="pick m">MindIE</div>
+      <div class="rsn">c8 吞吐 <b>177 tok/s</b>(比 vLLM +22%)反而最高 —— 但首字 456ms 偏慢,且严禁上高并发。</div></div>
+    <div class="arow"><div class="scn">SGLang 适用场景<span class="s2">本套昇腾栈</span></div>
+      <div class="pick no">暂不推荐</div>
+      <div class="rsn">各档吞吐垫底,c128 KV 打满后吞吐回退;除非有 SGLang 专属特性强需求。</div></div>
+  </div>
+
+  <div class="sum"><b>一句话:</b>Ascend 910B4 / Qwen3-32B / ShareGPT 真实负载下,<b>vLLM-Ascend v0.18.0rc1</b> 全场景默认推荐;MindIE 是「并发可控、不在意首字」的有条件次选;SGLang 本轮不作生产默认。结论绑定上述具体镜像版本,换版本需复测。</div>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · 选型建议</span><span class="right">45 轮 0 错误 · internal</span></div>
+</div>
+</body></html>

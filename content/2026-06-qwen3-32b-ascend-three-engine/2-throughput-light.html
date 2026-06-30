@@ -1,0 +1,39 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="style-light.css">
+<style>
+  .chart{margin-top:30px;background:#fff;border:1px solid var(--line2);border-radius:var(--r);padding:32px 30px 24px;box-shadow:var(--shadow)}
+  .legend2{display:flex;gap:26px;font-size:18px;font-weight:700;color:var(--ink2);margin-bottom:22px}
+  .legend2 i{display:inline-block;width:16px;height:16px;border-radius:5px;margin-right:8px;vertical-align:-2px}
+  .lv{background:#6d4bff} .lm{background:#f59e0b} .ls{background:#aab0c0}
+  .plot{display:flex;align-items:flex-end;justify-content:space-between;height:330px;gap:18px;border-bottom:2px solid var(--line2);padding:0 6px}
+  .grp{flex:1;display:flex;align-items:flex-end;justify-content:center;gap:8px;height:100%}
+  .col{width:52px;border-radius:8px 8px 0 0;display:flex;align-items:flex-start;justify-content:center;padding-top:8px;font-size:15px;font-weight:800;color:#fff;position:relative}
+  .cv{background:linear-gradient(180deg,#8b6dff,#6d4bff)}
+  .cm{background:linear-gradient(180deg,#fbbf24,#f59e0b)}
+  .cs{background:linear-gradient(180deg,#c2c6d4,#9aa0b4)}
+  .xaxis{display:flex;justify-content:space-between;margin-top:12px;padding:0 6px}
+  .xaxis .xl{flex:1;text-align:center;font-size:19px;font-weight:800;color:var(--ink2)}
+  .note{margin-top:26px;font-size:19px;color:var(--ink2);background:#f1eeff;border:1px solid #d8d2ff;border-radius:16px;padding:18px 22px;line-height:1.55}
+  .note b{color:var(--violet)}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>吞吐与扩展性<span class="tag">输出 tokens/s · higher is better</span></div>
+  <h2 class="sec">c64 之后,<span class="hi">吞吐曲线分化</span></h2>
+  <div class="sec-sub">c8–c32 三家几乎重合;c64 之后差距拉开 —— vLLM 到 c128 仍接近线性增长,SGLang 在 c64 达峰后回退。</div>
+
+  <div class="chart">
+    <div class="legend2"><span><i class="lv"></i>vLLM-Ascend</span><span><i class="lm"></i>MindIE</span><span><i class="ls"></i>SGLang</span></div>
+    <div class="plot">
+      <div class="grp"><div class="col cv" style="height:35px">145</div><div class="col cm" style="height:43px">177</div><div class="col cs" style="height:35px">144</div></div>
+      <div class="grp"><div class="col cv" style="height:68px">280</div><div class="col cm" style="height:72px">296</div><div class="col cs" style="height:65px">267</div></div>
+      <div class="grp"><div class="col cv" style="height:129px">527</div><div class="col cm" style="height:120px">490</div><div class="col cs" style="height:113px">461</div></div>
+      <div class="grp"><div class="col cv" style="height:202px">828</div><div class="col cm" style="height:154px">631</div><div class="col cs" style="height:176px">721</div></div>
+      <div class="grp"><div class="col cv" style="height:300px">1228</div><div class="col cm" style="height:187px">764</div><div class="col cs" style="height:134px">550</div></div>
+    </div>
+    <div class="xaxis"><span class="xl">c8</span><span class="xl">c16</span><span class="xl">c32</span><span class="xl">c64</span><span class="xl">c128</span></div>
+  </div>
+
+  <div class="note">c64 之后差距拉开:vLLM 从 828 增至 1228 tok/s(c128 仍在增长),MindIE 增速放缓至 764,SGLang 在 c64 达峰(721)后 <b>c128 回退到 550</b>。c128 区间内,vLLM 吞吐曲线尚未饱和。</div>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · 吞吐扩展性</span><span class="right">Qwen3-32B · ShareGPT · 910B4 ×4 · evalscope</span></div>
+</div>
+</body></html>
