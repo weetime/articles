@@ -1,0 +1,13 @@
+A technical walkthrough: how to choose a multi-cluster deployment topology for LLM inference behind a Higress AI gateway.
+
+The same gateway capabilities form four patterns, chosen on two axes — does the primary cluster serve models, and where does routing policy live:
+1) Single cluster — governance + serving together (the foundation)
+2) Control-compute separation — primary is pure routing, sub-clusters serve (recommended)
+3) Control-compute unified — primary loops back to reuse its own compute
+4) Decentralized — every cluster full, F5 routes to the nearest
+
+Within a pattern, cross-cluster routing is one DestinationRule away: weighted round-robin, least-request, consistent-hash (session affinity), circuit-breaking, locality failover — each with what it does and when to pick it. Plus the fully-declarative implementation (ServiceEntry + DestinationRule + Ingress, zero EnvoyFilter) and measured behavior on real vLLM.
+
+Note: on-screen labels are Chinese; English voiceover + subtitles carry the walkthrough.
+
+#Higress #LLM #Kubernetes #Istio #vLLM #InferenceGateway #LoadBalancing

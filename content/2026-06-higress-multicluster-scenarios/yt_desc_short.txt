@@ -1,0 +1,7 @@
+How to choose a multi-cluster LLM inference gateway topology with Higress — in under a minute.
+
+Two axes → four patterns. Swap one DestinationRule to change routing policy: weighted round-robin / least-request / session-affinity / circuit-break. Outlier detection handles failover. Fully declarative, zero EnvoyFilter.
+
+(On-screen labels are Chinese; English voiceover + subtitles.)
+
+#Shorts #Higress #LLM #Kubernetes #vLLM #Istio #InferenceGateway

@@ -6,7 +6,7 @@
 
 | 文章 | 公众号 | 视频号 | 抖音 | B站 | YouTube | X |
 |---|---|---|---|---|---|---|
-| [Higress 多集群场景化选型](content/2026-06-higress-multicluster-scenarios/) | 🟡 草稿(图文+贴图) | — | — | — | ⚪ | ⚪ |
+| [Higress 多集群场景化选型](content/2026-06-higress-multicluster-scenarios/) | 🟡 草稿(图文+贴图) | 🟡 待发 | 🟡 待发 | ⚪ | [✅ 正片](https://youtu.be/mCUZ8DK5s54) · [Short](https://youtu.be/HN8TaUKOZpg) | ⚪ |
 | [Qwen3-32B 昇腾三引擎横评](content/2026-06-qwen3-32b-ascend-three-engine/) | ✅ 已发 | ✅ 已发 | ✅ 已发 | ⚪ | [✅ 公开](https://youtu.be/MWPS-YX8714) | ⚪ |
 | [Higress prefix_cache 路由实测](content/2026-06-higress-prefix-cache-routing/) | ⚪ | ⚪ | ⚪ | ⚪ | [✅ 公开](https://youtu.be/x5ACtbvzI-c) | ⚪ |
 | [Higress 双协议兼容实测](content/2026-05-higress-protocol-compat/) | ⚪ | ⚪ | ⚪ | ⚪ | ⚪ | ⚪ |
@@ -21,6 +21,10 @@
 - 文章:[`content/2026-06-higress-multicluster-scenarios/article.md`](content/2026-06-higress-multicluster-scenarios/article.md)
 - 配图:`final-1.png`(场景化选型图,4 卡片 + 10 维对比)…`final-5.png`(去中心) · `cover.png`(暗色 2.35:1 封面) · `footer-card.png`(落款卡)
 - 公众号:**已建两份草稿** —— ① 图文(news) ② 贴图(newspic / 图片消息);本账号未微信认证,只能建草稿,去后台「草稿箱」手动发表。
+- 视频(Remotion 代码动画,含请求流/策略切换/故障转移/三个 CR 机制拓扑):
+  - 中文竖屏 `video-portrait.mp4`(完整 3'40")+ `video-short.mp4`(60s)→ 视频号/抖音手动传
+  - 英文横屏 `video-landscape-en.mp4` → **YouTube 正片** [youtu.be/mCUZ8DK5s54](https://youtu.be/mCUZ8DK5s54)(public)
+  - 英文竖屏 `video-short-en.mp4` → **YouTube Shorts** [youtu.be/HN8TaUKOZpg](https://youtu.be/HN8TaUKOZpg)(public)
 - 发布元数据:[`publish_meta.json`](content/2026-06-higress-multicluster-scenarios/publish_meta.json)
 
 ### 2026-06 · Higress prefix_cache 路由实测
