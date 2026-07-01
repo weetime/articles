@@ -22,3 +22,8 @@ Thumbs.db
 
 # playwright 会话截图
 .playwright-mcp/
+e*.mp3
+e*.ass
+ce*.mp4
+_voen*.mp4
+ss*.mp3
