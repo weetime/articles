@@ -19,3 +19,6 @@ bgm.wav
 # 系统
 .DS_Store
 Thumbs.db
+
+# playwright 会话截图
+.playwright-mcp/

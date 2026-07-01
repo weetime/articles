@@ -1,0 +1,17 @@
+{
+  "wechat_title": "Higress 推理网关多集群部署技术选型:从高可用到异地灾备",
+  "wechat_digest": "推理服务上生产,多集群怎么选型?两根轴(主集群是否 serving × ai-route 策略位置)倒推四套方案:单集群 / 管控算力分离(推荐)/ 管控算力一体 / 去中心,分别对应从单点起步到高可用、故障转移、同城多活、异地灾备。附每套的取舍、方案内 5 种路由策略含义与实测。",
+  "article_type_news": "news",
+  "article_type_pic": "newspic",
+  "figures": [
+    "final-1.png (选型总览 · 深色长图 · 2160×4462)",
+    "final-2.png (单集群 · 全栈架构手机长图 · 2160×5388)",
+    "final-3.png (管控算力分离 · 主备横向 HA · 2160×9124)",
+    "final-4.png (管控算力一体 · 主备横向 HA · 2160×9124)",
+    "final-5.png (去中心 · 全栈架构手机长图 · 2160×6408)",
+    "footer-card.png (落款卡)"
+  ],
+  "figure_note": "深色手机竖向长图:原始 infographic 海报单列化(1080 宽)、2x 渲染=大字清晰;主备 HA 块横向(主 primary ← 同步 → 备 standby);每张底部带 recipes.mcpinfra.net + ModelDoctor 签名。",
+  "cover": "cover.png",
+  "x_text": "推理服务上生产,多集群怎么选型?其实只有两根轴——主集群要不要自己 serving、ai-route 策略放主集群入口还是下沉子集群。两轴一交叉,倒推出四套方案:单集群 / 管控算力分离(推荐)/ 管控算力一体 / 去中心,分别对应从单点起步到高可用、故障转移、同城多活、异地灾备。能力栈不变,只换拓扑与路由策略;跨集群加权 + 故障转移全声明式、零 EnvoyFilter,已双集群实测。\n\n#Higress #多集群 #LLM推理 #AI网关 #vLLM #SRE"
+}

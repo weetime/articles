@@ -1,0 +1,32 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><style>
+:root{--bg0:#080810;--bg1:#0c0c1e;--pur:#8b7df7;--blu:#46a6ff;--grn:#33d39a;--org:#f5933e;--pnk:#ff5fa2;--tx:#eef0f8;--sub:#9aa1ba;--line:rgba(255,255,255,.12)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px}
+.cv{width:1080px;height:460px;position:relative;overflow:hidden;padding:48px 56px;
+  background:radial-gradient(720px 420px at 12% -30%,rgba(139,125,247,.22),transparent 65%),radial-gradient(640px 420px at 92% 120%,rgba(39,211,230,.10),transparent 65%),linear-gradient(160deg,var(--bg0),var(--bg1) 55%,#0a0a18);
+  color:var(--tx);font-family:"PingFang SC","Microsoft YaHei","Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;justify-content:center}
+.cv::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:48px 48px;mask:radial-gradient(800px 420px at 50% 40%,#000,transparent 80%)}
+.eye{position:relative;z-index:1;display:flex;align-items:center;gap:11px;font-size:21px;font-weight:700;color:var(--pur)}
+.eye .d{width:9px;height:9px;border-radius:50%;background:var(--pur);box-shadow:0 0 14px #8b7df7aa}
+.h1{position:relative;z-index:1;margin-top:18px;font-size:62px;font-weight:850;letter-spacing:-1.5px;line-height:1.12}
+.h1 .g{background:linear-gradient(92deg,var(--blu),var(--pur) 60%,var(--pnk));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{position:relative;z-index:1;margin-top:16px;font-size:23px;color:var(--sub);font-weight:500}
+.sub b{color:#cfd4ec;font-weight:700}
+.chips{position:relative;z-index:1;display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+.cp{font-size:18px;font-weight:700;padding:9px 18px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.04)}
+.cp.a{color:var(--pur);border-color:#8b7df755}.cp.b{color:var(--grn);border-color:#33d39a55}
+.cp.c{color:var(--org);border-color:#f5933e55}.cp.d{color:var(--pnk);border-color:#ff5fa255}
+.cp .star{font-size:14px;opacity:.9}
+</style></head><body>
+<div class="cv">
+  <div class="eye"><span class="d"></span>Higress AI 推理网关 · 多集群部署选型</div>
+  <div class="h1">Higress 推理网关<br><span class="g">多集群部署技术选型</span></div>
+  <div class="sub">从高可用、故障转移,到<b>同城多活</b>、<b>异地灾备</b> —— 按可用性目标选拓扑与路由</div>
+  <div class="chips">
+    <span class="cp a">单集群</span>
+    <span class="cp b">管控算力分离 <span class="star">★ 推荐</span></span>
+    <span class="cp c">管控算力一体</span>
+    <span class="cp d">去中心</span>
+  </div>
+</div>
+</body></html>
