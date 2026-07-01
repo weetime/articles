@@ -6,6 +6,7 @@
 
 | 文章 | 公众号 | 视频号 | 抖音 | B站 | YouTube | X |
 |---|---|---|---|---|---|---|
+| [Higress 多集群场景化选型](content/2026-06-higress-multicluster-scenarios/) | 🟡 草稿(图文+贴图) | — | — | — | ⚪ | ⚪ |
 | [Qwen3-32B 昇腾三引擎横评](content/2026-06-qwen3-32b-ascend-three-engine/) | ✅ 已发 | ✅ 已发 | ✅ 已发 | ⚪ | [✅ 公开](https://youtu.be/MWPS-YX8714) | ⚪ |
 | [Higress prefix_cache 路由实测](content/2026-06-higress-prefix-cache-routing/) | ⚪ | ⚪ | ⚪ | ⚪ | [✅ 公开](https://youtu.be/x5ACtbvzI-c) | ⚪ |
 | [Higress 双协议兼容实测](content/2026-05-higress-protocol-compat/) | ⚪ | ⚪ | ⚪ | ⚪ | ⚪ | ⚪ |
@@ -13,6 +14,14 @@
 ---
 
 ## 各篇产物速查
+
+### 2026-06 · Higress 多集群场景化选型
+- 主题:同一套 Higress AI 网关能力栈(ai-route / ai-provider / 治理插件 / ai-LB+EPP / PD 分离 / 分层 KV),只换网络拓扑 + ai-route 策略位置,落成 4 套部署方案:**单集群 / 管算分离(推荐)/ 管算一体 / 去中心**;附 10 维选型对比 + 跨集群路由「换 DestinationRule 即切」5 策略真实双集群实测(会话亲和 20/20 全粘、熔断 ~28×503、加权 30/70)。
+- 图来源:`~/go/src/github.com/higress/multicluster-declarative/infographic`(深色霓虹海报 overview + v1–v4,直接复用渲染)。
+- 文章:[`content/2026-06-higress-multicluster-scenarios/article.md`](content/2026-06-higress-multicluster-scenarios/article.md)
+- 配图:`final-1.png`(场景化选型图,4 卡片 + 10 维对比)…`final-5.png`(去中心) · `cover.png`(暗色 2.35:1 封面) · `footer-card.png`(落款卡)
+- 公众号:**已建两份草稿** —— ① 图文(news) ② 贴图(newspic / 图片消息);本账号未微信认证,只能建草稿,去后台「草稿箱」手动发表。
+- 发布元数据:[`publish_meta.json`](content/2026-06-higress-multicluster-scenarios/publish_meta.json)
 
 ### 2026-06 · Higress prefix_cache 路由实测
 - 主题:只改网关负载均衡(轮询 → prefix_cache),vLLM 前缀缓存命中率 22%→65%、吞吐 +64%、TTFT P95 −40%(Qwen3-32B × 4 Pods)。

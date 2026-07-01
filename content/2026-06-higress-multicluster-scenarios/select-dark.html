@@ -1,0 +1,89 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><style>
+:root{--bg0:#080810;--bg1:#0c0c1e;--line:rgba(255,255,255,.10);--pur:#8b7df7;--blu:#46a6ff;--grn:#33d39a;--org:#f5933e;--pnk:#ff5fa2;--cyn:#27d3e6;--tx:#eef0f8;--sub:#9aa1ba;--dim:#737a93}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;background:#0a0a16}
+body{background:radial-gradient(900px 520px at 50% -160px,rgba(139,125,247,.18),transparent 70%),radial-gradient(760px 480px at 92% 18%,rgba(39,211,230,.07),transparent 70%),linear-gradient(180deg,var(--bg0),var(--bg1) 32%,#0a0a18);color:var(--tx);font-family:"PingFang SC","Microsoft YaHei","Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;padding:50px 46px 38px}
+code{font-family:"SF Mono",Menlo,monospace;font-size:.88em;color:#c7d2f0;background:rgba(255,255,255,.05);padding:1px 6px;border-radius:5px}
+.eyebrow{display:flex;align-items:center;gap:12px;font-size:23px;font-weight:700;color:var(--pur)}
+.eyebrow .dot{width:11px;height:11px;border-radius:50%;background:var(--pur);box-shadow:0 0 13px #8b7df7aa}
+.eyebrow .tag{margin-left:auto;font-size:18px;font-weight:800;color:#0c0c18;background:#b9aeff;border-radius:8px;padding:4px 14px}
+h1{font-size:60px;font-weight:850;line-height:1.12;letter-spacing:-1.4px;margin-top:20px}
+h1 .g{background:linear-gradient(92deg,#b9aeff,#7cc4ff 55%,#9aa6ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{font-size:25px;color:#bcc2d8;margin-top:18px;line-height:1.55;font-weight:500}
+.sub b{color:#e7deff;font-weight:700}
+.secbar{display:flex;align-items:center;gap:13px;font-size:24px;font-weight:800;color:#dfe4f5;margin:40px 0 20px}
+.secbar::before{content:"";width:6px;height:26px;border-radius:4px;background:var(--ac,var(--pur))}
+.secbar .s2{font-weight:600;color:var(--dim);font-size:18px}
+.cards{display:flex;flex-direction:column;gap:18px}
+.card{border:1.6px solid var(--ac,var(--line));border-left-width:6px;border-radius:18px;background:rgba(255,255,255,.025);padding:24px 28px;position:relative;overflow:hidden}
+.card::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(420px 200px at 100% -40%,var(--gl,transparent),transparent 70%)}
+.card .hd{display:flex;align-items:center;gap:14px;position:relative;z-index:1}
+.card .vn{font-size:18px;font-weight:800;color:#0c0c18;background:var(--ac);border-radius:7px;padding:4px 13px;flex:none}
+.card .nm{font-size:32px;font-weight:850;letter-spacing:-.5px}
+.card .rec{margin-left:auto;font-size:17px;font-weight:800;color:#0c0c18;background:#7ff0c4;border-radius:999px;padding:4px 14px}
+.card .one{font-size:22px;color:#cdd3ea;line-height:1.55;margin-top:14px;position:relative;z-index:1}
+.card .one b{color:#fff;font-weight:700}
+.card .one code{font-size:.9em}
+.card .pick{font-size:20px;color:var(--sub);line-height:1.55;margin-top:14px;padding-top:14px;border-top:1px dashed rgba(255,255,255,.14);position:relative;z-index:1}
+.card .pick b{color:var(--ac);font-weight:800;margin-right:8px}
+table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;font-size:21px;margin-top:4px}
+th,td{padding:16px 18px;text-align:left;border-bottom:1px solid rgba(255,255,255,.07);vertical-align:top;line-height:1.4}
+thead th{font-size:21px;font-weight:800;background:rgba(255,255,255,.05);color:#dfe4f5}
+thead th .vd{display:inline-block;width:13px;height:13px;border-radius:4px;margin-right:8px;vertical-align:-1px}
+tbody tr:last-child td{border-bottom:none}
+td.dim{color:var(--sub);font-weight:700;background:rgba(255,255,255,.02);white-space:nowrap}
+td b{color:#fff;font-weight:700}
+.c1{color:#cdbfff}.c2{color:#9fe9c8}.c3{color:#ffc78f}.c4{color:#ffb0cf}
+.foot{display:flex;justify-content:space-between;align-items:center;font-size:18px;color:var(--dim);margin-top:34px;padding-top:18px;border-top:1px solid rgba(255,255,255,.09)}
+.foot .l{color:var(--pur);font-weight:700}
+</style></head><body>
+  <div class="eyebrow"><span class="dot"></span>多集群 LLM 推理网关 · 架构选型<span class="tag">一图选型</span></div>
+  <h1>同一套 Higress 能力<br><span class="g">按场景落成 4 种方案</span></h1>
+  <div class="sub">决策只有两根轴:<b>主集群要不要自己跑模型(serving)</b> · <b>ai-route 策略放主集群入口还是下沉子集群</b>。两轴一交叉,落成下面四套。</div>
+
+  <div class="secbar" style="--ac:var(--blu)">四套方案 <span class="s2">能力栈相同,差异只在拓扑与策略位置</span></div>
+  <div class="cards">
+    <div class="card" style="--ac:#8b7df7;--gl:rgba(139,125,247,.16)">
+      <div class="hd"><span class="vn">单地域起步</span><span class="nm">单集群</span></div>
+      <div class="one">一套 Higress <b>管控 + 算力同体</b>:ai-route 原生选路 → ai-provider → 本地模型。无跨集群、无回环、不破环。</div>
+      <div class="pick"><b>选它当</b>最小 MVP / 内部试点 / 单地域起步,暂不需要跨集群容灾</div>
+    </div>
+    <div class="card" style="--ac:#33d39a;--gl:rgba(51,211,154,.15)">
+      <div class="hd"><span class="vn">多集群标准</span><span class="nm">管控算力分离</span><span class="rec">★ 推荐</span></div>
+      <div class="one">主集群 <b>纯路由不 serving</b>(主备 HA 永远在线,CR + 共享 Redis 同步);子集群跑模型,跨集群上游池 SE+DR 加权/健康/会话分发。<b>无回环、无需破环</b>。</div>
+      <div class="pick"><b>选它当</b>多集群常态化,要集中管控 + 加权路由 + 自动故障转移</div>
+    </div>
+    <div class="card" style="--ac:#f5933e;--gl:rgba(245,147,62,.15)">
+      <div class="hd"><span class="vn">算力复用</span><span class="nm">管控算力一体</span></div>
+      <div class="one">主集群<b>既路由又自己跑模型(回环)</b>,上游池端点含主集群自身;回环腿需 <code>model</code> 改写破环,治理再过一遍。</div>
+      <div class="pick"><b>选它当</b>资源紧张 / 集群数少,愿复用主集群 GPU、接受破环复杂度</div>
+    </div>
+    <div class="card" style="--ac:#ff5fa2;--gl:rgba(255,95,162,.15)">
+      <div class="hd"><span class="vn">跨地域全量</span><span class="nm">去中心</span></div>
+      <div class="one">每集群<b>全量模型 + 全套 Higress</b>,F5 直连就近、无中心路由跳;策略下沉各集群自治,仅本地异常时兜底互转。代价是<b>全量复制</b>。</div>
+      <div class="pick"><b>选它当</b>多地域就近 + 全量容灾,容忍复制的存储与一致性成本</div>
+    </div>
+  </div>
+
+  <div class="secbar" style="--ac:var(--cyn)">逐维对比 <span class="s2">同一能力栈,差异集中在这几维</span></div>
+  <table>
+    <thead><tr>
+      <th style="width:200px">维度</th>
+      <th><span class="vd" style="background:#8b7df7"></span>单集群</th>
+      <th><span class="vd" style="background:#33d39a"></span>管控算力分离 ★</th>
+      <th><span class="vd" style="background:#f5933e"></span>管控算力一体</th>
+      <th><span class="vd" style="background:#ff5fa2"></span>去中心</th>
+    </tr></thead>
+    <tbody>
+      <tr><td class="dim">集群数</td><td class="c1">1</td><td class="c2">主 + 子</td><td class="c3">主 + 子</td><td class="c4">多 · 对等</td></tr>
+      <tr><td class="dim">主集群角色</td><td class="c1">管控+算力</td><td class="c2"><b>纯路由</b></td><td class="c3">路由+算力(回环)</td><td class="c4">无中心</td></tr>
+      <tr><td class="dim">ai-route 策略</td><td class="c1">本集群</td><td class="c2">主集群入口</td><td class="c3">主集群入口</td><td class="c4"><b>下沉</b>子集群</td></tr>
+      <tr><td class="dim">回环 / 破环</td><td class="c1">不涉及</td><td class="c2">无</td><td class="c3"><b>有 · model 破环</b></td><td class="c4">无</td></tr>
+      <tr><td class="dim">模型分布</td><td class="c1">全在本集群</td><td class="c2">子集群承载</td><td class="c3">主 + 子</td><td class="c4"><b>每集群全量</b></td></tr>
+      <tr><td class="dim">跨集群上游池</td><td class="c1">不需要</td><td class="c2">SE + DR</td><td class="c3">SE + DR(含回环)</td><td class="c4">可选互转</td></tr>
+      <tr><td class="dim">复杂度 / 适用</td><td class="c1"><b>低</b> · 起步</td><td class="c2"><b>中</b> · 标准首选</td><td class="c3"><b>中高</b> · 算力复用</td><td class="c4"><b>高</b> · 跨地域全冗余</td></tr>
+    </tbody>
+  </table>
+
+  <div class="foot"><span class="l">多集群推理网关 · 场景化选型</span><span>recipes.mcpinfra.net · github.com/weetime</span></div>
+</body></html>
