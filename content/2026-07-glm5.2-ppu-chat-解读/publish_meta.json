@@ -1,0 +1,27 @@
+{
+  "title": "GLM-5.2-W4A8 × SGLang @ 8 卡 PPU：部署与性能调优",
+  "digest": "GLM-5.2-W4A8(744B)在国产 8 卡上的 SGLang 参数调优实测:单副本吞吐天花板在哪、为什么抬并发和开投机都是负优化,以及这类报告该怎么读。",
+  "cover": "report-banner.png",
+  "figures": [
+    "report-recipe.png",
+    "report-fig1.png",
+    "report-fig2.png",
+    "report-fig3.png"
+  ],
+  "tags": [
+    "推理引擎",
+    "SGLang",
+    "GLM-5.2",
+    "压测解读",
+    "国产卡"
+  ],
+  "series": "测试报告解读",
+  "compliance": {
+    "external_links": false,
+    "footer_account_info": false,
+    "qr_code": false,
+    "absolute_terms_checked": true,
+    "neutral_voice": true,
+    "note": "中立解读、非商业推广;正文无链接/二维码;含单次实验适用边界声明。"
+  }
+}
