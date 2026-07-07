@@ -1,0 +1,49 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><style>
+:root{--bg0:#070710;--bg1:#0b0b1c;--pur:#8b7df7;--blu:#46a6ff;--grn:#33d39a;--org:#f5933e;--pnk:#ff5fa2;--tx:#eef0f8;--sub:#9aa1ba;--line:rgba(255,255,255,.12)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px}
+.pg{width:1080px;height:1350px;position:relative;overflow:hidden;padding:96px 84px;
+  background:radial-gradient(760px 520px at 14% -18%,rgba(139,125,247,.28),transparent 62%),radial-gradient(680px 480px at 90% 118%,rgba(39,211,230,.12),transparent 62%),linear-gradient(162deg,var(--bg0),var(--bg1) 55%,#08081a);
+  color:var(--tx);font-family:"PingFang SC","Microsoft YaHei","Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+.pg::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:54px 54px;mask:radial-gradient(760px 560px at 50% 34%,#000,transparent 82%)}
+.eye{position:relative;z-index:1;align-self:center;display:flex;align-items:center;gap:12px;font-size:23px;font-weight:800;color:var(--pur);border:1px solid #8b7df755;background:rgba(139,125,247,.08);padding:12px 26px;border-radius:999px}
+.eye .d{width:10px;height:10px;border-radius:50%;background:var(--pur);box-shadow:0 0 16px #8b7df7cc}
+.h1{position:relative;z-index:1;margin-top:66px;text-align:center;font-size:118px;font-weight:900;letter-spacing:-3px;line-height:1.06}
+.h1 .g{background:linear-gradient(96deg,#a99bff,#7bb8ff 46%,#ff8fc0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.rule{position:relative;z-index:1;align-self:center;width:220px;height:5px;margin-top:40px;border-radius:4px;background:linear-gradient(90deg,transparent,var(--pur),var(--pnk),transparent)}
+.sub{position:relative;z-index:1;margin-top:40px;text-align:center;font-size:31px;line-height:1.62;color:var(--sub);font-weight:500}
+.sub b{color:#dfe3f4;font-weight:800}
+.sub .v{color:var(--pur);font-weight:800}
+.stats{position:relative;z-index:1;display:flex;gap:20px;margin-top:62px}
+.st{flex:1;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:20px;padding:30px 20px;text-align:center}
+.st .n{font-size:52px;font-weight:900;letter-spacing:-1px}
+.st.a .n{color:var(--pur)}.st.b .n{color:var(--blu)}.st.c .n{color:var(--grn)}
+.st .l{margin-top:8px;font-size:21px;color:var(--sub);font-weight:600}
+.term{position:relative;z-index:1;margin-top:auto;border:1px solid var(--line);border-radius:20px;background:rgba(6,6,16,.72);padding:30px 34px}
+.term .dots{display:flex;gap:9px;margin-bottom:20px}
+.term .dots i{width:14px;height:14px;border-radius:50%}
+.term .dots i:nth-child(1){background:#ff5f57}.term .dots i:nth-child(2){background:#febc2e}.term .dots i:nth-child(3){background:#28c840}
+.term .cmd{font-family:"SF Mono","JetBrains Mono",ui-monospace,monospace;font-size:32px;font-weight:700;line-height:1.5}
+.term .cmd .p{color:var(--grn)}.term .cmd .k{color:var(--blu)}.term .cmd .a{color:var(--pur)}.term .cmd .m{color:var(--sub)}
+.term .cmd .cur{display:inline-block;width:16px;height:30px;background:var(--grn);margin-left:8px;vertical-align:-4px;border-radius:2px;box-shadow:0 0 12px #33d39a99}
+.foot{position:relative;z-index:1;display:flex;align-items:center;margin-top:34px;font-size:22px}
+.foot .b{font-weight:800;color:#cfd4ec}.foot .b .md{color:var(--pur)}
+.foot .r{margin-left:auto;color:#6b7192;font-family:ui-monospace,monospace;font-size:19px}
+</style></head><body>
+<div class="pg">
+  <div class="eye"><span class="d"></span>recipes.mcpinfra.net · SRE × FDE 视角</div>
+  <div class="h1">大模型部署<br><span class="g">从「手艺」到「工程」</span></div>
+  <div class="rule"></div>
+  <div class="sub">让大模型推理服务,从「能跑」到 <b>「持续稳定跑」</b><br><span class="v">FDE</span> 跑通最后一公里 · <span class="v">SRE</span> 让它别在凌晨三点炸</div>
+  <div class="stats">
+    <div class="st a"><div class="n">116</div><div class="l">模型配方</div></div>
+    <div class="st b"><div class="n">8</div><div class="l">部署策略</div></div>
+    <div class="st c"><div class="n">2</div><div class="l">引擎 vLLM·SGLang</div></div>
+  </div>
+  <div class="term">
+    <div class="dots"><i></i><i></i><i></i></div>
+    <div class="cmd"><span class="p">$</span> 选模型 <span class="m">→</span> <span class="k">配硬件</span> <span class="m">→</span> <span class="a">serve</span> <span class="m">→</span> 跑起来<span class="cur"></span></div>
+  </div>
+  <div class="foot"><span class="b"><span class="md">recipes</span>.mcpinfra.net</span><span class="r">github.com/weetime/recipes</span></div>
+</div>
+</body></html>

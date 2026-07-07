@@ -1,0 +1,99 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><style>
+:root{--bg0:#070710;--bg1:#0b0b1c;--pur:#8b7df7;--blu:#46a6ff;--grn:#33d39a;--org:#f5933e;--pnk:#ff5fa2;--tx:#eef0f8;--sub:#9aa1ba;--line:rgba(255,255,255,.11)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px}
+.pg{width:1080px;position:relative;overflow:hidden;padding:76px 76px 60px;
+  background:radial-gradient(820px 560px at 12% -12%,rgba(139,125,247,.24),transparent 60%),radial-gradient(720px 520px at 92% 108%,rgba(39,211,230,.10),transparent 62%),linear-gradient(162deg,var(--bg0),var(--bg1) 55%,#08081a);
+  color:var(--tx);font-family:"PingFang SC","Microsoft YaHei","Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.pg::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:54px 54px;mask:radial-gradient(900px 700px at 50% 12%,#000,transparent 86%)}
+.z{position:relative;z-index:1}
+.eye{align-self:center;display:inline-flex;align-items:center;gap:11px;font-size:20px;font-weight:800;color:var(--pur);border:1px solid #8b7df755;background:rgba(139,125,247,.08);padding:10px 22px;border-radius:999px}
+.eye .d{width:9px;height:9px;border-radius:50%;background:var(--pur);box-shadow:0 0 14px #8b7df7cc}
+.head{display:flex;flex-direction:column;align-items:center;text-align:center}
+.h1{margin-top:26px;font-size:74px;font-weight:900;letter-spacing:-2px;line-height:1.1}
+.h1 .g{background:linear-gradient(96deg,#a99bff,#7bb8ff 50%,#ff8fc0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{margin-top:20px;font-size:27px;color:var(--sub);font-weight:500}
+.sub code{font-family:ui-monospace,monospace;color:#cfd4ec;font-size:24px}
+.sec{margin-top:56px;text-align:center;font-size:34px;font-weight:850;letter-spacing:-.5px}
+.sec.line{display:flex;align-items:center;gap:22px;justify-content:center}
+.sec.line::before,.sec.line::after{content:"";height:1px;width:110px;background:linear-gradient(90deg,transparent,var(--line))}
+.sec.line::after{background:linear-gradient(90deg,var(--line),transparent)}
+.oneliner{margin-top:26px;border:1px solid var(--line);border-radius:22px;padding:34px 38px;background:linear-gradient(150deg,rgba(139,125,247,.10),rgba(255,255,255,.02))}
+.oneliner .t{font-size:30px;font-weight:800;line-height:1.5}
+.oneliner .t .v{color:var(--pur)}.oneliner .t .g{color:var(--grn)}.oneliner .t .b{color:var(--blu)}
+.oneliner .n{margin-top:14px;font-size:22px;color:var(--sub);line-height:1.6}
+.oneliner .n b{color:#cfd4ec;font-weight:700}
+.grid{margin-top:26px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.cell{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:18px;padding:24px 22px;display:flex;flex-direction:column;justify-content:space-between;min-height:118px}
+.cell .nm{font-size:26px;font-weight:800;color:#dfe3f4}
+.cell .cnt{font-size:44px;font-weight:900;letter-spacing:-1px;line-height:1}
+.cell .u{font-size:17px;color:var(--sub);font-weight:600;margin-top:2px}
+.cell .top{display:flex;align-items:baseline;justify-content:space-between}
+.c1 .cnt{color:var(--pur)}.c2 .cnt{color:var(--blu)}.c3 .cnt{color:var(--grn)}.c4 .cnt{color:var(--org)}
+.c5 .cnt{color:var(--pnk)}.c6 .cnt{color:var(--pur)}.c7 .cnt{color:var(--blu)}.c8 .cnt{color:var(--grn)}
+.bar{margin-top:16px;border:1px solid var(--line);border-radius:18px;padding:24px 30px;background:rgba(255,255,255,.03);display:flex;align-items:center;gap:22px}
+.bar .k{font-size:22px;font-weight:800;color:var(--org);white-space:nowrap}
+.bar .v{font-size:24px;font-weight:800;color:#dfe3f4}.bar .v b{color:var(--pur)}
+.hw{margin-top:16px;border:1px solid var(--line);border-radius:18px;padding:26px 30px;background:rgba(255,255,255,.03)}
+.hw .r{display:flex;gap:12px;align-items:baseline;margin-top:12px}
+.hw .r:first-child{margin-top:0}
+.hw .tag{font-size:20px;font-weight:800;white-space:nowrap}
+.hw .n1{color:#76d0ff}.hw .n2{color:#ff9a5a}.hw .n3{color:#6ee7c0}
+.hw .txt{font-size:23px;font-weight:700;color:#d7dbef;letter-spacing:.2px}
+.hw .txt .dim{color:var(--sub);font-weight:600}
+.four{margin-top:26px;display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.card{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:18px;padding:26px 28px}
+.card .ct{font-size:26px;font-weight:850}
+.card.k1 .ct{color:var(--pur)}.card.k2 .ct{color:var(--grn)}.card.k3 .ct{color:var(--blu)}.card.k4 .ct{color:var(--org)}
+.card .cd{margin-top:10px;font-size:21px;color:var(--sub);line-height:1.55}
+.card .cd code{font-family:ui-monospace,monospace;color:#cfd4ec;font-size:19px}
+.sum{margin-top:30px;border:1px solid #8b7df755;border-radius:20px;padding:30px 34px;background:linear-gradient(150deg,rgba(139,125,247,.16),rgba(255,255,255,.02));display:flex;gap:20px;align-items:center}
+.sum .ic{font-size:40px}
+.sum .tx{font-size:27px;font-weight:800;line-height:1.5}
+.sum .tx .v{color:var(--grn)}
+.foot{display:flex;align-items:center;margin-top:44px;padding-top:22px;border-top:1px solid var(--line);font-size:21px}
+.foot .b{font-weight:800;color:#cfd4ec}.foot .b .md{color:var(--pur)}
+.foot .r{margin-left:auto;color:#6b7192;font-family:ui-monospace,monospace;font-size:18px}
+</style></head><body>
+<div class="pg">
+  <div class="head z">
+    <div class="eye"><span class="d"></span>recipes.mcpinfra.net · 项目总览</div>
+    <div class="h1">recipes 到底是<span class="g">什么</span></div>
+    <div class="sub">回答一个问题:<code>How do I run model X on hardware Y for task Z?</code></div>
+  </div>
+
+  <div class="oneliner z">
+    <div class="t">一句话:它是<span class="v">命令合成器</span>,不是文档站 —— 选模型 <span class="b">→</span> 按你的卡微调 <span class="b">→</span> 复制一条<span class="g">能直接跑的 serve 命令</span></div>
+    <div class="n">fork 自社区项目 <b>recipes.vllm.ai</b>,由社区验证过的「模型 × 硬件」部署配方库;常见组合别人已经踩过坑,照抄即可。</div>
+  </div>
+
+  <div class="sec line z">覆盖范围 · 116 配方 / 29 组织</div>
+  <div class="grid z">
+    <div class="cell c1"><div class="top"><span class="nm">Qwen</span><span class="cnt">22</span></div><div class="u">recipes</div></div>
+    <div class="cell c2"><div class="top"><span class="nm">GLM</span><span class="cnt">12</span></div><div class="u">recipes</div></div>
+    <div class="cell c3"><div class="top"><span class="nm">NVIDIA</span><span class="cnt">11</span></div><div class="u">recipes</div></div>
+    <div class="cell c4"><div class="top"><span class="nm">DeepSeek</span><span class="cnt">9</span></div><div class="u">recipes</div></div>
+    <div class="cell c5"><div class="top"><span class="nm">Google</span><span class="cnt">7</span></div><div class="u">recipes</div></div>
+    <div class="cell c6"><div class="top"><span class="nm">Mistral</span><span class="cnt">6</span></div><div class="u">recipes</div></div>
+    <div class="cell c7"><div class="top"><span class="nm">Kimi</span><span class="cnt">5</span></div><div class="u">recipes</div></div>
+    <div class="cell c8"><div class="top"><span class="nm">MiniMax</span><span class="cnt">4</span></div><div class="u">recipes</div></div>
+  </div>
+  <div class="hw z">
+    <div class="r"><span class="tag n1">NVIDIA</span><span class="txt">H100 · H200 · B200 · B300 · GB200/GB300 <span class="dim">· DGX Spark/Station</span></span></div>
+    <div class="r"><span class="tag n2">AMD</span><span class="txt">MI300X · MI325X · MI355X</span></div>
+    <div class="r"><span class="tag n3">国产 / 其他</span><span class="txt">昇腾 910B/910C · 海光 DCU · 天数 · 寒武纪 · 昆仑 · <span class="dim">Google TPU · Intel Xeon</span></span></div>
+  </div>
+
+  <div class="sec line z">它凭什么帮你从「能跑」到「稳定跑」</div>
+  <div class="four z">
+    <div class="card k1"><div class="ct">双引擎选型</div><div class="cd"><b>vLLM + SGLang</b> 一键切换命令,拿你自己的真实流量测——引擎选型不站队,靠数据。</div></div>
+    <div class="card k2"><div class="ct">JSON API · 喂给 Agent</div><div class="cd">每个配方产出 <code>public/*.json</code>,Agent / 平台可自动识别、拼命令;<b>OpenAI + Anthropic 双协议</b>兼容。</div></div>
+    <div class="card k3"><div class="ct">国产卡 + GPUStack</div><div class="cd">昇腾 / 海光 / 寒武纪…配方覆盖,联动 <b>GPUStack</b> 的国产卡适配引擎镜像,免于环境地狱。</div></div>
+    <div class="card k4"><div class="ct">容量前置 · VRAM 公式</div><div class="cd"><code>ceil(params × bytes × 1.2)</code>,开卡、报预算前先算清「要多少卡」,不靠试错。</div></div>
+  </div>
+
+  <div class="sum z"><span class="ic"><svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#8b7df7" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 21h4"/><path d="M12 2.6a6.5 6.5 0 0 0-4 11.6c.8.7 1 1.3 1 2.4h6c0-1.1.2-1.7 1-2.4A6.5 6.5 0 0 0 12 2.6Z"/></svg></span><div class="tx">把「部署一个模型的所有决策」沉淀成 <span class="v">可查 · 可抄 · 可复用</span> 的配方,让推理从「能跑」到「持续稳定跑」。</div></div>
+
+  <div class="foot z"><span class="b"><span class="md">recipes</span>.mcpinfra.net</span><span class="r">github.com/weetime/recipes</span></div>
+</div>
+</body></html>

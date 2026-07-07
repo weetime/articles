@@ -1,0 +1,47 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><style>
+:root{--bg0:#070710;--bg1:#0b0b1c;--pur:#8b7df7;--blu:#46a6ff;--grn:#33d39a;--org:#f5933e;--rose:#ff5d7a;--tx:#eef0f8;--sub:#9aa1ba;--line:rgba(255,255,255,.11)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px}
+.pg{width:1080px;height:1920px;position:relative;overflow:hidden;padding:150px 70px 110px;
+  background:radial-gradient(820px 560px at 16% 6%,rgba(51,211,154,.16),transparent 60%),radial-gradient(760px 520px at 86% 96%,rgba(70,166,255,.13),transparent 62%),linear-gradient(163deg,var(--bg0),var(--bg1) 55%,#08081a);
+  color:var(--tx);font-family:"PingFang SC","Microsoft YaHei","Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+.pg::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:54px 54px;mask:radial-gradient(900px 760px at 50% 26%,#000,transparent 84%)}
+.z{position:relative;z-index:1}
+.eye{align-self:center;display:inline-flex;align-items:center;gap:11px;font-size:22px;font-weight:800;color:var(--grn);border:1px solid #33d39a55;background:rgba(51,211,154,.09);padding:12px 26px;border-radius:999px}
+.eye .d{width:11px;height:11px;border-radius:50%;background:var(--grn);box-shadow:0 0 15px #33d39a}
+.head{display:flex;flex-direction:column;align-items:center;text-align:center}
+.h1{margin-top:26px;font-size:72px;font-weight:900;letter-spacing:-2px;line-height:1.1}
+.h1 .g{background:linear-gradient(96deg,#6ee7c0,#7bb8ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.rows{margin-top:54px;display:flex;flex-direction:column;gap:22px}
+.rw{border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.03);padding:30px 34px}
+.rw .lab{font-size:26px;font-weight:700;color:var(--sub)}
+.rw .line{margin-top:12px;display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
+.rw .a{font-size:52px;font-weight:850;color:var(--sub)}
+.rw .arw{font-size:40px;color:#5e6677;font-weight:800}
+.rw .b{font-size:60px;font-weight:900;letter-spacing:-1px}
+.rw.r1 .b{color:var(--grn)}.rw.r2 .b{color:var(--blu)}.rw.r3 .b{color:var(--grn)}
+.rw .badge{margin-left:auto;font-size:36px;font-weight:900;padding:8px 22px;border-radius:14px}
+.rw.r1 .badge{color:var(--grn);background:rgba(51,211,154,.14);border:1px solid #33d39a55}
+.rw.r2 .badge{color:var(--blu);background:rgba(70,166,255,.14);border:1px solid #46a6ff55}
+.rw.r3 .badge{color:var(--grn);background:rgba(51,211,154,.14);border:1px solid #33d39a55}
+.rw .u{font-size:26px;color:var(--sub);font-weight:700}
+.punch{margin-top:auto;padding-top:30px;text-align:center;font-size:36px;font-weight:850;line-height:1.4}
+.punch .r{color:var(--rose)}.punch .g{color:var(--grn)}
+.foot{display:flex;align-items:center;margin-top:26px;padding-top:18px;border-top:1px solid var(--line);font-size:20px}
+.foot .b{font-weight:800;color:#cfd4ec}.foot .b .md{color:var(--pur)}
+.foot .r{margin-left:auto;color:#6b7192;font-size:17px}
+</style></head><body>
+<div class="pg">
+  <div class="head z">
+    <div class="eye"><span class="d"></span>对比结果 · 差异数据</div>
+    <div class="h1">配方一换,<span class="g">性能差一截</span></div>
+  </div>
+  <div class="rows z">
+    <div class="rw r1"><div class="lab">峰值输出吞吐</div><div class="line"><span class="a">394</span><span class="arw">→</span><span class="b">568</span><span class="u">tok/s</span><span class="badge">+44%</span></div></div>
+    <div class="rw r2"><div class="lab">首字延迟 TTFT</div><div class="line"><span class="a">~1.5 s</span><span class="arw">→</span><span class="b">~0.5 s</span><span class="badge">快 ~3×</span></div></div>
+    <div class="rw r3"><div class="lab">压测成功率</div><div class="line"><span class="b">100%</span><span class="u">全程零失败</span><span class="badge">稳</span></div></div>
+  </div>
+  <div class="punch z">硬件没变,<span class="r">配方一换</span>,峰值吞吐 <span class="g">+44%</span>、首字延迟快 <span class="g">3 倍</span>。</div>
+  <div class="foot z"><span class="b"><span class="md">recipes</span>.mcpinfra.net</span><span class="r">两次真实评测 · 口径详见报告</span></div>
+</div>
+</body></html>

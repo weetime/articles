@@ -6,6 +6,7 @@
 
 | 文章 | 公众号 | 视频号 | 抖音 | B站 | YouTube | X |
 |---|---|---|---|---|---|---|
+| [PPU DeepSeek-V4 参数寻优解读](content/2026-07-ppu-deepseek-v4-解读/) · 「测试报告解读」系列① | 🟡 草稿已推(中立·无外链·待手动发+加热) | 🟡 走查片 1:51 + 引流 28s 待发 | 🟡 待发 | ⚪ | — | — |
 | [Higress 多集群场景化选型](content/2026-06-higress-multicluster-scenarios/) | 🟡 草稿(图文+贴图) | 🟡 待发 | 🟡 待发 | ⚪ | [✅ 正片](https://youtu.be/mCUZ8DK5s54) · [Short](https://youtu.be/HN8TaUKOZpg) | ⚪ |
 | [Qwen3-32B 昇腾三引擎横评](content/2026-06-qwen3-32b-ascend-three-engine/) | ✅ 已发 | ✅ 已发 | ✅ 已发 | ⚪ | [✅ 公开](https://youtu.be/MWPS-YX8714) | ⚪ |
 | [Higress prefix_cache 路由实测](content/2026-06-higress-prefix-cache-routing/) | ⚪ | ⚪ | ⚪ | ⚪ | [✅ 公开](https://youtu.be/x5ACtbvzI-c) | ⚪ |

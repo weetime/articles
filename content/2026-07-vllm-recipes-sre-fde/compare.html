@@ -1,0 +1,94 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><style>
+:root{--bg0:#070710;--bg1:#0b0b1c;--pur:#8b7df7;--blu:#46a6ff;--grn:#33d39a;--org:#f5933e;--pnk:#ff5fa2;--rose:#ff5d7a;--tx:#eef0f8;--sub:#9aa1ba;--line:rgba(255,255,255,.11)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px}
+.pg{width:1080px;height:1500px;position:relative;overflow:hidden;padding:64px 64px 56px;
+  background:radial-gradient(820px 560px at 14% 4%,rgba(255,93,122,.14),transparent 60%),radial-gradient(760px 520px at 88% 98%,rgba(51,211,154,.14),transparent 62%),linear-gradient(163deg,var(--bg0),var(--bg1) 55%,#08081a);
+  color:var(--tx);font-family:"PingFang SC","Microsoft YaHei","Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+.pg::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:54px 54px;mask:radial-gradient(900px 720px at 50% 20%,#000,transparent 84%)}
+.z{position:relative;z-index:1}
+.eye{align-self:center;display:inline-flex;align-items:center;gap:11px;font-size:21px;font-weight:800;color:var(--rose);border:1px solid #ff5d7a55;background:rgba(255,93,122,.09);padding:11px 24px;border-radius:999px}
+.eye .d{width:10px;height:10px;border-radius:50%;background:var(--rose);box-shadow:0 0 14px #ff5d7a}
+.head{display:flex;flex-direction:column;align-items:center;text-align:center}
+.h1{margin-top:24px;font-size:70px;font-weight:900;letter-spacing:-2px;line-height:1.1}
+.h1 .g{background:linear-gradient(96deg,#6ee7c0,#7bb8ff 55%,#ff8fc0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{margin-top:18px;font-size:25px;color:var(--sub);font-weight:600;line-height:1.5}
+.sub b{color:#dfe3f4;font-weight:800}
+.cols{margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.card{border-radius:22px;padding:30px 28px;border:1px solid var(--line);background:rgba(255,255,255,.03)}
+.card.b{border-color:#33d39a66;background:linear-gradient(160deg,rgba(51,211,154,.10),rgba(255,255,255,.02))}
+.tag{display:inline-block;font-size:22px;font-weight:800;padding:7px 18px;border-radius:10px;margin-bottom:18px}
+.card.a .tag{color:var(--sub);background:rgba(255,255,255,.06)}
+.card.b .tag{color:#04140c;background:var(--grn)}
+.row{display:flex;align-items:baseline;gap:10px;font-size:22px;line-height:1.5;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.row .k{color:var(--sub);font-weight:600;width:96px;flex-shrink:0}
+.row .v{color:#e6e9f6;font-weight:700}
+.row .v.mut{color:var(--sub)}
+.card.b .row .v .hl{color:var(--grn);font-weight:850}
+.res{margin-top:20px;padding-top:16px}
+.res .big{font-size:56px;font-weight:900;letter-spacing:-1px}
+.card.a .res .big{color:var(--sub)}
+.card.b .res .big{color:var(--grn)}
+.res .u{font-size:24px;font-weight:700;color:var(--sub);margin-left:6px}
+.res .t2{margin-top:8px;font-size:26px;font-weight:800;color:#dfe3f4}
+.card.a .res .t2 .n{color:var(--rose)}
+.card.b .res .t2 .n{color:var(--grn)}
+.delta{margin-top:22px;display:flex;gap:20px;justify-content:center;align-items:center;border:1px solid #33d39a55;border-radius:20px;padding:26px 20px;background:linear-gradient(150deg,rgba(51,211,154,.14),rgba(139,125,247,.05))}
+.delta .d{text-align:center}
+.delta .d .n{font-size:60px;font-weight:900;letter-spacing:-1px;color:var(--grn)}
+.delta .d .n.r{color:#7bb8ff}
+.delta .d .l{font-size:22px;font-weight:700;color:var(--sub);margin-top:2px}
+.delta .sep{width:1px;height:70px;background:var(--line)}
+.punch{margin-top:24px;text-align:center;font-size:32px;font-weight:850;line-height:1.45}
+.punch .r{color:var(--rose)}.punch .g{color:var(--grn)}
+.foot{display:flex;align-items:center;margin-top:auto;padding-top:18px;border-top:1px solid var(--line);font-size:19px}
+.foot .b{font-weight:800;color:#cfd4ec}.foot .b .md{color:var(--pur)}
+.foot .r{margin-left:auto;color:#6b7192;font-size:16px}
+.note{text-align:center;font-size:16px;color:#5e6677;margin-top:12px}
+</style></head><body>
+<div class="pg">
+  <div class="head z">
+    <div class="eye"><span class="d"></span>实测 · 国产卡 PPU · 配方的价值</div>
+    <div class="h1">同一张卡,配方不同<br><span class="g">性能差一截</span></div>
+    <div class="sub"><b>PPU-ZW810E</b> · DeepSeek-V4-Flash · SGLang —— 只是换了一套<b>部署配方</b></div>
+  </div>
+
+  <div class="cols z">
+    <div class="card a">
+      <span class="tag">配方 A · 基础</span>
+      <div class="row"><span class="k">并行</span><span class="v mut">DP8 · TP8 · EP8</span></div>
+      <div class="row"><span class="k">投机解码</span><span class="v mut">✗ 未开</span></div>
+      <div class="row"><span class="k">批 / 并发</span><span class="v mut">大 batch,未调拐点</span></div>
+      <div class="row"><span class="k">显存占用</span><span class="v mut">mem-frac 0.70</span></div>
+      <div class="res">
+        <div><span class="big">394</span><span class="u">tok/s 峰值</span></div>
+        <div class="t2">首字延迟 <span class="n">~1.5 s</span></div>
+      </div>
+    </div>
+    <div class="card b">
+      <span class="tag">配方 B · 优化</span>
+      <div class="row"><span class="k">并行</span><span class="v">TP8 + <span class="hl">NSA 上下文并行</span></span></div>
+      <div class="row"><span class="k">投机解码</span><span class="v"><span class="hl">✓ EAGLE</span></span></div>
+      <div class="row"><span class="k">批 / 并发</span><span class="v">chunked 8192 · <span class="hl">拐点调对</span></span></div>
+      <div class="row"><span class="k">显存占用</span><span class="v">mem-frac 0.75</span></div>
+      <div class="res">
+        <div><span class="big">568</span><span class="u">tok/s 峰值</span></div>
+        <div class="t2">首字延迟 <span class="n">~0.5 s</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="delta z">
+    <div class="d"><div class="n">+44%</div><div class="l">峰值吞吐</div></div>
+    <div class="sep"></div>
+    <div class="d"><div class="n r">~3×</div><div class="l">首字延迟更快</div></div>
+    <div class="sep"></div>
+    <div class="d"><div class="n">100%</div><div class="l">全程零失败</div></div>
+  </div>
+
+  <div class="punch z">硬件买了,<span class="r">配方没调对</span>,性能就<span class="r">白扔一半</span>。<br>这,就是<span class="g">配方</span>的价值。</div>
+
+  <div class="note z">同卡 · 同模型 · SGLang · 两次真实评测(负载/口径详见报告);投机解码 + 上下文并行 + 拐点调优是主要增益来源。</div>
+  <div class="foot z"><span class="b"><span class="md">recipes</span>.mcpinfra.net</span><span class="r">选型 · 配硬件 · 拿能跑对的配方</span></div>
+</div>
+</body></html>

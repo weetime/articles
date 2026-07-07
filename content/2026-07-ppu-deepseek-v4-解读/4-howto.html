@@ -1,0 +1,13 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="assets/neutral.css"></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>03 · 这些数字该怎么读<span class="tag">给看报告的人</span></div>
+  <h2 class="sec">读这类压测报告,盯住四件事</h2>
+
+  <div class="steps">
+    <div class="step"><div class="no">01</div><div class="tx"><h4>看「峰值」,也要看「低并发」</h4><p>把并发上限调高能顶起峰值,但同样一档并发参数在轻负载时反而更慢——它有固定开销。没有一套参数全场都占优,得按你的真实并发选。</p></div></div>
+    <div class="step"><div class="no">02</div><div class="tx"><h4>吞吐的尽头是「显存墙」</h4><p>KV 缓存(放对话上下文的显存)占到 100% 后,再加并发不但不涨,还会因为抢占/重算而抖动。报告里的拐点,基本都是这堵墙。</p></div></div>
+    <div class="step"><div class="no">03</div><div class="tx"><h4>分清两类负载</h4><p>短对话吃「并发」,靠调参数就能提;长输入的 Agent 吃「算力」,单机调参救不了,得靠拆分预填充与解码、或多机扩容这类架构手段。</p></div></div>
+    <div class="step"><div class="no">04</div><div class="tx"><h4>一次实验不是普适结论</h4><p>换模型、换数据集、换硬件,甜点和拐点都会移动。数字的价值在方法可复现,而不是某个固定值适用于所有场景。</p></div></div>
+  </div>
+</div>
+</body></html>

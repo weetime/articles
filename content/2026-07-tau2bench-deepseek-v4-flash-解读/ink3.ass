@@ -1,0 +1,20 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Cap,Kaiti SC,56,&H001A2023,&H001A2023,&H00DBECF2,&H60403020,1,0,0,0,100,100,0,0,1,6,1,2,80,80,470,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.10,0:00:01.77,Cap,,0,0,0,,结果出来了 —— 能胜任
+Dialogue: 0,0:00:01.72,0:00:02.51,Cap,,0,0,0,,订单查询
+Dialogue: 0,0:00:02.51,0:00:03.29,Cap,,0,0,0,,机票改签
+Dialogue: 0,0:00:03.29,0:00:04.08,Cap,,0,0,0,,下单购买
+Dialogue: 0,0:00:04.08,0:00:04.87,Cap,,0,0,0,,售后退换
+Dialogue: 0,0:00:04.87,0:00:07.04,Cap,,0,0,0,,这些标准工单它都能拿下
+Dialogue: 0,0:00:07.04,0:00:08.62,Cap,,0,0,0,,单次成功率85%

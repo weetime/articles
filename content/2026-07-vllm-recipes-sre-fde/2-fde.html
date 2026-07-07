@@ -1,0 +1,86 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><style>
+:root{--bg0:#070710;--bg1:#0b0b1c;--pur:#8b7df7;--blu:#46a6ff;--grn:#33d39a;--org:#f5933e;--pnk:#ff5fa2;--tx:#eef0f8;--sub:#9aa1ba;--line:rgba(255,255,255,.11)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px}
+.pg{width:1080px;position:relative;overflow:hidden;padding:76px 76px 60px;
+  background:radial-gradient(820px 560px at 12% -12%,rgba(70,166,255,.20),transparent 60%),radial-gradient(720px 520px at 92% 108%,rgba(139,125,247,.14),transparent 62%),linear-gradient(162deg,var(--bg0),var(--bg1) 55%,#08081a);
+  color:var(--tx);font-family:"PingFang SC","Microsoft YaHei","Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.pg::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:54px 54px;mask:radial-gradient(900px 700px at 50% 12%,#000,transparent 86%)}
+.z{position:relative;z-index:1}
+.eye{align-self:center;display:inline-flex;align-items:center;gap:11px;font-size:20px;font-weight:800;color:var(--blu);border:1px solid #46a6ff55;background:rgba(70,166,255,.08);padding:10px 22px;border-radius:999px}
+.eye .d{width:9px;height:9px;border-radius:50%;background:var(--blu);box-shadow:0 0 14px #46a6ffcc}
+.head{display:flex;flex-direction:column;align-items:center;text-align:center}
+.h1{margin-top:26px;font-size:74px;font-weight:900;letter-spacing:-2px;line-height:1.1}
+.h1 .g{background:linear-gradient(96deg,#7bb8ff,#a99bff 60%,#ff8fc0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{margin-top:20px;font-size:26px;color:var(--sub);font-weight:500;line-height:1.5}
+.sub b{color:#cfd4ec;font-weight:800}
+.why{margin-top:34px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.why .w{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:16px;padding:22px 18px;text-align:center}
+.why .w .n{font-size:34px;font-weight:900;letter-spacing:-1px}
+.why .w1 .n{color:var(--grn)}.why .w2 .n{color:var(--pur)}.why .w3 .n{color:var(--blu)}.why .w4 .n{color:var(--org)}
+.why .w .l{margin-top:8px;font-size:19px;color:var(--sub);font-weight:600;line-height:1.4}
+.sec{margin-top:52px;text-align:center;font-size:34px;font-weight:850;letter-spacing:-.5px;display:flex;align-items:center;gap:22px;justify-content:center}
+.sec::before,.sec::after{content:"";height:1px;width:90px;background:linear-gradient(90deg,transparent,var(--line))}
+.sec::after{background:linear-gradient(90deg,var(--line),transparent)}
+.mile{margin-top:26px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.mile .m{border:1px solid var(--line);background:rgba(255,255,255,.03);border-radius:16px;padding:24px 20px}
+.mile .m .t{font-size:25px;font-weight:850}
+.mile .m1 .t{color:var(--pur)}.mile .m2 .t{color:var(--blu)}.mile .m3 .t{color:var(--org)}.mile .m4 .t{color:var(--pnk)}
+.mile .m .d{margin-top:10px;font-size:19px;color:var(--sub);line-height:1.5}
+.mile .m .d code{font-family:ui-monospace,monospace;color:#cfd4ec;font-size:17px}
+.steps{margin-top:26px;display:flex;flex-direction:column;gap:14px}
+.step{display:flex;gap:20px;align-items:flex-start;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:18px;padding:24px 28px}
+.step .idx{flex-shrink:0;width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;color:#fff}
+.step.s1 .idx{background:linear-gradient(150deg,#8b7df7,#6d5bff)}
+.step.s2 .idx{background:linear-gradient(150deg,#46a6ff,#2f7fe0)}
+.step.s3 .idx{background:linear-gradient(150deg,#33d39a,#1fae7e)}
+.step.s4 .idx{background:linear-gradient(150deg,#f5933e,#e0761f)}
+.step .bd{flex:1}
+.step .bd .t{font-size:27px;font-weight:850;color:#eef0f8}
+.step .bd .t .hl{color:var(--blu)}
+.step .bd .d{margin-top:8px;font-size:21px;color:var(--sub);line-height:1.55}
+.step .bd .d code{font-family:ui-monospace,monospace;color:#cfd4ec;font-size:19px}
+.step .bd .d b{color:#d7dbef;font-weight:700}
+.sum{margin-top:30px;border:1px solid #46a6ff55;border-radius:20px;padding:30px 34px;background:linear-gradient(150deg,rgba(70,166,255,.16),rgba(255,255,255,.02));display:flex;gap:20px;align-items:center}
+.sum .ic{font-size:40px}
+.sum .tx{font-size:27px;font-weight:800;line-height:1.5}
+.sum .tx .v{color:var(--blu)}
+.foot{display:flex;align-items:center;margin-top:44px;padding-top:22px;border-top:1px solid var(--line);font-size:21px}
+.foot .b{font-weight:800;color:#cfd4ec}.foot .b .md{color:var(--pur)}
+.foot .r{margin-left:auto;color:#6b7192;font-family:ui-monospace,monospace;font-size:18px}
+</style></head><body>
+<div class="pg">
+  <div class="head z">
+    <div class="eye"><span class="d"></span>视角一 · Forward Deployed Engineer</div>
+    <div class="h1">FDE 视角:接住<br><span class="g">「最后一公里」</span></div>
+    <div class="sub">把模型从 <b>demo 惊艳</b>,推到 <b>客户环境真能跑</b> —— 2026 需求 <b>+1165% YoY</b></div>
+  </div>
+
+  <div class="why z">
+    <div class="w w1"><div class="n">+1165%</div><div class="l">岗位需求 YoY</div></div>
+    <div class="w w2"><div class="n">$40亿+</div><div class="l">OpenAI Deploy Co.</div></div>
+    <div class="w w3"><div class="n">$1M+</div><div class="l">顶尖总包</div></div>
+    <div class="w w4"><div class="n">嵌入</div><div class="l">写生产代码·对结果负责</div></div>
+  </div>
+
+  <div class="sec z">最后一公里,最硬的四道坎</div>
+  <div class="mile z">
+    <div class="m m1"><div class="t">选模型</div><div class="d">Pro 还是 Flash?量化选哪档?<code>parser 三件套</code>漏一个就报错。</div></div>
+    <div class="m m2"><div class="t">配硬件</div><div class="d">异构 <code>GPU/NPU</code>,单机装不下还是上多机?要多少卡?</div></div>
+    <div class="m m3"><div class="t">调参数</div><div class="d"><code>TP/PP</code> 设几?<code>max-model-len</code> 开多大?KV 要不要 FP8?</div></div>
+    <div class="m m4"><div class="t">踩坑</div><div class="d">模板报错、思考档位、协议兼容…… 每一步都能卡住上线。</div></div>
+  </div>
+
+  <div class="sec z">recipes 怎么替 FDE 接住</div>
+  <div class="steps z">
+    <div class="step s1"><div class="idx">1</div><div class="bd"><div class="t">模型档案<span class="hl"> · 一眼看清</span></div><div class="d">架构 / 激活参数 / 上下文 / <b>parser 三件套</b>(tokenizer · tool-call · reasoning)全列出,不用翻十篇博客。</div></div></div>
+    <div class="step s2"><div class="idx">2</div><div class="bd"><div class="t">先算账 <span class="hl">· 要多少卡</span></div><div class="d">VRAM 公式 + 硬件 profile,<b>开卡前</b>算清 <code>8×H100 / 4×H200 / 2×4090(量化)</code>,不靠试错。</div></div></div>
+    <div class="step s3"><div class="idx">3</div><div class="bd"><div class="t">三步起服务 <span class="hl">· 能直接跑</span></div><div class="d"><code>download → vllm serve → curl 验证</code>,命令带齐并行、KV、parser,复制即用。</div></div></div>
+    <div class="step s4"><div class="idx">4</div><div class="bd"><div class="t">为什么这么写 <span class="hl">+ 踩坑提示</span></div><div class="d">不是裸命令:<b>EP+DP 比纯 TP 稳</b>、<b>FP8 KV 省显存</b>、报错先升级 vLLM…… 决策有据可查。</div></div></div>
+  </div>
+
+  <div class="sum z"><span class="ic"><svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#46a6ff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.2"/><path d="M15.7 8.3l-2.1 5.3-5.3 2.1 2.1-5.3 5.3-2.1Z"/></svg></span><div class="tx">把散落在聊天记录里的 <span class="v">tribal knowledge</span>,沉淀成一本能照抄的「部署 cookbook」。</div></div>
+
+  <div class="foot z"><span class="b"><span class="md">recipes</span>.mcpinfra.net</span><span class="r">github.com/weetime/recipes</span></div>
+</div>
+</body></html>

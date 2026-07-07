@@ -1,0 +1,20 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 2
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Cap,Kaiti SC,56,&H001A2023,&H001A2023,&H00DBECF2,&H60403020,1,0,0,0,100,100,0,0,1,6,1,2,80,80,470,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.10,0:00:01.31,Cap,,0,0,0,,放大看每个任务
+Dialogue: 0,0:00:01.31,0:00:02.34,Cap,,0,0,0,,左边一直绿的
+Dialogue: 0,0:00:02.34,0:00:03.03,Cap,,0,0,0,,每次都过
+Dialogue: 0,0:00:03.03,0:00:04.06,Cap,,0,0,0,,右边一直红的
+Dialogue: 0,0:00:04.06,0:00:04.75,Cap,,0,0,0,,每次都挂
+Dialogue: 0,0:00:04.75,0:00:06.47,Cap,,0,0,0,,中间这条红绿相间的带
+Dialogue: 0,0:00:06.47,0:00:07.85,Cap,,0,0,0,,就是不稳定的那批

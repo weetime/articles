@@ -1,0 +1,76 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><style>
+:root{--bg0:#070710;--bg1:#0b0b1c;--pur:#8b7df7;--blu:#46a6ff;--grn:#33d39a;--org:#f5933e;--pnk:#ff5fa2;--rose:#ff5d7a;--tx:#eef0f8;--sub:#9aa1ba;--line:rgba(255,255,255,.11)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px}
+.pg{width:1080px;height:1500px;position:relative;overflow:hidden;padding:64px 66px 56px;
+  background:radial-gradient(820px 560px at 14% 4%,rgba(139,125,247,.16),transparent 60%),radial-gradient(760px 520px at 88% 98%,rgba(255,93,122,.12),transparent 62%),linear-gradient(163deg,var(--bg0),var(--bg1) 55%,#08081a);
+  color:var(--tx);font-family:"PingFang SC","Microsoft YaHei","Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+.pg::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:54px 54px;mask:radial-gradient(900px 720px at 50% 20%,#000,transparent 84%)}
+.z{position:relative;z-index:1}
+.eye{align-self:center;display:inline-flex;align-items:center;gap:11px;font-size:21px;font-weight:800;color:var(--pur);border:1px solid #8b7df755;background:rgba(139,125,247,.09);padding:11px 24px;border-radius:999px}
+.eye .d{width:10px;height:10px;border-radius:50%;background:var(--pur);box-shadow:0 0 14px #8b7df7}
+.head{display:flex;flex-direction:column;align-items:center;text-align:center}
+.h1{margin-top:24px;font-size:66px;font-weight:900;letter-spacing:-2px;line-height:1.12}
+.h1 .g{background:linear-gradient(96deg,#a99bff,#7bb8ff 55%,#6ee7c0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{margin-top:18px;font-size:24px;color:var(--sub);font-weight:600}
+.sub b{color:#dfe3f4;font-weight:800}
+.chart{margin-top:44px;border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.03);padding:34px 40px 28px}
+.chart .cap{font-size:22px;font-weight:700;color:var(--sub);margin-bottom:26px}
+.chart .cap b{color:#dfe3f4}
+.bars{display:flex;align-items:flex-end;gap:26px;height:420px}
+.col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.col .val{font-size:30px;font-weight:850;margin-bottom:10px}
+.col .bar{width:100%;border-radius:10px 10px 0 0;background:linear-gradient(180deg,#7d68ff,#5b4bd6)}
+.col .x{margin-top:14px;font-size:22px;font-weight:700;color:var(--sub)}
+.col.peak .bar{background:linear-gradient(180deg,#4ae88f,#2bb96a)}
+.col.peak .val{color:var(--grn)}
+.col.over .bar{background:repeating-linear-gradient(45deg,#ff5d7a,#ff5d7a 10px,#c93a54 10px,#c93a54 20px)}
+.col.over .val{color:var(--rose)}
+.col .val.small{font-size:26px;color:var(--sub)}
+.peaktag{margin-top:8px;font-size:17px;font-weight:800;color:var(--grn)}
+.overtag{margin-top:8px;font-size:17px;font-weight:800;color:var(--rose)}
+.pts{margin-top:26px;display:flex;flex-direction:column;gap:14px}
+.pt{display:flex;gap:16px;align-items:flex-start;font-size:24px;line-height:1.5}
+.pt .i{flex-shrink:0;width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;color:#fff;margin-top:2px}
+.pt.p1 .i{background:linear-gradient(150deg,#33d39a,#1fae7e)}
+.pt.p2 .i{background:linear-gradient(150deg,#ff5d7a,#e03d84)}
+.pt.p3 .i{background:linear-gradient(150deg,#8b7df7,#6d5bff)}
+.pt .t{color:#e6e9f6;font-weight:700}
+.pt .t .k{font-family:ui-monospace,monospace;color:#cfd4ec}
+.pt .t .g{color:var(--grn)}.pt .t .r{color:var(--rose)}
+.punch{margin-top:26px;text-align:center;font-size:33px;font-weight:850;line-height:1.4}
+.punch .g{color:var(--grn)}.punch .r{color:var(--rose)}
+.foot{display:flex;align-items:center;margin-top:auto;padding-top:18px;border-top:1px solid var(--line);font-size:19px}
+.foot .b{font-weight:800;color:#cfd4ec}.foot .b .md{color:var(--pur)}
+.foot .r{margin-left:auto;color:#6b7192;font-size:16px}
+</style></head><body>
+<div class="pg">
+  <div class="head z">
+    <div class="eye"><span class="d"></span>实测 · 国产卡 PPU · 拐点归因</div>
+    <div class="h1">吞吐卡在 568,<span class="g">不是卡不行</span></div>
+    <div class="sub"><b>PPU-ZW810E</b> · DeepSeek-V4-Flash · SGLang · ShareGPT 真实负载</div>
+  </div>
+
+  <div class="chart z">
+    <div class="cap">输出吞吐 <b>(tok/s)</b> 随并发扫描 · 每档 3 次取中位数</div>
+    <div class="bars">
+      <div class="col"><div class="val small">44</div><div class="bar" style="height:8%"></div><div class="x">c1</div></div>
+      <div class="col"><div class="val small">142</div><div class="bar" style="height:25%"></div><div class="x">c4</div></div>
+      <div class="col"><div class="val small">242</div><div class="bar" style="height:43%"></div><div class="x">c8</div></div>
+      <div class="col"><div class="val small">388</div><div class="bar" style="height:68%"></div><div class="x">c16</div></div>
+      <div class="col peak"><div class="val">568</div><div class="bar" style="height:100%"></div><div class="x">c32</div><div class="peaktag">拐点 · 峰值</div></div>
+      <div class="col over"><div class="val">560</div><div class="bar" style="height:98%"></div><div class="x">c64</div><div class="overtag">TTFT 0.57s→14s</div></div>
+    </div>
+  </div>
+
+  <div class="pts z">
+    <div class="pt p1"><div class="i">✓</div><div class="t">c1→c32 吞吐 <span class="g">近线性升到 568</span>,拐点内首字延迟稳在 <span class="k">0.36–0.57s</span></div></div>
+    <div class="pt p2"><div class="i">!</div><div class="t">越过 c32:吞吐<span class="r">不升反降</span>,首字延迟<span class="r">飙到 14.4s</span> —— 纯排队信号</div></div>
+    <div class="pt p3"><div class="i">?</div><div class="t">拐点正好 = 服务端 <span class="k">--max-running-requests 32</span> —— 是<b>配方设的并发上限</b></div></div>
+  </div>
+
+  <div class="punch z">拐点是 <span class="g">配方</span> 定的,不是硬件算力饱和。<br>想更快?先<span class="g">调对配方</span>,而不是硬堆并发。</div>
+
+  <div class="foot z"><span class="b"><span class="md">recipes</span>.mcpinfra.net</span><span class="r">22 run · 0 错误 · 口径详见评测报告</span></div>
+</div>
+</body></html>

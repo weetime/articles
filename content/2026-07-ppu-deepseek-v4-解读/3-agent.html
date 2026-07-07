@@ -1,0 +1,14 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="assets/neutral.css"></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>02 · Agent 场景<span class="tag">真实工具调用 trace 回放</span></div>
+  <h2 class="sec">换成长输入的 Agent 负载,单实例扛不住了</h2>
+  <div class="sec-sub">同一台机器、同样默认配置,把负载从短对话换成<b>真实 Agent 轨迹</b>(长输入 ~5–9K token + 短输出)。表现完全变样。</div>
+
+  <div class="row2">
+    <div class="pane bad"><h3>首字延迟 TTFT(中位数)</h3><div class="num">65–108<span style="font-size:28px"> 秒</span></div><p>用户点一下,要等一分多钟才见第一个字。短对话时这个数只有零点几秒。</p></div>
+    <div class="pane bad"><h3>实际处理速度</h3><div class="num">0.6–1.7<span style="font-size:28px"> req/s</span></div><p>而轨迹本身的到达速度是 <b>3.9 req/s</b>——供不应求 <b>2–7 倍</b>,请求全堆在队列里。</p></div>
+  </div>
+
+  <div class="note wall"><b>为什么?</b> Agent 的特征是<b>长输入(预填充很重)+ 短输出(几十个 token 就结束)</b>,瓶颈卡在<b>算力</b>,不在并发数、也不在显存。所以上一张图那套"调并发"的办法,在这里不管用——把上下文放长到 64K 反而更慢(放进来的长请求预填充更重)。</div>
+</div>
+</body></html>

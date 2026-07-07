@@ -1,0 +1,18 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="assets/neutral.css"></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>01 · Chat 并发上限扫描<span class="tag">ShareGPT · 输入~800 / 输出~256</span></div>
+  <h2 class="sec">抬高「同时在跑的请求数」,吞吐一路涨到显存墙</h2>
+  <div class="sec-sub">横轴是并发上限(<b>max-running-requests</b>),纵轴是每秒输出 token。默认锁 32,逐档放开到 128。柱下小字是当时 KV 缓存占用。</div>
+
+  <div class="bars">
+    <div class="barcol"><div class="val">568</div><div class="bk" style="height:243px"></div><div class="lb">32</div><div class="sub">默认 · 基线</div></div>
+    <div class="barcol"><div class="val">619</div><div class="bk" style="height:265px"></div><div class="lb">48</div><div class="sub">KV 43%</div></div>
+    <div class="barcol"><div class="val">720</div><div class="bk" style="height:308px"></div><div class="lb">64</div><div class="sub">KV 57%</div></div>
+    <div class="barcol hl"><div class="val">823</div><div class="bk" style="height:352px"></div><div class="lb">96</div><div class="sub">KV 78% · 甜点</div></div>
+    <div class="barcol wall"><div class="val">842</div><div class="bk" style="height:360px"></div><div class="lb">128</div><div class="sub">KV 100% · 墙</div></div>
+  </div>
+  <div class="axis">并发上限 max-running-requests →（每档峰值输出 tok/s）</div>
+
+  <div class="note"><b>甜点在 96</b>:比默认高 <b>45%</b>,显存还留 22% 余量。继续加到 128,KV 缓存打满 100%,吞吐只多 2%——不划算。<b>吞吐的尽头是显存,不是算力。</b></div>
+</div>
+</body></html>

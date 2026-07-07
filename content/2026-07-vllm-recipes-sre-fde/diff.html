@@ -1,0 +1,52 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><style>
+:root{--bg0:#070710;--bg1:#0b0b1c;--pur:#8b7df7;--blu:#46a6ff;--grn:#33d39a;--org:#f5933e;--rose:#ff5d7a;--tx:#eef0f8;--sub:#9aa1ba;--line:rgba(255,255,255,.11)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px}
+.pg{width:1080px;height:1920px;position:relative;overflow:hidden;padding:150px 56px 100px;
+  background:radial-gradient(820px 560px at 14% 4%,rgba(139,125,247,.15),transparent 60%),radial-gradient(760px 520px at 88% 98%,rgba(51,211,154,.13),transparent 62%),linear-gradient(163deg,var(--bg0),var(--bg1) 55%,#08081a);
+  color:var(--tx);font-family:"PingFang SC","Microsoft YaHei","Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+.pg::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:54px 54px;mask:radial-gradient(900px 760px at 50% 24%,#000,transparent 84%)}
+.z{position:relative;z-index:1}
+.eye{align-self:center;display:inline-flex;align-items:center;gap:11px;font-size:22px;font-weight:800;color:var(--pur);border:1px solid #8b7df755;background:rgba(139,125,247,.09);padding:12px 26px;border-radius:999px}
+.eye .d{width:11px;height:11px;border-radius:50%;background:var(--pur);box-shadow:0 0 15px #8b7df7}
+.head{display:flex;flex-direction:column;align-items:center;text-align:center}
+.h1{margin-top:26px;font-size:68px;font-weight:900;letter-spacing:-2px;line-height:1.12}
+.h1 .g{background:linear-gradient(96deg,#a99bff,#6ee7c0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{margin-top:18px;font-size:25px;color:var(--sub);font-weight:600}
+.sub b{color:#dfe3f4;font-weight:800}
+.term{margin-top:42px;border:1px solid var(--line);border-radius:22px;background:#0a0d14;padding:30px 30px;box-shadow:0 20px 60px #00000055}
+.term .cap{font-size:22px;color:var(--sub);font-weight:700;margin-bottom:18px;display:flex;gap:14px;align-items:center}
+.term .cap .a{color:var(--rose)}.term .cap .b{color:var(--grn)}
+.code{font-family:"SF Mono","JetBrains Mono",ui-monospace,monospace;font-size:26px;line-height:1.72;white-space:pre-wrap;word-break:break-word}
+.code .same{color:#6b7484}
+.code .del{color:#ff8fa3;background:rgba(255,93,122,.10);display:block;border-radius:6px;padding:2px 8px;margin:3px 0}
+.code .add{color:#7ff0b6;background:rgba(51,211,154,.10);display:block;border-radius:6px;padding:2px 8px;margin:3px 0}
+.code b{font-weight:800}
+.keys{margin-top:auto;padding-top:26px;text-align:center;font-size:30px;font-weight:850;line-height:1.5}
+.keys .g{color:var(--grn)}
+.foot{display:flex;align-items:center;margin-top:24px;padding-top:18px;border-top:1px solid var(--line);font-size:20px}
+.foot .b{font-weight:800;color:#cfd4ec}.foot .b .md{color:var(--pur)}
+.foot .r{margin-left:auto;color:#6b7192;font-size:17px}
+</style></head><body>
+<div class="pg">
+  <div class="head z">
+    <div class="eye"><span class="d"></span>配方 A vs 配方 B · 差异</div>
+    <div class="h1">两个配方,<span class="g">差在这几行</span></div>
+    <div class="sub">同卡同模型 · <b>PPU-ZW810E · DeepSeek-V4-Flash · SGLang</b></div>
+  </div>
+  <div class="term z">
+    <div class="cap"><span class="a">− 配方 A(394 tok/s)</span><span class="b">+ 配方 B(568 tok/s)</span></div>
+    <div class="code"><span class="same">  --tp 8  --context-length 8192  --quantization w8a8_int8</span>
+<span class="del">− --dp 8  --enable-dp-attention  --enable-dp-lm-head</span>
+<span class="add">+ --attention-context-parallel-size 8  --enable-nsa-prefill-context-parallel</span>
+<span class="del">− <b>(无投机解码)</b></span>
+<span class="add">+ <b>--speculative-algo EAGLE</b>  --speculative-num-steps 2  --eagle-topk 1</span>
+<span class="del">− --max-running-requests <b>1024</b>  --cuda-graph-max-bs 128</span>
+<span class="add">+ --max-running-requests <b>32</b>  --cuda-graph-bs 32  <b>(拐点调对)</b></span>
+<span class="del">− --chunked-prefill-size 2048  --mem-fraction-static 0.70</span>
+<span class="add">+ --chunked-prefill-size 8192  --mem-fraction-static 0.75</span></div>
+  </div>
+  <div class="keys z">三处关键:<span class="g">上下文并行</span> · <span class="g">EAGLE 投机</span> · <span class="g">拐点调对</span></div>
+  <div class="foot z"><span class="b"><span class="md">recipes</span>.mcpinfra.net</span><span class="r">同卡同模型 · 只换配方</span></div>
+</div>
+</body></html>

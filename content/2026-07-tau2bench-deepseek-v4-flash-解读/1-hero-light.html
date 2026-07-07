@@ -1,0 +1,95 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8">
+<style>
+  :root{
+    --violet:#6d4bff; --violet2:#7c5cff; --cyan:#0891b2; --green:#16a34a;
+    --ink:#16161a; --ink2:#41414e; --ink3:#6b6b78; --ink4:#9a9aa8;
+    --off:#9aa0b4; --line:#ececf2; --line2:#e2e3ed; --r:22px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1080px;background:#fff;font-family:"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+  .poster{width:1080px;position:relative;overflow:hidden;padding:64px 60px 40px;
+    background:radial-gradient(900px 520px at 80% -10%, #6d4bff10, transparent 60%),
+      radial-gradient(760px 480px at 6% 104%, #0891b20a, transparent 60%),
+      linear-gradient(170deg,#ffffff 0%,#f5f6fb 70%);}
+  .poster::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:linear-gradient(#00000005 1px,transparent 1px),linear-gradient(90deg,#00000005 1px,transparent 1px);background-size:54px 54px}
+  .poster>*{position:relative;z-index:1}
+  .eyebrow{display:flex;align-items:center;gap:12px;font-size:21px;font-weight:700;color:var(--violet);letter-spacing:.3px}
+  .eyebrow .dot{width:9px;height:9px;border-radius:50%;background:var(--violet);box-shadow:0 0 12px #6d4bff66}
+  .eyebrow .tag{margin-left:auto;font-size:15px;font-weight:600;color:var(--ink3);border:1px solid var(--line2);border-radius:999px;padding:6px 14px}
+  h1.title{font-size:60px;line-height:1.12;font-weight:800;letter-spacing:-1px;margin-top:20px}
+  h1.title .hi{background:linear-gradient(100deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .subtitle{font-size:24px;color:var(--ink2);margin-top:18px;font-weight:500;line-height:1.5}
+  .subtitle b{color:var(--ink);font-weight:700}
+  .arc{position:relative;margin-top:40px;height:210px}
+  .node{position:absolute;top:34px;width:330px;border-radius:20px;padding:24px 26px;border:1px solid var(--line2);background:#fff;box-shadow:0 8px 24px #1212260a}
+  .node .k{font-size:18px;font-weight:600;color:var(--ink3)}
+  .node .v{font-size:46px;font-weight:850;line-height:1;margin-top:12px;letter-spacing:-1px;white-space:nowrap}
+  .node .s{font-size:16px;color:var(--ink3);margin-top:12px}
+  .node.off{left:0;background:#f3f4f9}.node.off .v{color:var(--off)}
+  .node.on{right:0;background:linear-gradient(180deg,#f4f1ff,#eef5ff);border-color:#cdc0ff;box-shadow:0 10px 30px #6d4bff1f}
+  .node.on .v{background:linear-gradient(100deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .arcsvg{position:absolute;left:310px;right:310px;top:0;height:210px}
+  .arclabel{position:absolute;left:50%;top:0;transform:translateX(-50%);text-align:center;white-space:nowrap}
+  .arclabel .t{font-size:19px;color:var(--ink2);font-weight:700}
+  .arclabel .b{font-size:38px;font-weight:850;color:var(--cyan);margin-top:2px}
+  .keyword{position:absolute;left:50%;top:140px;transform:translateX(-50%);font-size:18px;font-weight:700;color:var(--violet);background:#6d4bff12;border:1px solid #6d4bff33;border-radius:999px;padding:8px 20px;white-space:nowrap}
+  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:34px}
+  .mcard{background:#fff;border:1px solid var(--line2);border-radius:var(--r);padding:26px 22px;position:relative;overflow:hidden;box-shadow:0 6px 20px #12122608}
+  .mcard .bar{position:absolute;left:0;top:0;width:100%;height:5px}
+  .mcard .lab{font-size:18px;color:var(--ink3);font-weight:600}
+  .mcard .big{font-size:50px;font-weight:850;line-height:1;margin-top:14px;letter-spacing:-1px}
+  .mcard .flow{font-size:17px;margin-top:14px;color:var(--ink2);font-weight:600}
+  .mcard .flow .o{color:var(--off)}.mcard .flow .n{color:var(--ink)}
+  .up{color:var(--green)}.down{color:var(--cyan)}
+  .chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+  .chip{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line2);border-radius:14px;padding:12px 18px;font-size:17px;font-weight:600;color:var(--ink2);box-shadow:0 3px 10px #12122606}
+  .chip b{color:var(--ink)}
+  .chip .cdot{width:7px;height:7px;border-radius:2px;background:var(--violet);flex-shrink:0}
+  .footer{display:flex;align-items:center;margin-top:38px;padding-top:22px;border-top:1px solid var(--line);font-size:18px;color:var(--ink3)}
+  .footer .brand{font-weight:800;color:var(--ink);font-size:20px}.footer .brand .md{color:var(--violet)}
+  .footer .right{margin-left:auto;color:var(--ink4)}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>ModelDoctor · Agent 能力实测<span class="tag">τ²-bench · tool-calling</span></div>
+  <h1 class="title">能力已具备,<span class="hi">稳定性仍是短板</span></h1>
+  <div class="subtitle">国产 <b>真武 PPU</b> 上的 <b>DeepSeek-V4-Flash</b>,跑 τ²-bench 多轮 tool-calling agent 任务——单次能解出,但难以次次做对。</div>
+
+  <div class="arc">
+    <div class="node off"><div class="k">reliability · Pass⁴(4 次全过)</div><div class="v">67–68%</div><div class="s">稳定通过的真实水位</div></div>
+    <svg class="arcsvg" viewBox="0 0 460 210" preserveAspectRatio="none">
+      <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9aa0b4"/><stop offset="1" stop-color="#6d4bff"/></linearGradient>
+      <marker id="a" markerWidth="12" markerHeight="12" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#6d4bff"/></marker></defs>
+      <path d="M20,150 C160,40 300,40 440,66" fill="none" stroke="url(#g)" stroke-width="5" stroke-dasharray="2 10" stroke-linecap="round" marker-end="url(#a)"/>
+    </svg>
+    <div class="arclabel"><div class="t">capability–reliability gap</div><div class="b">≈ 25pp</div></div>
+    <div class="keyword">能力有余 · 稳定不足</div>
+    <div class="node on"><div class="k">capability · Pass@4(≥1 次过)</div><div class="v">88–96%</div><div class="s">有能力解出的任务上界</div></div>
+  </div>
+
+  <div class="metrics">
+    <div class="mcard"><div class="bar" style="background:linear-gradient(90deg,var(--violet),var(--cyan))"></div>
+      <div class="lab">airline · Pass¹</div><div class="big">81.5<span style="font-size:26px">%</span></div>
+      <div class="flow"><span class="o">Pass⁴</span> <span class="n">68.0%</span></div></div>
+    <div class="mcard"><div class="bar" style="background:linear-gradient(90deg,var(--violet),var(--cyan))"></div>
+      <div class="lab">retail · Pass¹</div><div class="big">85.7<span style="font-size:26px">%</span></div>
+      <div class="flow"><span class="o">Pass⁴</span> <span class="n">66.7%</span></div></div>
+    <div class="mcard"><div class="bar" style="background:linear-gradient(90deg,var(--green),#4ade80)"></div>
+      <div class="lab">DB-match(工具/状态)</div><div class="big up">83–88<span style="font-size:26px">%</span></div>
+      <div class="flow">执行正确,失分在判断</div></div>
+    <div class="mcard"><div class="bar" style="background:linear-gradient(90deg,var(--cyan),#38bdf8)"></div>
+      <div class="lab">simulations</div><div class="big">656</div>
+      <div class="flow"><span class="n">0</span> context 溢出</div></div>
+  </div>
+
+  <div class="chips">
+    <div class="chip"><span class="cdot"></span>真武 PPU-ZW810E <b>×8</b> · 2 副本 TP8</div>
+    <div class="chip"><span class="cdot"></span>SGLang 0.5.12 · <b>64k ctx</b></div>
+    <div class="chip"><span class="cdot"></span>τ²-bench · airline+retail</div>
+    <div class="chip"><span class="cdot"></span>user simulator <b>deepseek-chat</b></div>
+    <div class="chip"><span class="cdot"></span>num-trials <b>4</b></div>
+  </div>
+
+  <div class="footer"><span class="brand"><span class="md">Model</span>Doctor</span><span class="right">mcpinfra.net · github.com/weetime</span></div>
+</div>
+</body></html>

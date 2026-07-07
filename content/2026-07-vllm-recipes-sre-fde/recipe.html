@@ -1,0 +1,60 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><style>
+:root{--bg0:#070710;--bg1:#0b0b1c;--pur:#8b7df7;--blu:#46a6ff;--grn:#33d39a;--org:#f5933e;--pnk:#ff5fa2;--tx:#eef0f8;--sub:#9aa1ba;--line:rgba(255,255,255,.11)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px}
+.pg{width:1080px;height:1920px;position:relative;overflow:hidden;padding:150px 60px 110px;
+  background:radial-gradient(820px 560px at 14% 4%,rgba(51,211,154,.15),transparent 60%),radial-gradient(760px 520px at 88% 98%,rgba(139,125,247,.14),transparent 62%),linear-gradient(163deg,var(--bg0),var(--bg1) 55%,#08081a);
+  color:var(--tx);font-family:"PingFang SC","Microsoft YaHei","Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+.pg::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:54px 54px;mask:radial-gradient(900px 760px at 50% 24%,#000,transparent 84%)}
+.z{position:relative;z-index:1}
+.eye{align-self:center;display:inline-flex;align-items:center;gap:11px;font-size:22px;font-weight:800;color:var(--grn);border:1px solid #33d39a55;background:rgba(51,211,154,.09);padding:12px 26px;border-radius:999px}
+.eye .d{width:11px;height:11px;border-radius:50%;background:var(--grn);box-shadow:0 0 15px #33d39a}
+.head{display:flex;flex-direction:column;align-items:center;text-align:center}
+.h1{margin-top:26px;font-size:66px;font-weight:900;letter-spacing:-2px;line-height:1.12}
+.h1 .g{background:linear-gradient(96deg,#6ee7c0,#7bb8ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{margin-top:18px;font-size:25px;color:var(--sub);font-weight:600}
+.sub b{color:#dfe3f4;font-weight:800}
+.term{margin-top:44px;border:1px solid var(--line);border-radius:22px;background:#0a0d14;padding:34px 38px;box-shadow:0 20px 60px #00000055}
+.term .dots{display:flex;gap:11px;margin-bottom:22px}
+.term .dots i{width:16px;height:16px;border-radius:50%}
+.term .dots i:nth-child(1){background:#ff5f57}.term .dots i:nth-child(2){background:#febc2e}.term .dots i:nth-child(3){background:#28c840}
+.term .dots .cap{margin-left:14px;font-size:22px;color:var(--sub);font-weight:600;align-self:center}
+.code{font-family:"SF Mono","JetBrains Mono",ui-monospace,monospace;font-size:28px;line-height:1.62;white-space:pre-wrap;word-break:break-all}
+.code .c{color:#5e6677}
+.code .p{color:var(--grn)}
+.code .f{color:#cfd4ec}
+.code .hl{color:var(--grn);font-weight:700}
+.code .hp{color:var(--pur);font-weight:700}
+.code .ho{color:var(--org);font-weight:700}
+.code .v{color:#8fb4ff}
+.punch{margin-top:auto;text-align:center;font-size:34px;font-weight:850;line-height:1.4;padding-top:26px}
+.punch .g{color:var(--grn)}
+.foot{display:flex;align-items:center;margin-top:26px;padding-top:18px;border-top:1px solid var(--line);font-size:20px}
+.foot .b{font-weight:800;color:#cfd4ec}.foot .b .md{color:var(--pur)}
+.foot .r{margin-left:auto;color:#6b7192;font-size:17px}
+</style></head><body>
+<div class="pg">
+  <div class="head z">
+    <div class="eye"><span class="d"></span>完整配方 · 复制即用</div>
+    <div class="h1">配方 B 长这样,<span class="g">照抄就跑</span></div>
+    <div class="sub"><b>PPU-ZW810E</b> · DeepSeek-V4-Flash · SGLang</div>
+  </div>
+  <div class="term z">
+    <div class="dots"><i></i><i></i><i></i><span class="cap">起服务</span></div>
+    <div class="code"><span class="p">python3</span> -m sglang.launch_server \
+  <span class="f">--model-path</span> <span class="v">DeepSeek-V4-Flash-INT8</span> --trust-remote-code \
+  <span class="f">--tp</span> <span class="v">8</span> --context-length <span class="v">8192</span> --quantization <span class="v">w8a8_int8</span> \
+  <span class="hl">--attention-context-parallel-size 8</span> \
+  <span class="hl">--enable-nsa-prefill-context-parallel</span> \
+  --moe-a2a-backend deepep --disable-shared-experts-fusion \
+  <span class="hp">--speculative-algo EAGLE --speculative-num-steps 2</span> \
+  <span class="hp">--speculative-eagle-topk 1 --speculative-num-draft-tokens 2</span> \
+  <span class="ho">--max-running-requests 32 --cuda-graph-bs 32</span> \
+  --mem-fraction-static <span class="v">0.75</span> --chunked-prefill-size <span class="v">8192</span> \
+  --kv-cache-dtype bfloat16 \
+  --tool-call-parser deepseekv4 --reasoning-parser deepseek-v4</div>
+  </div>
+  <div class="punch z"><span class="g">投机解码</span> · <span class="g">上下文并行</span> · <span class="g">拐点调优</span> —— 一整套决策,写成一条命令。</div>
+  <div class="foot z"><span class="b"><span class="md">recipes</span>.mcpinfra.net</span><span class="r">选型 · 配硬件 · 复制能跑对的配方</span></div>
+</div>
+</body></html>

@@ -1,0 +1,77 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><style>
+:root{--bg0:#070710;--bg1:#0b0b1c;--pur:#8b7df7;--blu:#46a6ff;--grn:#33d39a;--org:#f5933e;--pnk:#ff5fa2;--tx:#eef0f8;--sub:#9aa1ba;--line:rgba(255,255,255,.11)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px}
+.pg{width:1080px;position:relative;overflow:hidden;padding:76px 76px 60px;
+  background:radial-gradient(820px 560px at 12% -12%,rgba(245,147,62,.16),transparent 60%),radial-gradient(720px 520px at 92% 108%,rgba(70,166,255,.14),transparent 62%),linear-gradient(162deg,var(--bg0),var(--bg1) 55%,#08081a);
+  color:var(--tx);font-family:"PingFang SC","Microsoft YaHei","Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.pg::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:54px 54px;mask:radial-gradient(900px 700px at 50% 12%,#000,transparent 86%)}
+.z{position:relative;z-index:1}
+.eye{align-self:center;display:inline-flex;align-items:center;gap:11px;font-size:20px;font-weight:800;color:var(--org);border:1px solid #f5933e55;background:rgba(245,147,62,.08);padding:10px 22px;border-radius:999px}
+.eye .d{width:9px;height:9px;border-radius:50%;background:var(--org);box-shadow:0 0 14px #f5933ecc}
+.head{display:flex;flex-direction:column;align-items:center;text-align:center}
+.h1{margin-top:26px;font-size:72px;font-weight:900;letter-spacing:-2px;line-height:1.1}
+.h1 .g{background:linear-gradient(96deg,#ffb46a,#ff8fc0 55%,#a99bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{margin-top:20px;font-size:26px;color:var(--sub);font-weight:500}
+.sub b{color:#cfd4ec;font-weight:800}
+.sec{margin-top:50px;text-align:center;font-size:32px;font-weight:850;letter-spacing:-.5px;display:flex;align-items:center;gap:22px;justify-content:center}
+.sec::before,.sec::after{content:"";height:1px;width:80px;background:linear-gradient(90deg,transparent,var(--line))}
+.sec::after{background:linear-gradient(90deg,var(--line),transparent)}
+.mets{margin-top:26px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.met{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:18px;padding:26px 24px}
+.met .t{font-size:27px;font-weight:850}
+.m1 .t{color:var(--blu)}.m2 .t{color:var(--grn)}.m3 .t{color:var(--org)}
+.met .en{font-size:16px;font-weight:700;color:#6b7192;font-family:ui-monospace,monospace;margin-top:2px}
+.met .d{margin-top:12px;font-size:20px;color:var(--sub);line-height:1.5}
+.met .ref{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);font-size:19px;color:#d7dbef;font-weight:700}
+.met .ref .v{color:var(--grn)}
+.tbl{margin-top:26px;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:rgba(6,6,16,.5)}
+.tbl .cap{padding:20px 28px;font-size:21px;font-weight:800;color:#dfe3f4;border-bottom:1px solid var(--line);background:rgba(255,255,255,.03)}
+.tbl .cap b{color:var(--org)}.tbl .cap .dim{color:var(--sub);font-weight:600;font-size:18px}
+.tr{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;align-items:center}
+.tr>div{padding:20px 22px}
+.th{font-size:19px;font-weight:800;color:var(--sub);border-bottom:1px solid var(--line)}
+.tr .r{text-align:right}
+.tr .eng{font-size:24px;font-weight:850;color:#dfe3f4}
+.tr .num{font-size:24px;font-weight:800;font-family:ui-monospace,monospace}
+.win{background:linear-gradient(90deg,rgba(51,211,154,.12),rgba(51,211,154,.03))}
+.win .eng{color:var(--grn)}.win .num{color:#6ee7c0}
+.tr.body{border-bottom:1px solid rgba(255,255,255,.06)}
+.tr.body:last-child{border-bottom:none}
+.num.slow{color:var(--pnk)}.num.mid{color:var(--org)}
+.sum{margin-top:30px;border:1px solid #f5933e55;border-radius:20px;padding:30px 34px;background:linear-gradient(150deg,rgba(245,147,62,.15),rgba(139,125,247,.06));display:flex;gap:20px;align-items:center}
+.sum .ic{font-size:40px}
+.sum .tx{font-size:27px;font-weight:800;line-height:1.5}
+.sum .tx .v{color:var(--org)}.sum .tx .g{color:var(--grn)}
+.foot{display:flex;align-items:center;margin-top:44px;padding-top:22px;border-top:1px solid var(--line);font-size:21px}
+.foot .b{font-weight:800;color:#cfd4ec}.foot .b .md{color:var(--pur)}
+.foot .r{margin-left:auto;color:#6b7192;font-family:ui-monospace,monospace;font-size:18px}
+</style></head><body>
+<div class="pg">
+  <div class="head z">
+    <div class="eye"><span class="d"></span>第二关 · 跑得好不好</div>
+    <div class="h1">跑起来 <span class="g">≠</span> 跑得好</div>
+    <div class="sub">先学会看三个数,再拿<b>真实流量</b>测引擎——别信仰,上数据</div>
+  </div>
+
+  <div class="sec z">你必须会看的三个数</div>
+  <div class="mets z">
+    <div class="met m1"><div class="t">TTFT</div><div class="en">Time To First Token</div><div class="d">点下发送到看见第一个字。决定「卡不卡」的第一印象。</div><div class="ref">参照:Chat <span class="v">500ms–2s</span> · 语音/代码 &lt;200ms</div></div>
+    <div class="met m2"><div class="t">TPOT / ITL</div><div class="en">per-output-token</div><div class="d">出字的节奏。太慢像卡带,流式输出也救不回。</div><div class="ref">参照:快过 <span class="v">~150ms/字</span>(≈6 tok/s 阅读速度)</div></div>
+    <div class="met m3"><div class="t">吞吐 + 错误率</div><div class="en">tok/s · errorRate</div><div class="d">单位时间总产出,以及压力下会不会开始报错。</div><div class="ref">决定「<span class="v">能扛多少人</span>」</div></div>
+  </div>
+
+  <div class="sec z">真机横评:只换引擎,差多少?</div>
+  <div class="tbl z">
+    <div class="cap">昇腾 <b>910B4 ×4</b> · Qwen3-32B · 同一份 ShareGPT 真实流量 · <b>c128 高压档</b> <span class="dim">(仅更换推理引擎,错误率 0.00%)</span></div>
+    <div class="tr th"><div>引擎</div><div class="r">输出吞吐</div><div class="r">TTFT p50</div><div class="r">ITL p50</div></div>
+    <div class="tr body win"><div class="eng">vLLM-Ascend</div><div class="r num">1228 tok/s</div><div class="r num">1.2 s</div><div class="r num">100 ms</div></div>
+    <div class="tr body"><div class="eng">MindIE</div><div class="r num mid">764 tok/s</div><div class="r num slow">25.3 s</div><div class="r num">106 ms</div></div>
+    <div class="tr body"><div class="eng">SGLang</div><div class="r num mid">550 tok/s</div><div class="r num slow">9.0 s</div><div class="r num mid">202 ms</div></div>
+  </div>
+
+  <div class="sum z"><span class="ic"><svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#f5933e" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 20.5h17"/><rect x="5.5" y="12.5" width="3.2" height="8" rx="1"/><rect x="10.4" y="7" width="3.2" height="13.5" rx="1"/><rect x="15.3" y="10" width="3.2" height="10.5" rx="1"/></svg></span><div class="tx">同一张卡、同一个模型,<span class="v">只换引擎:吞吐差 2.2×,TTFT 差 20×</span>。这就是 <span class="g">双引擎(vLLM + SGLang)</span> 存在的意义。</div></div>
+
+  <div class="foot z"><span class="b"><span class="md">recipes</span>.mcpinfra.net</span><span class="r">github.com/weetime/recipes</span></div>
+</div>
+</body></html>

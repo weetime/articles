@@ -1,0 +1,16 @@
+{
+  "title": "同一批 8 张卡,只调一个并发参数,吞吐能差出多少",
+  "digest": "一份 DeepSeek-V4-Flash-INT8 在国产 8 卡上的 SGLang 参数寻优报告的中立解读:调并发上限吞吐涨到显存墙、Agent 长输入负载单实例扛不住、以及这类压测报告该怎么读。",
+  "cover": "final-1.png",
+  "figures": ["final-1.png", "final-2.png", "final-3.png", "final-4.png"],
+  "tags": ["推理引擎", "SGLang", "压测解读", "容量规划", "国产卡"],
+  "series": "测试报告解读",
+  "compliance": {
+    "external_links": false,
+    "footer_account_info": false,
+    "qr_code": false,
+    "absolute_terms_checked": true,
+    "neutral_voice": true,
+    "note": "中立解读、非商业推广;正文无链接/二维码/小程序,不触发广告认定;含单次实验适用边界声明。加热前确认账号侧无需标注广告。"
+  }
+}

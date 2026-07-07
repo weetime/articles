@@ -1,0 +1,78 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><style>
+:root{--bg0:#070710;--bg1:#0b0b1c;--pur:#8b7df7;--blu:#46a6ff;--grn:#33d39a;--org:#f5933e;--pnk:#ff5fa2;--tx:#eef0f8;--sub:#9aa1ba;--line:rgba(255,255,255,.11)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px}
+.pg{width:1080px;position:relative;overflow:hidden;padding:76px 72px 60px;
+  background:radial-gradient(820px 560px at 12% -12%,rgba(70,166,255,.18),transparent 60%),radial-gradient(720px 520px at 92% 108%,rgba(255,95,162,.12),transparent 62%),linear-gradient(162deg,var(--bg0),var(--bg1) 55%,#08081a);
+  color:var(--tx);font-family:"PingFang SC","Microsoft YaHei","Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.pg::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:54px 54px;mask:radial-gradient(900px 700px at 50% 12%,#000,transparent 86%)}
+.z{position:relative;z-index:1}
+.eye{align-self:center;display:inline-flex;align-items:center;gap:11px;font-size:20px;font-weight:800;color:var(--blu);border:1px solid #46a6ff55;background:rgba(70,166,255,.08);padding:10px 22px;border-radius:999px}
+.eye .d{width:9px;height:9px;border-radius:50%;background:var(--blu);box-shadow:0 0 14px #46a6ffcc}
+.head{display:flex;flex-direction:column;align-items:center;text-align:center}
+.h1{margin-top:26px;font-size:70px;font-weight:900;letter-spacing:-2px;line-height:1.1}
+.h1 .g{background:linear-gradient(96deg,#7bb8ff,#a99bff 55%,#ff8fc0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{margin-top:20px;font-size:26px;color:var(--sub);font-weight:500}
+.sub b{color:#cfd4ec;font-weight:800}
+.cols{margin-top:44px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.col{border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.03);overflow:hidden;display:flex;flex-direction:column}
+.col .hd{padding:26px 24px 22px;text-align:center;border-bottom:1px solid var(--line)}
+.col .ic{font-size:44px}
+.col .nm{margin-top:10px;font-size:34px;font-weight:900;letter-spacing:-.5px}
+.c1 .nm{color:var(--grn)}.c2 .nm{color:var(--blu)}.c3 .nm{color:var(--org)}
+.col .who{margin-top:6px;font-size:19px;color:var(--sub);font-weight:600}
+.col .bd{padding:22px 24px;flex:1;display:flex;flex-direction:column;gap:18px}
+.blk .k{font-size:18px;font-weight:800;color:#6b7192;letter-spacing:.5px}
+.blk .val{margin-top:6px;font-size:22px;font-weight:800;line-height:1.45;color:#e6e9f6}
+.c1 .blk .val .hl{color:var(--grn)}.c2 .blk .val .hl{color:var(--blu)}.c3 .blk .val .hl{color:var(--org)}
+.blk .val .dim{color:var(--sub);font-weight:600;font-size:20px}
+.col .fx{margin-top:auto;padding:18px 24px;border-top:1px solid var(--line);background:rgba(255,255,255,.02);font-size:20px;font-weight:700;line-height:1.5;color:#d7dbef}
+.col .fx .t{font-weight:800}
+.c1 .fx .t{color:var(--grn)}.c2 .fx .t{color:var(--blu)}.c3 .fx .t{color:var(--org)}
+.sum{margin-top:30px;border:1px solid #46a6ff55;border-radius:20px;padding:30px 34px;background:linear-gradient(150deg,rgba(70,166,255,.15),rgba(139,125,247,.06));display:flex;gap:20px;align-items:center}
+.sum .ic{font-size:40px}
+.sum .tx{font-size:27px;font-weight:800;line-height:1.5}
+.sum .tx .v{color:var(--blu)}
+.foot{display:flex;align-items:center;margin-top:44px;padding-top:22px;border-top:1px solid var(--line);font-size:21px}
+.foot .b{font-weight:800;color:#cfd4ec}.foot .b .md{color:var(--pur)}
+.foot .r{margin-left:auto;color:#6b7192;font-family:ui-monospace,monospace;font-size:18px}
+</style></head><body>
+<div class="pg">
+  <div class="head z">
+    <div class="eye"><span class="d"></span>第三关 · 场景化 SLO</div>
+    <div class="h1">同一个模型,<span class="g">三套 SLO</span></div>
+    <div class="sub">上线前先问一句:你这是 <b>Chat</b>、<b>RAG</b>,还是 <b>Agent</b>?盯的指标完全不同</div>
+  </div>
+
+  <div class="cols z">
+    <div class="col c1">
+      <div class="hd"><div class="ic"><svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="#33d39a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5h16a1.5 1.5 0 0 1 1.5 1.5v7a1.5 1.5 0 0 1-1.5 1.5H9.5L5 19v-2.5H4A1.5 1.5 0 0 1 2.5 15V7A1.5 1.5 0 0 1 4 5.5Z"/><circle cx="8.5" cy="11" r="1.1" fill="#33d39a" stroke="none"/><circle cx="12" cy="11" r="1.1" fill="#33d39a" stroke="none"/><circle cx="15.5" cy="11" r="1.1" fill="#33d39a" stroke="none"/></svg></div><div class="nm">Chat</div><div class="who">人在屏幕对面等</div></div>
+      <div class="bd">
+        <div class="blk"><div class="k">盯什么</div><div class="val"><span class="hl">TTFT</span> &lt;1s · <span class="hl">TPOT</span> 快过阅读</div></div>
+        <div class="blk"><div class="k">为什么</div><div class="val dim">体感为王,慢一秒就流失</div></div>
+      </div>
+      <div class="fx"><span class="t">关键动作:</span>一定开流式输出,先出字体感就救回来</div>
+    </div>
+    <div class="col c2">
+      <div class="hd"><div class="ic"><svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="#46a6ff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5.6" rx="7" ry="2.8"/><path d="M5 5.6v12.8c0 1.55 3.13 2.8 7 2.8s7-1.25 7-2.8V5.6"/><path d="M5 12c0 1.55 3.13 2.8 7 2.8s7-1.25 7-2.8"/></svg></div><div class="nm">RAG</div><div class="who">检索拼进 prompt 再问</div></div>
+      <div class="bd">
+        <div class="blk"><div class="k">盯什么</div><div class="val"><span class="hl">TTFT</span>(prefill 变重)+ <span class="hl">KV 命中率</span></div></div>
+        <div class="blk"><div class="k">为什么</div><div class="val dim">长 prompt 让首字延迟成大头</div></div>
+      </div>
+      <div class="fx"><span class="t">关键动作:</span>先让检索返回更少更准的 chunk,比调 flag 更管用</div>
+    </div>
+    <div class="col c3">
+      <div class="hd"><div class="ic"><svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="#f5933e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="6.5" width="11" height="11" rx="2.2"/><rect x="10" y="10" width="4" height="4" rx="0.6"/><path d="M9.5 6.5V3.8M14.5 6.5V3.8M9.5 20.2v-2.7M14.5 20.2v-2.7M6.5 9.5H3.8M6.5 14.5H3.8M20.2 9.5h-2.7M20.2 14.5h-2.7"/></svg></div><div class="nm">Agent</div><div class="who">没人等,喂给工具</div></div>
+      <div class="bd">
+        <div class="blk"><div class="k">盯什么</div><div class="val"><span class="hl">吞吐</span> + 总任务完成时间</div></div>
+        <div class="blk"><div class="k">为什么</div><div class="val dim">TTFT 几乎不重要,流量像离线批处理</div></div>
+      </div>
+      <div class="fx"><span class="t">关键动作:</span>和交互流量分两级优先队列,互不抢占</div>
+    </div>
+  </div>
+
+  <div class="sum z"><span class="ic"><svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#46a6ff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="#46a6ff" stroke="none"/></svg></span><div class="tx">看懂场景,你才知道<span class="v">该跟客户对齐哪个数字、该往哪调</span>——这就是从「能跑」到「跑对」。</div></div>
+
+  <div class="foot z"><span class="b"><span class="md">recipes</span>.mcpinfra.net</span><span class="r">github.com/weetime/recipes</span></div>
+</div>
+</body></html>

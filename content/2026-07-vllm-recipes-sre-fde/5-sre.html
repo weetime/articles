@@ -1,0 +1,77 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><style>
+:root{--bg0:#070710;--bg1:#0b0b1c;--pur:#8b7df7;--blu:#46a6ff;--grn:#33d39a;--org:#f5933e;--pnk:#ff5fa2;--tx:#eef0f8;--sub:#9aa1ba;--line:rgba(255,255,255,.11)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px}
+.pg{width:1080px;position:relative;overflow:hidden;padding:76px 76px 60px;
+  background:radial-gradient(820px 560px at 12% -12%,rgba(51,211,154,.16),transparent 60%),radial-gradient(720px 520px at 92% 108%,rgba(139,125,247,.16),transparent 62%),linear-gradient(162deg,var(--bg0),var(--bg1) 55%,#08081a);
+  color:var(--tx);font-family:"PingFang SC","Microsoft YaHei","Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.pg::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:54px 54px;mask:radial-gradient(900px 700px at 50% 12%,#000,transparent 86%)}
+.z{position:relative;z-index:1}
+.eye{align-self:center;display:inline-flex;align-items:center;gap:11px;font-size:20px;font-weight:800;color:var(--grn);border:1px solid #33d39a55;background:rgba(51,211,154,.08);padding:10px 22px;border-radius:999px}
+.eye .d{width:9px;height:9px;border-radius:50%;background:var(--grn);box-shadow:0 0 14px #33d39acc}
+.head{display:flex;flex-direction:column;align-items:center;text-align:center}
+.h1{margin-top:26px;font-size:68px;font-weight:900;letter-spacing:-2px;line-height:1.12}
+.h1 .g{background:linear-gradient(96deg,#6ee7c0,#7bb8ff 55%,#a99bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{margin-top:20px;font-size:26px;color:var(--sub);font-weight:600}
+.sub b{color:#cfd4ec;font-weight:800}
+.sec{margin-top:48px;text-align:center;font-size:31px;font-weight:850;letter-spacing:-.5px;display:flex;align-items:center;gap:20px;justify-content:center}
+.sec .en{font-size:18px;font-weight:700;color:#6b7192;font-family:ui-monospace,monospace}
+.sec::before,.sec::after{content:"";height:1px;width:60px;background:linear-gradient(90deg,transparent,var(--line))}
+.sec::after{background:linear-gradient(90deg,var(--line),transparent)}
+.gold{margin-top:24px;display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.g4{border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:16px;padding:22px 24px}
+.g4 .t{font-size:24px;font-weight:850;display:flex;align-items:baseline;gap:10px}
+.g4 .t .en{font-size:15px;font-weight:700;color:#6b7192;font-family:ui-monospace,monospace}
+.g4 .d{margin-top:8px;font-size:20px;color:var(--sub);line-height:1.5}
+.g4 .d code{font-family:ui-monospace,monospace;color:#cfd4ec;font-size:18px}
+.ga .t{color:var(--blu)}.gb .t{color:var(--grn)}.gc .t{color:var(--pnk)}.gd .t{color:var(--org)}
+.gd{grid-column:1 / -1;border-color:#f5933e55;background:linear-gradient(120deg,rgba(245,147,62,.12),rgba(255,255,255,.02))}
+.gd .d b{color:#ffcfa0;font-weight:800}
+.coc{margin-top:24px;display:flex;flex-direction:column;gap:14px}
+.p{display:flex;gap:22px;align-items:flex-start;border:1px solid var(--line);background:rgba(255,255,255,.035);border-radius:18px;padding:24px 30px}
+.p .idx{flex-shrink:0;width:54px;height:54px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:900;color:#fff}
+.p1 .idx{background:linear-gradient(150deg,#8b7df7,#6d5bff)}
+.p2 .idx{background:linear-gradient(150deg,#46a6ff,#2f7fe0)}
+.p3 .idx{background:linear-gradient(150deg,#33d39a,#1fae7e)}
+.p .bd{flex:1}
+.p .bd .t{font-size:27px;font-weight:850;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.p1 .bd .t .k{color:var(--pur)}.p2 .bd .t .k{color:var(--blu)}.p3 .bd .t .k{color:var(--grn)}
+.p .bd .t .en{font-size:17px;font-weight:700;color:#6b7192;font-family:ui-monospace,monospace}
+.p .bd .d{margin-top:9px;font-size:21px;color:var(--sub);line-height:1.55}
+.p .bd .d code{font-family:ui-monospace,monospace;color:#cfd4ec;font-size:19px}
+.p .bd .d b{color:#d7dbef;font-weight:700}
+.sum{margin-top:30px;border:1px solid #33d39a55;border-radius:20px;padding:30px 36px;background:linear-gradient(150deg,rgba(51,211,154,.15),rgba(139,125,247,.06));display:flex;gap:20px;align-items:center}
+.sum .ic{font-size:42px}
+.sum .tx{font-size:27px;font-weight:800;line-height:1.5}
+.sum .tx .v{color:var(--grn)}
+.foot{display:flex;align-items:center;margin-top:44px;padding-top:22px;border-top:1px solid var(--line);font-size:21px}
+.foot .b{font-weight:800;color:#cfd4ec}.foot .b .md{color:var(--pur)}
+.foot .r{margin-left:auto;color:#6b7192;font-family:ui-monospace,monospace;font-size:18px}
+</style></head><body>
+<div class="pg">
+  <div class="head z">
+    <div class="eye"><span class="d"></span>第四关 · 让它持续稳定跑</div>
+    <div class="h1">挂上黄金指标,<span class="g">写进版本库</span></div>
+    <div class="sub">上线不是终点,是<b>值班的开始</b> —— 凌晨三点告警响,你靠什么定位?</div>
+  </div>
+
+  <div class="sec z">① 黄金指标 · LLM 版 <span class="en">4 golden signals</span></div>
+  <div class="gold z">
+    <div class="g4 ga"><div class="t">延迟 <span class="en">Latency</span></div><div class="d">TTFT + TPOT,分 <code>p50 / p95 / p99</code> 看。</div></div>
+    <div class="g4 gb"><div class="t">流量 <span class="en">Traffic</span></div><div class="d">RPS / 并发数 / 输出 <code>tok/s</code>。</div></div>
+    <div class="g4 gc"><div class="t">错误 <span class="en">Errors</span></div><div class="d">errorRate / 超时 / OOM。</div></div>
+    <div class="g4 gd"><div class="t">饱和度 <span class="en">Saturation ★ 最易漏</span></div><div class="d"><b>KV-cache 利用率 + 调度排队深度</b>。横评里 MindIE 排队冲到 34、SGLang KV 打满 100% —— <b>正是这两个信号解释了它们 TTFT 崩到 25s</b>。只看延迟只知道「慢了」,盯饱和度才知道「为什么慢、下一步扩什么」。</div></div>
+  </div>
+
+  <div class="sec z">② config-as-code <span class="en">部署进版本库</span></div>
+  <div class="coc z">
+    <div class="p p1"><div class="idx">1</div><div class="bd"><div class="t"><span class="k">配置即代码</span><span class="en">versioned YAML</span></div><div class="d">带版本的 YAML,<code>min_vllm_version</code> pin 死、硬件 verified 三态,部署决策进 <b>code review</b> 而非记忆。</div></div></div>
+    <div class="p p2"><div class="idx">2</div><div class="bd"><div class="t"><span class="k">确定性</span><span class="en">pure function</span></div><div class="d">纯函数合成,<b>同输入 = 同命令</b>,可 diff、可回滚,从源头拒绝配置漂移。</div></div></div>
+    <div class="p p3"><div class="idx">3</div><div class="bd"><div class="t"><span class="k">可编程接入</span><span class="en">JSON API</span></div><div class="d">每个配方产出 JSON,<b>Agent / 平台自动识别、拼命令</b>;服务 OpenAI + Anthropic 双协议兼容,直接接 Claude Code。</div></div></div>
+  </div>
+
+  <div class="sum z"><span class="ic"><svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#33d39a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8l7 2.8v5.1c0 4.4-3 7.4-7 8.9-4-1.5-7-4.5-7-8.9V5.6l7-2.8Z"/><path d="M9 11.9l2.2 2.2L15 10.2"/></svg></span><div class="tx">部署进版本库 + 饱和度上告警 = 你的服务从「能跑」变成 <span class="v">「敢上线、能值班」</span>。</div></div>
+
+  <div class="foot z"><span class="b"><span class="md">recipes</span>.mcpinfra.net</span><span class="r">github.com/weetime/recipes</span></div>
+</div>
+</body></html>

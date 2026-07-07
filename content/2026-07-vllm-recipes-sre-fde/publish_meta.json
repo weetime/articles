@@ -1,0 +1,19 @@
+{
+  "wechat_title": "大模型部署,从「手艺」到「工程」:一份 FDE 跑得通、SRE 睡得着的落地手册",
+  "wechat_digest": "第二人称带你把大模型推理部署走通五关:①能跑(选型/算卡/一条命令起服务)②跑得好不好(TTFT/TPOT/吞吐三个数,附昇腾910B4上Qwen3-32B三引擎实测:只换引擎吞吐差2.2×、TTFT差20×)③跑对(Chat/RAG/Agent 三种场景三套SLO)④持续稳定跑(黄金指标含饱和度 + config-as-code)⑤国产卡落地(配方覆盖 + GPUStack 引擎镜像)。从「能跑」到「持续稳定跑」,读完恭喜你学会了。",
+  "article_type_news": "news",
+  "article_type_pic": "newspic",
+  "figures": [
+    "0-cover.png (封面竖图 · 从手艺到工程 / 能跑到持续稳定跑 · 2160×2700)",
+    "1-overview.png (项目总览 · 116配方/双引擎/国产卡+GPUStack/JSON API · 2160×4096)",
+    "2-fde.png (第一关 · 让它能跑 · 最后一公里四道坎 · 2160×3958)",
+    "3-perf.png (第二关 · 三个核心指标 + 昇腾910B4三引擎真机横评 · 2160×3084)",
+    "4-scenario.png (第三关 · Chat/RAG/Agent 三场景三套SLO · 2160×2482)",
+    "5-sre.png (第四关 · 黄金指标(含饱和度) + config-as-code · 2160×3534)",
+    "6-topology.png (下一站 · PD 分离 × KV-Cache 感知路由拓扑)",
+    "footer-card.png (落款卡)"
+  ],
+  "figure_note": "深色系手机竖向长图,严格对齐 recipes.mcpinfra.net 品牌(深黑→深紫渐变底、紫罗兰主色 + 绿/蓝/品红点缀、mac 终端块、底部左右签名)。1080 宽 2x 渲染=大字清晰。3-perf 用真实昇腾三引擎横评数据;6-topology 复用 recipes info-pics 的 PD 分离拓扑图。",
+  "cover": "cover.png",
+  "x_text": "大模型推理部署,第二人称带你走通五关:能跑→跑得好不好→跑对→持续稳定跑→国产卡落地。真实数据:同一台昇腾910B4、同一个Qwen3-32B,只换引擎——吞吐差2.2×、TTFT差20×。这就是vLLM recipes坚持双引擎(vLLM+SGLang)的原因。附场景化SLO(Chat/RAG/Agent)与黄金指标(别漏饱和度)。\n\n#vLLM #SGLang #LLM推理 #昇腾 #SRE #FDE"
+}

@@ -1,0 +1,29 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><style>
+:root{--bg0:#070710;--bg1:#0b0b1c;--pur:#8b7df7;--blu:#46a6ff;--grn:#33d39a;--pnk:#ff5fa2;--tx:#eef0f8;--sub:#9aa1ba;--line:rgba(255,255,255,.12)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px}
+.cv{width:1080px;height:460px;position:relative;overflow:hidden;padding:50px 60px;
+  background:radial-gradient(720px 420px at 12% -30%,rgba(139,125,247,.24),transparent 62%),radial-gradient(640px 420px at 92% 120%,rgba(39,211,230,.12),transparent 62%),linear-gradient(160deg,var(--bg0),var(--bg1) 55%,#08081a);
+  color:var(--tx);font-family:"PingFang SC","Microsoft YaHei","Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;justify-content:center}
+.cv::before{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:48px 48px;mask:radial-gradient(820px 420px at 50% 40%,#000,transparent 82%)}
+.eye{position:relative;z-index:1;display:flex;align-items:center;gap:11px;font-size:21px;font-weight:800;color:var(--pur)}
+.eye .d{width:9px;height:9px;border-radius:50%;background:var(--pur);box-shadow:0 0 14px #8b7df7aa}
+.h1{position:relative;z-index:1;margin-top:16px;font-size:60px;font-weight:900;letter-spacing:-1.5px;line-height:1.12}
+.h1 .g{background:linear-gradient(92deg,var(--blu),var(--pur) 55%,var(--pnk));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{position:relative;z-index:1;margin-top:16px;font-size:23px;color:var(--sub);font-weight:500}
+.sub b{color:#cfd4ec;font-weight:800}.sub .v{color:var(--pur);font-weight:800}
+.chips{position:relative;z-index:1;display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+.cp{font-size:18px;font-weight:700;padding:9px 18px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.04)}
+.cp.a{color:var(--pur);border-color:#8b7df755}.cp.b{color:var(--grn);border-color:#33d39a55}.cp.c{color:var(--blu);border-color:#46a6ff55}
+</style></head><body>
+<div class="cv">
+  <div class="eye"><span class="d"></span>recipes.mcpinfra.net · SRE × FDE 视角</div>
+  <div class="h1">大模型部署,从「手艺」到<span class="g">「工程」</span></div>
+  <div class="sub">一份 <b>116 个模型</b> 的可执行部署契约 —— <span class="v">FDE</span> 跑通最后一公里,<span class="v">SRE</span> 让它别在凌晨三点炸</div>
+  <div class="chips">
+    <span class="cp a">116 模型配方</span>
+    <span class="cp c">8 部署策略</span>
+    <span class="cp b">vLLM · SGLang 双引擎</span>
+  </div>
+</div>
+</body></html>

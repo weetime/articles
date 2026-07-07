@@ -1,0 +1,21 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8"><link rel="stylesheet" href="assets/neutral.css"></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>测试报告解读 · 推理引擎参数寻优<span class="tag">SGLang · 8 卡实测</span></div>
+  <h1 class="title">同一批 8 张卡,只调一个并发参数,<br>吞吐能差出多少?</h1>
+  <div class="subtitle">一份 <b>DeepSeek-V4-Flash-INT8</b> 在国产 8 卡上的 SGLang 参数寻优报告。这里做一次中立解读——<b>它测了什么、结论是什么、这些数字该怎么读</b>。</div>
+
+  <div class="metrics">
+    <div class="mcard up"><div class="bar"></div><div class="lab">Chat 峰值吞吐</div><div class="big">+45%</div><div class="s">568 → 823 tok/s(调并发上限)</div></div>
+    <div class="mcard wall"><div class="bar"></div><div class="lab">显存墙</div><div class="big">100%</div><div class="s">并发 128 时 KV 缓存占满</div></div>
+    <div class="mcard amber"><div class="bar"></div><div class="lab">Agent 首字延迟</div><div class="big">65s+</div><div class="s">长输入负载下单实例过载</div></div>
+    <div class="mcard"><div class="bar"></div><div class="lab">模型上下文</div><div class="big">1M</div><div class="s">部署原本锁在 8K</div></div>
+  </div>
+
+  <div class="chips">
+    <span class="chip"><span class="cdot"></span>硬件 <b>PPU-ZW810E ×8</b></span>
+    <span class="chip"><span class="cdot"></span>引擎 <b>SGLang 0.5.12</b></span>
+    <span class="chip"><span class="cdot"></span>模型 <b>DeepSeek-V4-Flash-INT8</b></span>
+    <span class="chip"><span class="cdot"></span>负载 <b>ShareGPT + 真实 Agent trace</b></span>
+  </div>
+</div>
+</body></html>

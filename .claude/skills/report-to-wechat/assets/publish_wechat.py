@@ -64,7 +64,7 @@ def upload_content_img(token, path):
 
 # ---------- 极简 markdown -> 公众号内联样式 HTML ----------
 def inline(text):
-    text = re.sub(r"`([^`]+)`", r'<code style="background:#f2f2f5;border-radius:4px;padding:1px 6px;font-size:14px;color:#c0341d;">\1</code>', text)
+    text = re.sub(r"`([^`]+)`", r'<code style="background:#eef1f4;border-radius:4px;padding:1px 6px;font-size:13px;color:#3b5b80;">\1</code>', text)
     text = re.sub(r"\*\*([^*]+)\*\*", r'<strong style="color:#16161a;font-weight:700;">\1</strong>', text)
     text = re.sub(r"(?<!\*)\*([^*]+)\*(?!\*)", r'<em style="color:#666;">\1</em>', text)
     return text
@@ -80,24 +80,24 @@ def md_to_html(md, img_urls):
 
     def flush_para():
         if para:
-            out.append(f'<p style="margin:18px 0;font-size:16px;line-height:1.85;color:#2b2b33;">{inline(" ".join(para))}</p>')
+            out.append(f'<p style="margin:20px 0;font-size:15px;line-height:1.8;color:#2b2b33;">{inline(" ".join(para))}</p>')
             para.clear()
 
     def flush_quote():
         if quote:
             body = "<br>".join(inline(q) for q in quote)
-            out.append(f'<blockquote style="margin:20px 0;padding:14px 18px;background:#f7f6fb;border-left:4px solid #8b6dff;border-radius:8px;color:#555;font-size:15px;line-height:1.8;">{body}</blockquote>')
+            out.append(f'<blockquote style="margin:20px 0;padding:14px 18px;background:#f3f6fa;border-left:4px solid #1a4d80;border-radius:8px;color:#4a5058;font-size:14px;line-height:1.8;">{body}</blockquote>')
             quote.clear()
 
     def flush_ul():
         if ul:
-            items = "".join(f'<li style="margin:8px 0;font-size:16px;line-height:1.8;color:#2b2b33;">{inline(x)}</li>' for x in ul)
+            items = "".join(f'<li style="margin:7px 0;font-size:15px;line-height:1.8;color:#2b2b33;">{inline(x)}</li>' for x in ul)
             out.append(f'<ul style="margin:14px 0;padding-left:22px;">{items}</ul>')
             ul.clear()
 
     def flush_ol():
         if ol:
-            items = "".join(f'<li style="margin:8px 0;font-size:16px;line-height:1.85;color:#2b2b33;">{inline(x)}</li>' for x in ol)
+            items = "".join(f'<li style="margin:7px 0;font-size:15px;line-height:1.8;color:#2b2b33;">{inline(x)}</li>' for x in ol)
             out.append(f'<ol style="margin:14px 0;padding-left:26px;">{items}</ol>')
             ol.clear()
 
@@ -111,10 +111,11 @@ def md_to_html(md, img_urls):
         if not rows:
             return
         head, body = rows[0], rows[1:]
-        th = "".join(f'<th style="padding:9px 12px;border:1px solid #e3e3ea;background:#f7f6fb;font-size:14px;color:#16161a;text-align:left;">{inline(c)}</th>' for c in head)
+        # 第一列(标签列)不换行,避免"搜 索 方 式"逐字折行;内容列照常换行
+        th = "".join(f'<th style="padding:9px 12px;border:1px solid #e3e3ea;background:#f7f6fb;font-size:14px;color:#16161a;text-align:left;{"white-space:nowrap;" if j == 0 else ""}">{inline(c)}</th>' for j, c in enumerate(head))
         trs = ""
         for r in body:
-            tds = "".join(f'<td style="padding:9px 12px;border:1px solid #ececf0;font-size:14px;color:#2b2b33;">{inline(c)}</td>' for c in r)
+            tds = "".join(f'<td style="padding:9px 12px;border:1px solid #ececf0;font-size:14px;color:#2b2b33;{"white-space:nowrap;" if j == 0 else ""}">{inline(c)}</td>' for j, c in enumerate(r))
             trs += f"<tr>{tds}</tr>"
         out.append(f'<table style="border-collapse:collapse;width:100%;margin:18px 0;"><thead><tr>{th}</tr></thead><tbody>{trs}</tbody></table>')
 
@@ -128,8 +129,8 @@ def md_to_html(md, img_urls):
         if s.startswith("```"):
             if in_code:
                 esc = "\n".join(code).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-                out.append('<pre style="margin:18px 0;padding:16px 18px;background:#f6f7f9;border:1px solid #e3e3ea;border-radius:10px;overflow-x:auto;">'
-                           f'<code style="font-family:SFMono-Regular,Consolas,Menlo,monospace;font-size:13px;color:#24292f;white-space:pre;line-height:1.7;">{esc}</code></pre>')
+                out.append('<pre style="margin:20px 0;padding:16px 18px;background:#1f2328;border-radius:10px;overflow-x:auto;">'
+                           f'<code style="font-family:SFMono-Regular,Consolas,Menlo,monospace;font-size:13px;color:#e6edf3;white-space:pre;line-height:1.7;">{esc}</code></pre>')
                 code.clear(); in_code = False
             else:
                 flush_all(); in_code = True
@@ -147,9 +148,13 @@ def md_to_html(md, img_urls):
             if url:
                 out.append(f'<p style="margin:22px 0;text-align:center;"><img src="{url}" alt="{m_img.group(1)}" style="width:100%;border-radius:10px;display:block;"></p>')
             i += 1; continue
+        if s.startswith("### "):
+            flush_all()
+            out.append(f'<h3 style="margin:28px 0 10px;font-size:16px;font-weight:700;color:#15507d;line-height:1.5;">{inline(s[4:].strip())}</h3>')
+            i += 1; continue
         if s.startswith("## "):
             flush_all()
-            out.append(f'<h2 style="margin:34px 0 14px;font-size:21px;font-weight:800;color:#16161a;border-left:5px solid #8b6dff;padding-left:12px;line-height:1.4;">{inline(s[3:].strip())}</h2>')
+            out.append(f'<h2 style="text-align:center;margin:42px 0 22px;"><span style="display:inline-block;background:#1a4d80;color:#ffffff;font-size:17px;font-weight:700;padding:9px 24px;border-radius:9px;">{inline(s[3:].strip())}</span></h2>')
             i += 1; continue
         if s == "---":
             flush_all()
