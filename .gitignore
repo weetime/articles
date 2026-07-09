@@ -27,3 +27,13 @@ e*.ass
 ce*.mp4
 _voen*.mp4
 ss*.mp3
+
+# V2/V3 生成音频(可重生成)
+bgm-v2.wav
+_np_*.wav
+sfx/
+
+# 视频/音频产物(可由 build_video.py / make_bgm.py 重生成,不入库)
+*.mp4
+*.wav
+*.mp3
