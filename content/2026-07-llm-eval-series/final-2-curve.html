@@ -1,0 +1,56 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8">
+<link rel="stylesheet" href="style-dark.css">
+<style>
+  .chart{margin-top:30px;background:var(--panel-solid);border:1px solid var(--line2);border-radius:var(--r);padding:30px 34px 20px}
+  .lgd{display:flex;gap:26px;margin-top:18px;flex-wrap:wrap;font-size:19px;color:var(--ink2);font-weight:600}
+  .lgd span{display:flex;align-items:center;gap:9px}
+  .lgd i{width:26px;height:6px;border-radius:3px;display:inline-block}
+  .three{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+  .tb{background:var(--panel-solid);border:1px solid var(--line2);border-radius:16px;padding:18px 20px}
+  .tb .h{font-size:21px;font-weight:800}
+  .tb .d{font-size:16px;color:var(--ink3);margin-top:8px;line-height:1.5}
+  .tb.g{border-color:var(--violet);background:linear-gradient(180deg,#1c1b33,#141327)}
+  .tb .h .m{font-size:15px;font-weight:700;color:var(--violet2);margin-left:6px}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>方法主线 · 三线法<span class="tag">latency-throughput</span></div>
+  <h2 class="sec">为什么峰值不能上生产:<span class="hi">找 SLO 拐点</span></h2>
+  <div class="sec-sub">固定负载 → 阶梯加压 → 画「吞吐 vs P95 延迟」曲线。延迟陡升的那个膝盖点,才是能上线的运行点。</div>
+
+  <div class="chart">
+    <svg viewBox="0 0 980 430" width="100%">
+      <rect x="92" y="40" width="470" height="340" fill="#34d39914"/>
+      <line x1="92" y1="40" x2="92" y2="380" stroke="#3a3a63" stroke-width="2"/>
+      <line x1="92" y1="380" x2="930" y2="380" stroke="#3a3a63" stroke-width="2"/>
+      <text x="82" y="52" text-anchor="end" font-size="15" fill="#8a87b0">高</text>
+      <text x="82" y="374" text-anchor="end" font-size="15" fill="#8a87b0">低</text>
+      <text x="40" y="215" text-anchor="middle" font-size="18" fill="#c6c4e8" font-weight="700" transform="rotate(-90 40 215)">P95 延迟</text>
+      <text x="510" y="416" text-anchor="middle" font-size="18" fill="#c6c4e8" font-weight="700">吞吐(RPS / TPS)→ 并发加压</text>
+      <path d="M120,346 C330,332 460,318 562,300 C660,283 726,196 806,112 L862,66"
+            fill="none" stroke="#8b6dff" stroke-width="6" stroke-linecap="round"/>
+      <line x1="562" y1="300" x2="562" y2="380" stroke="#34d399" stroke-width="2.5" stroke-dasharray="7 6"/>
+      <circle cx="562" cy="300" r="9" fill="#34d399"/>
+      <text x="562" y="330" text-anchor="middle" font-size="17" fill="#34d399" font-weight="800">SLO 拐点</text>
+      <text x="562" y="352" text-anchor="middle" font-size="15" fill="#34d399" font-weight="700">= SLA 稳定线</text>
+      <circle cx="862" cy="66" r="8" fill="#fb7185"/>
+      <text x="856" y="52" text-anchor="end" font-size="16" fill="#fb7185" font-weight="800">性能上限线</text>
+      <text x="856" y="72" text-anchor="end" font-size="14" fill="#fb7185" font-weight="600">峰值吞吐 · 延迟已崩</text>
+      <text x="300" y="150" text-anchor="middle" font-size="18" fill="#34d399" font-weight="800">安全运行区</text>
+      <text x="300" y="174" text-anchor="middle" font-size="15" fill="#34d399" font-weight="600">延迟平稳 · 可上生产</text>
+    </svg>
+    <div class="lgd">
+      <span><i style="background:#8b6dff"></i>延迟-吞吐曲线</span>
+      <span><i style="background:#34d399"></i>SLA 稳定线(拐点)</span>
+      <span><i style="background:#fb7185"></i>性能上限线(峰值)</span>
+    </div>
+  </div>
+
+  <div class="three">
+    <div class="tb"><div class="h">性能上限线</div><div class="d">极限峰值吞吐 → 定容量边界,<b style="color:var(--ink2)">不推荐直接上生产</b>。</div></div>
+    <div class="tb g"><div class="h">SLA 稳定线<span class="m">生产默认</span></div><div class="d">延迟/错误率达标下的最高吞吐 → 推荐并发与配置。</div></div>
+    <div class="tb"><div class="h">成本效率线</div><div class="d">达标前提下每卡吞吐最高 → 定采购与扩容。</div></div>
+  </div>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · 三线法</span><span class="right">GuideLLM sweep · goodput = 满足 SLO 的完成请求/s</span></div>
+</div>
+</body></html>

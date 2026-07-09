@@ -1,0 +1,37 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8">
+<link rel="stylesheet" href="style-dark.css">
+<style>
+  .tbl{margin-top:30px;width:100%;border-collapse:separate;border-spacing:0;background:var(--panel-solid);border:1px solid var(--line2);border-radius:var(--r);overflow:hidden}
+  .tbl th{background:#1b1a32;color:var(--ink2);font-size:19px;font-weight:800;text-align:left;padding:18px 22px;border-bottom:2px solid var(--line2)}
+  .tbl td{font-size:20px;padding:18px 22px;border-bottom:1px solid var(--line);color:var(--ink);vertical-align:middle}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl td .s{font-size:15px;color:var(--ink4);font-weight:700;margin-right:8px}
+  .tbl td b{color:var(--ink)}
+  .pill{font-size:16px;font-weight:800;padding:5px 12px;border-radius:999px;white-space:nowrap;display:inline-block}
+  .tbl td.bn{white-space:nowrap}
+  .pill.pf{color:var(--violet2);background:#8b6dff22}
+  .pill.dc{color:var(--cyan);background:#2dd4ee22}
+  .pill.tp{color:var(--amber);background:#fbbf2422}
+  .pill.cap{color:var(--rose);background:#fb718522}
+  .agent td{background:linear-gradient(90deg,#1f1c3a,#161529)}
+  .agent td:first-child{box-shadow:inset 4px 0 0 var(--violet)}
+  .star{font-size:15px;color:#fff;background:var(--violet-deep);border-radius:6px;padding:2px 8px;font-weight:800;margin-left:8px}
+  .mut{color:var(--ink3);font-size:18px}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>场景库<span class="tag">一个模型 · 五种测法</span></div>
+  <h2 class="sec">同一个模型,<span class="hi">五个场景五种测法</span></h2>
+  <div class="sec-sub">先对号入座:你的业务落在哪个瓶颈上,就决定了主看指标与测试工具。</div>
+
+  <table class="tbl">
+    <tr><th style="width:26%">场景</th><th style="width:19%">瓶颈</th><th style="width:29%">主看指标</th><th style="width:26%">推荐工具</th></tr>
+    <tr><td><span class="s">S1</span>在线对话 / 客服</td><td class="bn"><span class="pill dc">Decode</span></td><td>TTFT / ITL <b>P95</b></td><td class="mut">EvalScope · AIPerf</td></tr>
+    <tr><td><span class="s">S2</span>长上下文 / RAG</td><td class="bn"><span class="pill pf">Prefill</span></td><td>TTFT @ 长输入</td><td class="mut">EvalScope 定长扫描</td></tr>
+    <tr><td><span class="s">S3</span>文档总结 / 批处理</td><td class="bn"><span class="pill tp">吞吐</span></td><td>Total TPS · goodput · 成本</td><td class="mut">throughput profile</td></tr>
+    <tr><td><span class="s">S4</span>代码生成</td><td class="bn"><span class="pill dc">Decode</span></td><td>Output TPS + 通过率</td><td class="mut">压测 + HumanEval</td></tr>
+    <tr class="agent"><td><span class="s">S5</span>Agent / 工具调用<span class="star">重点</span></td><td class="bn"><span class="pill pf">Prefill</span> <span class="pill cap">+ 能力</span></td><td><b>Pass^k</b> · 工具调用正确率</td><td><b>τ²-bench · BFCL</b></td></tr>
+  </table>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · 场景驱动评测</span><span class="right">脱离场景的延迟数字没有意义</span></div>
+</div>
+</body></html>

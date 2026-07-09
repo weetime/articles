@@ -1,0 +1,30 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8">
+<link rel="stylesheet" href="style-dark.css">
+<style>
+  .subtitle{max-width:960px}
+  .mcard .glow{position:absolute;left:0;top:0;right:auto;width:100%;height:5px;border-radius:0;filter:none;opacity:1}
+  .mcard .big.warn{color:var(--rose)}
+  .mcard .big.vi{background:linear-gradient(100deg,var(--violet2),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>大模型推理评测 · 方法论<span class="tag">评测 ≠ 调优</span></div>
+  <h1 class="title">别只看跑分<br><span class="hi">峰值 token/s ≠ 可用性能</span></h1>
+  <div class="subtitle">如何真正把一个模型<b>测明白</b>——从「延迟-吞吐曲线」到「五场景五测法」,再到 Agent 的 <b>Pass^k</b>。<br>评测聚焦<b>冻结配置下的业务可用性</b>,而非参数调优。</div>
+
+  <div class="metrics">
+    <div class="mcard"><div class="glow" style="background:var(--green)"></div><div class="lab">有效吞吐 goodput</div><div class="big vi">≠峰值</div><div class="flow">仅计满足 SLO</div></div>
+    <div class="mcard"><div class="glow" style="background:var(--cyan)"></div><div class="lab">TTFT 随并发</div><div class="big warn">×1000</div><div class="flow"><span class="o">0.2s</span> → <span class="n">200s+</span></div></div>
+    <div class="mcard"><div class="glow" style="background:var(--violet)"></div><div class="lab">Agent 实测 Pass⁴</div><div class="big">67%</div><div class="flow"><span class="o">Pass¹ 表面 85.7%</span></div></div>
+    <div class="mcard"><div class="glow" style="background:var(--amber)"></div><div class="lab">场景 → 测法</div><div class="big">5→5</div><div class="flow">Prefill / Decode 分离</div></div>
+  </div>
+
+  <div class="chips">
+    <div class="chip"><span style="width:7px;height:7px;border-radius:2px;background:var(--violet);flex-shrink:0"></span>评测 ≠ 调优</div>
+    <div class="chip"><span style="width:7px;height:7px;border-radius:2px;background:var(--violet);flex-shrink:0"></span><b>延迟-吞吐曲线</b>为主干</div>
+    <div class="chip"><span style="width:7px;height:7px;border-radius:2px;background:var(--violet);flex-shrink:0"></span>Agent:<b>τ²-bench · BFCL</b></div>
+    <div class="chip"><span style="width:7px;height:7px;border-radius:2px;background:var(--violet);flex-shrink:0"></span><b>PPU · DeepSeek-V4-Flash</b> 实测</div>
+  </div>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · 多引擎推理可观测</span><span class="right">mcpinfra.net · github.com/weetime</span></div>
+</div>
+</body></html>

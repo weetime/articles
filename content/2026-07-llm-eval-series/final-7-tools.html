@@ -1,0 +1,32 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8">
+<link rel="stylesheet" href="style-dark.css">
+<style>
+  .tbl{margin-top:28px;width:100%;border-collapse:separate;border-spacing:0;background:var(--panel-solid);border:1px solid var(--line2);border-radius:var(--r);overflow:hidden}
+  .tbl th{background:#1b1a32;color:var(--ink2);font-size:18px;font-weight:800;text-align:left;padding:16px 22px;border-bottom:2px solid var(--line2)}
+  .tbl td{font-size:19px;padding:16px 22px;border-bottom:1px solid var(--line);color:var(--ink2);vertical-align:middle}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl td .n{font-size:22px;font-weight:850;color:var(--ink)}
+  .tbl td .sub{font-size:15px;color:var(--ink4);font-weight:600}
+  .tbl td b{color:var(--violet2)}
+  .tag2{font-size:15px;font-weight:800;padding:4px 11px;border-radius:999px;white-space:nowrap;color:var(--cyan);background:#2dd4ee1a}
+  .hot td{background:linear-gradient(90deg,#1f1c3a,#161529)}
+  .hot td:first-child{box-shadow:inset 4px 0 0 var(--violet)}
+  .star{font-size:14px;color:#fff;background:var(--violet-deep);border-radius:6px;padding:2px 8px;font-weight:850;margin-left:8px}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>工具选型 · 各司其职<span class="tag">对症下药</span></div>
+  <h2 class="sec">按场景,<span class="hi">选对工具</span></h2>
+  <div class="sec-sub">性能、SLO 容量、能力/质量各有专用工具;同一份报告主指标固定用一种,别混口径。</div>
+
+  <table class="tbl">
+    <tr><th style="width:30%">工具</th><th style="width:40%">强项</th><th style="width:30%">什么时候用</th></tr>
+    <tr class="hot"><td><span class="n">EvalScope</span><span class="star">首选</span><br><span class="sub">ModelScope</span></td><td>性能压测 <b>+ 能力评测</b>一体,可接 OpenCompass</td><td>国产生态一站式</td></tr>
+    <tr><td><span class="n">GuideLLM</span><br><span class="sub">vLLM / Red Hat</span></td><td><b>SLO 驱动</b>:sweep 自动扫 + goodput</td><td>找拐点 · 容量规划</td></tr>
+    <tr><td><span class="n">AIPerf / GenAI-Perf</span><br><span class="sub">NVIDIA</span></td><td>并发 + 请求率双控 · <b>多轮 chat</b></td><td>通用 · 多轮</td></tr>
+    <tr><td><span class="n">vLLM / SGLang bench</span><br><span class="sub">引擎自带</span></td><td>复现引擎<b>官方口径</b></td><td>跟官方对照</td></tr>
+    <tr><td><span class="n">lm-eval · OpenCompass</span><br><span class="sub">质量/能力</span></td><td>学术基准 · 准确率</td><td>代码 / 知识质量</td></tr>
+  </table>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · 工具选型</span><span class="right">要跟官方对照,就复现官方那一款</span></div>
+</div>
+</body></html>

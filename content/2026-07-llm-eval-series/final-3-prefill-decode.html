@@ -1,0 +1,54 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8">
+<link rel="stylesheet" href="style-dark.css">
+<style>
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:32px}
+  .mblock{background:var(--panel-solid);border:1px solid var(--line2);border-radius:var(--r);padding:28px 30px;position:relative;overflow:hidden}
+  .mblock .top{height:6px;position:absolute;left:0;top:0;width:100%}
+  .mblock .name{font-size:30px;font-weight:850;margin-top:6px}
+  .mblock .tagline{font-size:19px;font-weight:800;margin-top:8px;padding:5px 14px;border-radius:999px;display:inline-block}
+  .kv{margin-top:20px}
+  .kv .row{display:flex;gap:14px;padding:11px 0;border-top:1px solid var(--line)}
+  .kv .row:first-child{border-top:none}
+  .kv .k{width:96px;flex-shrink:0;font-size:17px;color:var(--ink3);font-weight:700}
+  .kv .v{font-size:19px;color:var(--ink);font-weight:600;line-height:1.45}
+  .kv .v b{color:var(--violet2)}
+  .p .top{background:var(--violet)} .p .tagline{color:var(--violet2);background:#8b6dff1a;border:1px solid #8b6dff55}
+  .d .top{background:var(--cyan)} .d .tagline{color:var(--cyan);background:#2dd4ee1a;border:1px solid #2dd4ee55}
+  .note{margin-top:26px;font-size:20px;color:var(--ink2);background:linear-gradient(180deg,#1c1b33,#141327);border:1px solid var(--line2);border-radius:16px;padding:20px 24px;line-height:1.55}
+  .note b{color:var(--violet2)}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>物理根因<span class="tag">prefill vs decode</span></div>
+  <h2 class="sec">一次推理两个阶段,<span class="hi">瓶颈正相反</span></h2>
+  <div class="sec-sub">这就是为什么「一个模型要五种测法」——业务落在哪个阶段,该看的指标、该调的参数就都不同。</div>
+
+  <div class="grid2">
+    <div class="mblock p"><div class="top"></div>
+      <div class="name">Prefill</div>
+      <div class="tagline">算力受限 · compute-bound</div>
+      <div class="kv">
+        <div class="row"><div class="k">在做什么</div><div class="v">一次前向计算完整 prompt,构建 KV Cache</div></div>
+        <div class="row"><div class="k">瓶颈</div><div class="v">算力 <b>FLOPS</b></div></div>
+        <div class="row"><div class="k">关键指标</div><div class="v"><b>TTFT</b>(首 token 延迟)</div></div>
+        <div class="row"><div class="k">典型负载</div><div class="v">长输入 · RAG · <b>Agent</b></div></div>
+        <div class="row"><div class="k">相关参数</div><div class="v">chunked prefill · prefix/radix cache</div></div>
+      </div>
+    </div>
+    <div class="mblock d"><div class="top"></div>
+      <div class="name">Decode</div>
+      <div class="tagline">带宽受限 · memory-bandwidth-bound</div>
+      <div class="kv">
+        <div class="row"><div class="k">在做什么</div><div class="v">逐 token 生成输出</div></div>
+        <div class="row"><div class="k">瓶颈</div><div class="v">显存带宽 <b>HBM</b> · KV 读取</div></div>
+        <div class="row"><div class="k">关键指标</div><div class="v"><b>TPOT / ITL</b>(生成速度)</div></div>
+        <div class="row"><div class="k">典型负载</div><div class="v">长输出 · 高并发流式</div></div>
+        <div class="row"><div class="k">相关参数</div><div class="v">MTP · CUDA/NPU Graph · TP/DP</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note"><b>Prefill 受限于算力,Decode 受限于带宽。</b> 对话以 decode 为主(取决于生成速度),Agent 以 prefill 为主(取决于长输入处理)——因此测法必须分开。</div>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · 推理两阶段</span><span class="right">source: BentoML LLM Inference Handbook</span></div>
+</div>
+</body></html>

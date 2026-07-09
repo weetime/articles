@@ -1,0 +1,54 @@
+<!doctype html><html lang="zh"><head><meta charset="utf-8">
+<link rel="stylesheet" href="style-dark.css">
+<style>
+  .chart{margin-top:26px;background:var(--panel-solid);border:1px solid var(--line2);border-radius:var(--r);padding:28px 32px 18px}
+  .lgd{display:flex;gap:26px;margin-top:14px;flex-wrap:wrap;font-size:18px;color:var(--ink2);font-weight:700}
+  .lgd span{display:flex;align-items:center;gap:9px}
+  .lgd i{width:26px;height:6px;border-radius:3px;display:inline-block}
+  .note{margin-top:22px;font-size:20px;color:var(--ink);background:linear-gradient(180deg,#1c1b33,#141327);border:1px solid var(--line2);border-radius:16px;padding:20px 24px;line-height:1.6}
+  .note .t{font-size:17px;font-weight:800;color:var(--violet2);letter-spacing:.3px}
+  .note b{color:var(--violet2)} .note .big{font-weight:850}
+</style></head><body>
+<div class="poster">
+  <div class="eyebrow"><span class="dot"></span>Agent 可靠性<span class="tag">pass@1 → pass^k</span></div>
+  <h2 class="sec">为什么 Agent 要看 <span class="hi">Pass^k</span></h2>
+  <div class="sec-sub">Agent 需连续执行多步,单步出错即全局失败。平均成功率(Pass@1)具有误导性——应看「k 次全对」。</div>
+
+  <div class="chart">
+    <svg viewBox="0 0 980 420" width="100%">
+      <line x1="92" y1="40" x2="92" y2="380" stroke="#3a3a63" stroke-width="2"/>
+      <line x1="92" y1="380" x2="930" y2="380" stroke="#3a3a63" stroke-width="2"/>
+      <g font-size="15" fill="#8a87b0">
+        <line x1="92" y1="40"  x2="930" y2="40"  stroke="#242347"/><text x="82" y="46"  text-anchor="end">100%</text>
+        <line x1="92" y1="125" x2="930" y2="125" stroke="#242347"/><text x="82" y="131" text-anchor="end">75%</text>
+        <line x1="92" y1="210" x2="930" y2="210" stroke="#242347"/><text x="82" y="216" text-anchor="end">50%</text>
+        <line x1="92" y1="295" x2="930" y2="295" stroke="#242347"/><text x="82" y="301" text-anchor="end">25%</text>
+        <text x="82" y="384" text-anchor="end">0%</text>
+      </g>
+      <g font-size="16" fill="#c6c4e8" font-weight="700" text-anchor="middle">
+        <text x="90" y="404">k=1</text><text x="205" y="404">2</text><text x="321" y="404">3</text><text x="437" y="404">4</text>
+        <text x="553" y="404">5</text><text x="669" y="404">6</text><text x="784" y="404">7</text><text x="900" y="404">8</text>
+      </g>
+      <polyline fill="none" stroke="#6b7090" stroke-width="4" points="90,142 205,213 321,263 437,298 553,323 669,340 784,352 900,360"/>
+      <polyline fill="none" stroke="#2dd4ee" stroke-width="4" points="90,108 205,162 321,206 437,241 553,268 669,291 784,309 900,323"/>
+      <polyline fill="none" stroke="#8b6dff" stroke-width="6" points="90,74 205,105 321,132 437,157 553,179 669,199 784,217 900,234"/>
+      <circle cx="437" cy="157" r="8" fill="#8b6dff"/>
+      <text x="437" y="146" text-anchor="middle" font-size="17" fill="#a78bfa" font-weight="850">0.9⁴ ≈ 66%</text>
+      <circle cx="900" cy="234" r="9" fill="#fb7185"/>
+      <text x="898" y="222" text-anchor="end" font-size="18" fill="#fb7185" font-weight="850">0.9⁸ ≈ 43%</text>
+    </svg>
+    <div class="lgd">
+      <span><i style="background:#8b6dff"></i>单次成功率 90%</span>
+      <span><i style="background:#2dd4ee"></i>80%</span>
+      <span><i style="background:#6b7090"></i>70%</span>
+      <span style="color:var(--ink3);font-weight:600">纵轴 = k 次独立尝试全对的概率</span>
+    </div>
+  </div>
+
+  <div class="note"><span class="t">实测 · PPU 810E + SGLang · DeepSeek-V4-Flash(INT8)</span><br>
+    airline <b class="big">Pass¹ 81.5%</b> · retail <b class="big">Pass¹ 85.7%</b>,但 <b class="big">Pass⁴ 掉到 ~67%</b>。<br>
+    单次成功 ≠ 可稳定交付。<b>Pass@1 反映偶发成功,Pass^k 才反映稳定可靠。</b></div>
+
+  <div class="footer"><span class="brand"><span class="md">ModelDoctor</span> · Agent 能力评测</span><span class="right">τ²-bench · num-trials=4</span></div>
+</div>
+</body></html>
