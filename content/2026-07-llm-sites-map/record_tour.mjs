@@ -6,16 +6,17 @@ const OUT = '/private/tmp/claude-501/-Users-fangyong-articles/d9f008b4-9d6c-4705
 fs.rmSync(OUT, {recursive: true, force: true}); fs.mkdirSync(OUT, {recursive: true});
 const W = 1080, H = 1440;
 
-// 8 站,沿「看榜→选型→拿模型→落地」链路
+// 9 类榜首(按分类顺序):榜单动画后切到该类第一名的实操
 const SITES = [
-  {url: 'https://arena.ai/leaderboard',        settle: 3500, scroll: 420},
-  {url: 'https://www.superclueai.com/homepage', settle: 3200, scroll: 360},
-  {url: 'https://llm-stats.com/',               settle: 3200, scroll: 300},
-  {url: 'https://artificialanalysis.ai/',       settle: 3600, scroll: 420},
-  {url: 'https://www.swebench.com/',            settle: 3000, scroll: 380},
-  {url: 'https://openrouter.ai/rankings',       settle: 3400, scroll: 260},
-  {url: 'https://recipes.vllm.ai/',             settle: 3000, scroll: 360},
-  {url: 'https://recipes.mcpinfra.net/',        settle: 3200, scroll: 380},
+  {url: 'https://arena.ai/leaderboard',          settle: 3500, scroll: 420}, // 综合
+  {url: 'https://www.superclueai.com/homepage',  settle: 3200, scroll: 360}, // 中文
+  {url: 'https://artificialanalysis.ai/',        settle: 3600, scroll: 420}, // 选型
+  {url: 'https://www.swebench.com/',             settle: 3000, scroll: 380}, // 垂直
+  {url: 'https://aireleasetracker.com/',         settle: 3000, scroll: 320}, // 发布追踪
+  {url: 'https://openrouter.ai/rankings',        settle: 3400, scroll: 260}, // API 聚合
+  {url: 'https://huggingface.co/models',         settle: 3000, scroll: 300}, // 模型仓库
+  {url: 'https://recipes.mcpinfra.net/',         settle: 3200, scroll: 380}, // 部署
+  {url: 'https://epoch.ai/trends',               settle: 4000, scroll: 300}, // 趋势
 ];
 
 const browser = await chromium.launch({executablePath: CHROME, headless: true, args: ['--no-sandbox', '--force-color-profile=srgb']});

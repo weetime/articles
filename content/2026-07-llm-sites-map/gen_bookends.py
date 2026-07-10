@@ -1,27 +1,34 @@
 #!/usr/bin/env python3
-"""Generate a dark outro card (1080×1920) that bookends the constellation intro."""
+"""Editorial intro (hook headline) + outro (CTA) cards, 1080x1920."""
 import os
-from PIL import Image, ImageDraw, ImageFont
-
-W, H = 1080, 1920
-FONT="/System/Library/Fonts/Hiragino Sans GB.ttc"; MONO="/System/Library/Fonts/Menlo.ttc"
+from PIL import Image, ImageDraw
+import editorial as E
 HERE=os.path.dirname(os.path.abspath(__file__))
-def f(sz, mono=False): return ImageFont.truetype(MONO if mono else FONT, sz)
-def ctext(d, y, s, font, fill):
-    b=d.textbbox((0,0),s,font=font); d.text(((W-(b[2]-b[0]))//2, y), s, font=font, fill=fill)
 
-im=Image.new("RGBA",(W,H),(11,11,22,255)); d=ImageDraw.Draw(im)
-# center radial glow
-ov=Image.new("RGBA",(W,H),(0,0,0,0)); od=ImageDraw.Draw(ov)
-od.ellipse([W//2-460,H//2-420,W//2+460,H//2+420], fill=(124,110,247,30)); im.alpha_composite(ov)
-d.rectangle([0,0,W,10], fill=(139,125,247,255))
+def card(section, page, kicker, line1, line2, sub_ink, sub_acc):
+    im=Image.new("RGB",(E.W,E.H),E.BG); d=ImageDraw.Draw(im)
+    E.header(d, section, page)
+    d.text((120,470), E.spaced(kicker), font=E.F(27), fill=E.ACC)
+    d.text((120,548), line1, font=E.F(96, bold=True), fill=E.INK)
+    d.text((120,680), line2, font=E.F(96, bold=True), fill=E.INK)
+    y=848
+    d.text((120,y), sub_ink, font=E.F(36), fill=E.INK2)
+    b=d.textbbox((0,0),sub_ink,font=E.F(36))
+    d.text((120,y+58), sub_acc, font=E.F(36, bold=True), fill=E.ACC)
+    d.text((120,E.H-150), "recipes.mcpinfra.net · ModelDoctor", font=E.F(23), fill=E.MUTE)
+    return im
 
-ctext(d, 640, "链 路 速 览 · 到 此", f(32), (154,160,184,255))
-# gradient-ish title (two tones)
-ctext(d, 720, "完整盘点见公众号", f(94), (238,240,248,255))
-dw=200; d.rounded_rectangle([(W-dw)//2,884,(W+dw)//2,892], radius=4, fill=(139,125,247,255))
-ctext(d, 950, "9 大类 · 50+ 站点 · 推荐指数", f(38), (176,181,205,255))
-ctext(d, 1024, "图文 · 贴图 · 全景图,一并奉上", f(34), (128,133,160,255))
-ctext(d, 1770, "recipes.mcpinfra.net · ModelDoctor", f(26, mono=True), (120,125,150,255))
-im.convert("RGB").save(f"{HERE}/cards/outro.png")
-print("outro written")
+# intro — hook
+card("网站全景 · 盘点", 0, "大 模 型 生 态",
+     "工具站又多又杂?", "一张全景盘点。",
+     "按「看榜 · 选型 · 拿模型 · 部署 · 趋势」的链路,",
+     "9 大类 50+ 站点,逐一盘点、给出推荐指数。"
+     ).save(f"{HERE}/cards/intro.png")
+
+# outro — CTA
+card("完整盘点 · 收藏", 9, "看 完 这 一 轮",
+     "完整盘点,", "见公众号。",
+     "9 大类 50+ 站点 · 推荐指数 · 避坑要点 ·",
+     "部署配方,图文与全景图一并奉上。"
+     ).save(f"{HERE}/cards/outro.png")
+print("intro/outro (editorial) written")

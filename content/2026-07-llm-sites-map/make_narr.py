@@ -9,13 +9,15 @@ RATE = "+15%"
 PROXY = "http://127.0.0.1:7897"
 
 SEGS = [
-    "综合竞技场,arena,原 LMArena,基于真人盲测投票的偏好排行。",
-    "中文场景,SuperCLUE,国内影响力最大的中文通用综合榜,月度更新。",
-    "选型定价,LLM-Stats,将基准分与每 token 价格,合成一个综合分。",
-    "Artificial Analysis,端到端实测,真实发起请求,测量速度、价格与延迟。",
-    "垂直能力,SWE-bench,以真实代码问题为题的编码修复基准,认准 Verified 子榜。",
-    "获取模型,OpenRouter,统一接口聚合多家模型,并提供真实用量排行。",
-    "落地部署,recipes.mcpinfra,按模型和显卡给出可复制的启动命令,兼容 vLLM 与 SGLang。",
+    "第一,综合竞技场。榜首是 arena,原 LMArena,基于真人盲测投票的偏好排行。",
+    "第二,中文评测榜。榜首 SuperCLUE,国内影响力最大的中文通用综合榜。",
+    "第三,选型定价。榜首 Artificial Analysis,端到端实测速度、价格与延迟。",
+    "第四,垂直能力。榜首 SWE-bench,以真实代码问题为题的编码修复基准。",
+    "第五,发布追踪。榜首 AI Release Tracker,收录全部前沿模型的发布时间线。",
+    "第六,API 聚合。榜首 OpenRouter,统一接口,并提供真实用量排行。",
+    "第七,模型仓库。榜首 Hugging Face,两百多万模型的社区基础设施。",
+    "第八,部署引擎。榜首 recipes.mcpinfra,按模型和显卡给出可复制命令。",
+    "第九,趋势研究。榜首 Epoch AI,前沿增长趋势的数据仪表盘。",
 ]
 
 async def one(i, txt):
