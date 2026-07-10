@@ -29,23 +29,30 @@
   .card .note::before{ content:"⚠ "; color:#e0a03a; }
   .foot{ display:flex; justify-content:space-between; align-items:center; margin-top:34px; padding-top:24px; border-top:1px solid var(--line); font-size:21px; color:#6b7090; }
   .foot b{ color:#aab0c8; }
-  /* cover — 正方形 1080×1080,内容居中(贴图封面按中心方形裁剪) */
-  .cover{ width:1080px; height:1080px; padding:70px 74px; display:flex; flex-direction:column;
-          align-items:center; justify-content:center; text-align:center; }
-  .cover::before{ top:-200px; right:-200px; opacity:.20; }
-  .cover .kick{ font-size:26px; font-weight:800; letter-spacing:6px; color:#8b7df7; margin-bottom:34px; }
-  .cover .big{ font-size:92px; font-weight:900; line-height:1.2; letter-spacing:2px; }
-  .cover .big .g{ background:linear-gradient(90deg,#8b7df7,#38bdf8,#4ade80); -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .cover .csub{ font-size:31px; color:#c2c7dc; margin-top:38px; line-height:1.55; font-weight:600; }
-  .cover .csub b{ color:#fff; }
-  .cover .chain{ display:flex; flex-wrap:nowrap; gap:10px; margin:52px 0; justify-content:center; }
-  .cover .chain .step{ font-size:25px; font-weight:700; color:#eef0f8; background:#161628; border:1px solid var(--line); border-radius:14px; padding:14px 20px; white-space:nowrap; }
-  .cover .chain .step .n{ color:#8b7df7; margin-right:6px; }
-  .cover .chain .arw{ align-self:center; color:#5a5f7a; font-size:24px; }
-  .cover .coverlegend{ font-size:26px; color:#aab0c8; line-height:1.6; }
-  .cover .coverlegend .s{ color:#f5b942; letter-spacing:2px; }
-  .cover .brandline{ margin-top:40px; font-size:24px; color:#6b7090; letter-spacing:1px; }
-  .cover .brandline b{ color:#aab0c8; }
+  /* cover — 正方形 1080×1080,站名星图背景 + 中心强光 + 大标题 */
+  .cover{ width:1080px; height:1080px; position:relative; overflow:hidden;
+          background:radial-gradient(circle at 50% 44%, #191933 0%, #0c0c1a 58%, #07070f 100%); padding:0; }
+  .cover::before{ display:none; }
+  .cons{ position:absolute; inset:-30px; display:flex; flex-wrap:wrap; align-content:center; justify-content:center; gap:20px 30px; padding:44px; }
+  .cons span{ font-size:29px; font-weight:800; letter-spacing:.5px; white-space:nowrap; opacity:.17; }
+  .scrim{ position:absolute; inset:0; background:radial-gradient(ellipse 66% 50% at 50% 47%, rgba(9,9,18,.94) 26%, rgba(9,9,18,.72) 52%, rgba(9,9,18,0) 82%); }
+  .glow{ position:absolute; left:50%; top:47%; width:900px; height:640px; transform:translate(-50%,-50%);
+         background:radial-gradient(ellipse at center, rgba(124,110,247,.36), rgba(56,189,248,.16) 45%, transparent 70%); filter:blur(24px); }
+  .center{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:64px; }
+  .center .kick{ font-size:27px; font-weight:800; letter-spacing:8px; color:#a99bff; margin-bottom:26px; }
+  .center .big{ font-size:132px; font-weight:900; line-height:1.04; letter-spacing:3px;
+                background:linear-gradient(100deg,#b3a6ff 0%,#8b7df7 22%,#38bdf8 60%,#4ade80 100%);
+                -webkit-background-clip:text; background-clip:text; color:transparent;
+                filter:drop-shadow(0 6px 30px rgba(124,110,247,.5)); }
+  .center .stat{ margin-top:40px; font-size:46px; font-weight:900; color:#fff; letter-spacing:1px; }
+  .center .stat b{ background:linear-gradient(90deg,#8b7df7,#38bdf8); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .center .csub{ margin-top:20px; font-size:29px; color:#c2c7dc; font-weight:600; letter-spacing:.5px; }
+  .center .divider{ width:120px; height:4px; border-radius:3px; margin:34px 0 26px;
+                    background:linear-gradient(90deg,#8b7df7,#38bdf8,#4ade80); }
+  .center .legend2{ font-size:25px; color:#9aa0c0; }
+  .center .legend2 .s{ color:#f5b942; }
+  .center .brandline{ position:absolute; bottom:56px; font-size:24px; color:#7a7fa0; letter-spacing:1px; }
+  .center .brandline b{ color:#b6bbd8; }
 </style></head>
 <body><div id="app"></div>
 <script>
@@ -136,19 +143,27 @@ function cardHTML(it){
     ${opt.note?`<div class="note">${opt.note}</div>`:''}
   </div>`;
 }
-let html = `<div class="slide cover" style="--acc:#8b7df7">
-  <div class="kick">大 模 型 生 态</div>
-  <div class="big">常用网站<br><span class="g">全景盘点</span></div>
-  <div class="csub"><b>9 大类 · 50+ 站点</b><br>每站附客观定位 · 上榜理由 · 推荐指数</div>
-  <div class="chain">
-    <div class="step"><span class="n">①</span>看榜</div><div class="arw">→</div>
-    <div class="step"><span class="n">②</span>选型</div><div class="arw">→</div>
-    <div class="step"><span class="n">③</span>拿模型</div><div class="arw">→</div>
-    <div class="step"><span class="n">④</span>部署</div><div class="arw">→</div>
-    <div class="step"><span class="n">⑤</span>趋势</div>
+// 站名星图:拆分所有站点名(去重),按类主题色低透明度铺底
+const NAMES=[];
+CATS.forEach(c=>c.items.forEach(it=>{
+  it[0].split(/\s·\s|\s\/\s|·|\//).map(s=>s.trim()).filter(s=>s && s.length<=22).forEach(n=>NAMES.push([n,c.acc]));
+}));
+const seen=new Set(); const uniq=NAMES.filter(([n])=>{ if(seen.has(n))return false; seen.add(n); return true; });
+const tiled=[...uniq,...uniq].map(([n,c],i)=>`<span style="color:${c}">${n}</span>`).join('');
+
+let html = `<div class="slide cover">
+  <div class="cons">${tiled}</div>
+  <div class="glow"></div>
+  <div class="scrim"></div>
+  <div class="center">
+    <div class="kick">大 模 型 生 态</div>
+    <div class="big">网站全景盘点</div>
+    <div class="stat"><b>9 大类</b> · <b>50+ 站点</b></div>
+    <div class="csub">看榜 · 选型 · 拿模型 · 部署 · 趋势</div>
+    <div class="divider"></div>
+    <div class="legend2"><span class="s">★</span> 每站附客观定位 · 上榜理由 · 推荐指数</div>
+    <div class="brandline"><b>vLLM 生产工程</b> · recipes.mcpinfra.net · ModelDoctor</div>
   </div>
-  <div class="coverlegend"><span class="s">★</span> 推荐指数 = 权威性 × 不可替代性 · 2026.07 实访核对</div>
-  <div class="brandline"><b>vLLM 生产工程</b> · recipes.mcpinfra.net · ModelDoctor</div>
 </div>`;
 
 for(const c of CATS){
