@@ -16,15 +16,15 @@ OUTF = f"{SP}/oframes"
 
 # per site (recording order = category order): (section, source line)
 DEMO = [
-    ("综合竞技场",     "榜首 · arena.ai · 真人盲测 Elo"),
-    ("中文评测榜",     "榜首 · superclueai.com · 月度中文综合榜"),
-    ("选型 · 定价",    "榜首 · artificialanalysis.ai · 端到端实测"),
-    ("垂直能力",       "榜首 · swebench.com · 真实 issue 修复"),
-    ("发布追踪",       "榜首 · aireleasetracker.com · 全模型时间线"),
-    ("API 聚合 · 路由","榜首 · openrouter.ai · 真实用量榜"),
-    ("模型仓库 · 本地","榜首 · huggingface.co · 200 万+ 模型"),
-    ("部署 · 推理引擎","榜首 · recipes.vllm.ai · 官方部署配方"),
-    ("趋势 · 研究",    "榜首 · epoch.ai · 增长趋势仪表盘"),
+    ("综合竞技场",     "站点 · arena.ai · 真人盲测 Elo"),
+    ("中文评测榜",     "站点 · superclueai.com · 月度中文综合榜"),
+    ("选型 · 定价",    "站点 · artificialanalysis.ai · 端到端实测"),
+    ("垂直能力",       "站点 · swebench.com · 真实 issue 修复"),
+    ("发布追踪",       "站点 · aireleasetracker.com · 全模型时间线"),
+    ("API 聚合 · 路由","站点 · openrouter.ai · 真实用量榜"),
+    ("模型仓库 · 本地","站点 · huggingface.co · 200 万+ 模型"),
+    ("部署 · 推理引擎","站点 · recipes.vllm.ai · 官方部署配方"),
+    ("趋势 · 研究",    "站点 · epoch.ai · 增长趋势仪表盘"),
 ]
 
 ARR = [(0,0),(0,17),(4.4,13.2),(7.6,20),(10.2,19),(6.9,12.2),(12.7,12.2)]
@@ -58,8 +58,8 @@ def main():
             shot=Image.open(f"{wdir}/{fn}").convert("RGBA").resize((CW,CH))
             cv=Image.new("RGBA",(E.W,E.H),E.BG); d=ImageDraw.Draw(cv)
             E.header(d, section, bi+1)
-            # accent section label + 榜首实操
-            d.text((120,240), E.spaced(section)+"   ·   榜首实操", font=E.F(25), fill=E.ACC)
+            # accent section label + 打开看看
+            d.text((120,240), E.spaced(section)+"   ·   打开看看", font=E.F(25), fill=E.ACC)
             # footage
             cv.alpha_composite(shot,(0,TOPY))
             # thin hairline frame around footage

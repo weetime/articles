@@ -22,13 +22,13 @@ def card(section, page, kicker, line1, line2, sub_ink, sub_acc):
 card("网站全景 · 盘点", 0, "大 模 型 生 态",
      "工具站又多又杂?", "一张全景盘点。",
      "按「看榜 · 选型 · 拿模型 · 部署 · 趋势」的链路,",
-     "9 大类 50+ 站点,逐一盘点、给出推荐指数。"
+     "9 大类 50+ 站点,按链路逐类梳理、附定位与用途。"
      ).save(f"{HERE}/cards/intro.png")
 
 # outro — CTA
 card("完整盘点 · 收藏", 9, "看 完 这 一 轮",
      "完整盘点,", "见公众号。",
-     "9 大类 50+ 站点 · 推荐指数 · 避坑要点 ·",
+     "9 大类 50+ 站点 · 定位与用途 · 避坑要点 ·",
      "部署配方,图文与全景图一并奉上。"
      ).save(f"{HERE}/cards/outro.png")
 print("intro/outro (editorial) written")

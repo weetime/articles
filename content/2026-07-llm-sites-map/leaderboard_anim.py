@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Clean-editorial leaderboard reveals (rows fade+rise in one-by-one), per category.
-   -> SP/lb/{k}/%04d.png"""
+"""Clean-editorial category CARDS (资料梳理,非排名): site names + 定位 fade in
+   one-by-one, no ranks/stars/榜首. -> SP/lb/{k}/%04d.png"""
 import os
 from PIL import Image, ImageDraw
 import editorial as E
@@ -11,68 +11,51 @@ FPS = E.FPS
 DUR = 3.9
 NFR = round(DUR*FPS)
 
-# (section label, headline, [ (name, stars) ... top5 ], source)
+# (section, purpose headline, [ (name, 定位) ... ], footer note)
 CATS = [
- ("综合竞技场","看谁,最被引用",[("LMArena → Arena",5),("OpenLM Arena+",3),("Vellum",3),("Onyx",3),("BenchLM",3)],"榜首 · arena.ai · 真人盲测 Elo"),
- ("中文评测榜","中文场景,谁在顶端",[("SuperCLUE",5),("OpenCompass 司南",5),("FlagEval 天秤",3),("C-Eval",3),("CMMLU",3)],"榜首 · superclueai.com · 月度中文综合榜"),
- ("选型 · 定价","质量与价格,怎么权衡",[("Artificial Analysis",5),("LLM-Stats",4),("DemandSphere",3),("LMmarketcap",3),("Inference.net",3)],"榜首 · artificialanalysis.ai · 端到端实测"),
- ("垂直能力","具体任务,谁更能打",[("SWE-bench",5),("MTEB / C-MTEB",5),("BFCL",4),("tau-bench",4),("LiveBench",4)],"榜首 · swebench.com · 真实 issue 修复"),
- ("发布追踪","新模型,别错过",[("AI Release Tracker",4),("LLM-Stats Updates",4),("LMmarketcap",3)],"榜首 · aireleasetracker.com · 全模型时间线"),
- ("API 聚合 · 路由","统一入口,谁被用得最多",[("OpenRouter",5),("Groq",4),("Together AI",4),("Fireworks AI",4),("Replicate",3)],"榜首 · openrouter.ai · 真实用量榜"),
- ("模型仓库 · 本地","权重与数据,从哪来",[("Hugging Face",5),("ModelScope 魔搭",4),("Ollama",4)],"榜首 · huggingface.co · 200 万+ 模型"),
- ("部署 · 推理引擎","把模型,跑起来",[("recipes.vllm.ai",5),("recipes.mcpinfra.net",5),("vLLM",5),("SGLang",4),("TensorRT-LLM",4)],"榜首 · recipes.vllm.ai · vLLM 官方配方"),
- ("趋势 · 研究","往哪走,看数据",[("Epoch AI",5),("Stanford HAI Index",4),("a16z LLMflation",3)],"榜首 · epoch.ai · 增长趋势仪表盘"),
+ ("综合竞技场","看模型综合能力",[("LMArena → Arena","真人盲测 Elo"),("OpenLM Arena+","Elo × 硬基准"),("Vellum","基准聚合"),("Onyx","开/闭源对比"),("LLMReference","基准数据库")],"本类常用站点 · 打开看看"),
+ ("中文评测榜","中文场景对标",[("SuperCLUE","中文月度综合"),("OpenCompass 司南","学术全维度"),("FlagEval 天秤","智源多模态"),("C-Eval","52 学科"),("CMMLU","本土 67 学科")],"本类常用站点 · 打开看看"),
+ ("选型 · 定价","质量 × 速度 × 价格",[("Artificial Analysis","端到端实测"),("LLM-Stats","综合分 + 价格"),("DemandSphere","宏观追踪"),("LMmarketcap","综合分"),("Inference.net","价格横评")],"本类常用站点 · 打开看看"),
+ ("垂直能力","按任务看专项",[("SWE-bench","编码修复"),("MTEB / C-MTEB","向量 / RAG"),("BFCL","工具调用"),("tau-bench","任务型 Agent"),("LiveBench","抗污染动态")],"本类常用站点 · 打开看看"),
+ ("发布追踪","跟住新模型发布",[("AI Release Tracker","发布时间线"),("LLM-Stats Updates","每小时更新"),("LMmarketcap","周报订阅")],"本类常用站点 · 打开看看"),
+ ("API 聚合 · 路由","统一接入与比价",[("OpenRouter","统一入口 + 用量"),("Groq","LPU 低延迟"),("Together AI","开源托管"),("Fireworks AI","高性能推理"),("Replicate","一行代码调")],"本类常用站点 · 打开看看"),
+ ("模型仓库 · 本地","拿权重 / 本地跑",[("Hugging Face","200 万+ 模型"),("ModelScope 魔搭","国内社区"),("Ollama","本地运行")],"本类常用站点 · 打开看看"),
+ ("部署 · 推理引擎","在自己的卡上 serve",[("recipes.vllm.ai","官方配方"),("recipes.mcpinfra.net","配方站"),("vLLM","高吞吐引擎"),("SGLang","RadixAttention"),("TensorRT-LLM","NVIDIA 优化")],"本类常用站点 · 打开看看"),
+ ("趋势 · 研究","宏观视角看数据",[("Epoch AI","增长趋势"),("Stanford HAI Index","年度报告"),("a16z LLMflation","成本论述")],"本类常用站点 · 打开看看"),
 ]
 
 def ease(p): return 1-(1-p)**3
 
 def render():
     os.system(f"rm -rf {LB}"); os.makedirs(LB, exist_ok=True)
-    for ci,(label,headline,items,src) in enumerate(CATS):
+    for ci,(label,headline,items,note) in enumerate(CATS):
         od=f"{LB}/{ci}"; os.makedirs(od, exist_ok=True)
-        n=len(items); top=760; rowh=168
+        n=len(items); top=740; rowh=158
         for fr in range(NFR):
             t=fr/FPS
             im=Image.new("RGB",(E.W,E.H),E.BG); d=ImageDraw.Draw(im)
             E.header(d, label, ci+1)
-            # accent tracked label + big headline (fade in)
-            hp=ease(min(1,t/0.4))
             d.text((120,430), E.spaced(label), font=E.F(26), fill=E.ACC)
             d.text((120,486), headline, font=E.F(66, bold=True), fill=E.INK)
-            # rows
-            for i,(nm,s) in enumerate(items):
-                st=0.55+i*0.30
+            for i,(nm,dfn) in enumerate(items):
+                st=0.55+i*0.28
                 p=ease(max(0,min(1,(t-st)/0.36)))
                 if p<=0: continue
-                y=top+i*rowh; rise=int((1-p)*26)
-                first=(i==0)
+                y=top+i*rowh; rise=int((1-p)*24)
                 layer=Image.new("RGBA",(E.W,rowh),(0,0,0,0)); ld=ImageDraw.Draw(layer)
-                # rank
-                rc=E.ACC if first else E.INK
-                ld.text((120,20), f"{i+1:02d}", font=E.F(58 if first else 52, bold=first), fill=rc)
-                # name
-                nx=250
-                ld.text((nx,26 if first else 30), nm, font=E.F(48 if first else 42, bold=first),
-                        fill=E.ACC if first else E.INK)
-                # 榜首 tag
-                if first:
-                    b=ld.textbbox((0,0),nm,font=E.F(48,bold=True)); tagx=nx+(b[2]-b[0])+22
-                    ld.rounded_rectangle([tagx,34,tagx+84,80],radius=10,fill=E.ACC)
-                    ld.text((tagx+14,42),"榜首",font=E.F(24),fill=(255,255,255,255))
-                # stars right
-                sw=5*(30+8)-8
-                E.stars(ld, E.W-120-sw, 34, s, sz=30, gap=8)
-                # hairline divider
+                # accent tick + name (left), 定位 (right, gray)
+                ld.rectangle([120,30,126,86],fill=E.ACC+(255,))
+                ld.text((150,26), nm, font=E.F(46, bold=True), fill=E.INK+(255,))
+                b=ld.textbbox((0,0),dfn,font=E.F(32)); ld.text((E.W-120-(b[2]-b[0]),38), dfn, font=E.F(32), fill=E.INK2+(255,))
                 if i<n-1: ld.rectangle([120,rowh-2,E.W-120,rowh-1],fill=E.HAIR+(255,))
                 al=layer.split()[3].point(lambda v:int(v*p)); layer.putalpha(al)
                 im.paste(Image.alpha_composite(im.crop((0,y-rise,E.W,y-rise+rowh)).convert("RGBA"),layer).convert("RGB"),(0,y-rise))
-            # footer source after rows
-            fp=ease(max(0,min(1,(t-1.85)/0.4)))
+            fp=ease(max(0,min(1,(t-1.8)/0.4)))
             if fp>0.02:
                 col=tuple(int(E.MUTE[j]*fp+E.BG[j]*(1-fp)) for j in range(3))
-                d.text((120,E.H-150), src, font=E.F(23), fill=col)
+                d.text((120,E.H-150), note, font=E.F(23), fill=col)
             im.save(f"{od}/{fr:04d}.png")
-        print("lb",ci,label,NFR)
+        print("card",ci,label,NFR)
     print("DONE",len(CATS),"x",NFR)
 
 if __name__=="__main__":
