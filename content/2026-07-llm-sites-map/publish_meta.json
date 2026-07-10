@@ -1,15 +1,15 @@
 {
-  "wechat_title": "盘点大模型网站全景图:从「看榜」到「敢上线」,我常开的这几十个站",
-  "wechat_digest": "不是收藏夹式堆网址,而是按「看榜→选型→拿模型→落地→趋势」的真实工作动线,把每一步该开哪些站、怎么看、坑在哪讲清楚。14 张实拍截图 + 每类全量表格 + 一句「带走」。含榜单避坑(偏好≠事实、标称≠有效、综合分是别人的加权)、build-vs-buy 岔口、国产卡落地。落地部署是主场。",
+  "wechat_title": "大模型生态常用网站全景盘点:9 大类 50+ 站点,附推荐指数",
+  "wechat_digest": "按看榜→选型→拿模型→部署→趋势五个环节,把常用的大模型相关网站归类成一张全景图,每站给出客观定位、上榜理由与推荐指数(★=权威性×不可替代性)。含综合/中文榜、选型定价、垂直能力、API 聚合、模型仓库、部署配方与趋势研究。2026.07 逐站实访核对。",
   "article_type_news": "news",
   "figures": [
-    "shots/01-lmarena.png … 14-arc-agi.png(14 张实拍截图,桌面视口 @2x)"
+    "shots/00-landscape.png(全景图 · CNCF 风格分类大图 · 3200×2508)",
+    "旗舰站截图 8 张:arena / SuperCLUE / Artificial Analysis / SWE-bench / OpenRouter / Hugging Face / recipes.mcpinfra.net / Epoch AI"
   ],
+  "figure_note": "全景图 landscape.html 经 Chrome @2x 渲染;正文按 9 大类组织,每类主讲旗舰站配图 + 其余站点目录条目(定位/上榜理由/推荐指数)。",
   "footer_note": "结尾不放二维码(平台会屏蔽),改用纯文字关注引导",
-  "figure_note": "站点实拍截图为 2026-07 逐站实访核对;正文按链路六站组织,每站主讲 2-3 个重点站配图 + 全量表格。",
   "video": "video-portrait.mp4(竖屏 9:16 · 1080×1920 · 49s · 8 站实拍点击导览 + AI 配音 + 同步字幕 + BGM)",
-  "video_note": "Playwright 录真实站点点击过程,PIL 合成光标 + 每站要点 callout + 进度点;edge-tts 中文配音贯穿;沿链路走 arena.ai → SuperCLUE → LLM-Stats → Artificial Analysis → SWE-bench → OpenRouter → recipes.vllm.ai → recipes.mcpinfra.net。",
-  "cover": "shots/01-lmarena.png",
-  "x_text": "整理了一张大模型网站「链路地图」:不是收藏夹堆网址,而是按看榜→选型→拿模型→落地→趋势的动线走。\n\n三条避坑:①Arena 测偏好不测事实;②标称 200 万上下文 ≠ 有效 200 万;③综合分是别人的加权,选型按你自己的场景看专项榜。\n\n还有 build-vs-buy 岔口、国产卡(昇腾/MindIE)落地、几条能直接用的部署判断。14 张实拍 + 竖屏实拍导览视频。\n\n#大模型 #LLM #榜单 #模型选型 #vLLM #SGLang #推理部署",
+  "cover": "shots/00-landscape.png",
+  "x_text": "整理了一张大模型生态常用网站全景图:9 大类 50+ 站点,按看榜→选型→拿模型→部署→趋势归类,每站附客观定位、上榜理由与推荐指数(★=权威性×不可替代性)。\n\n涵盖综合/中文评测榜、选型定价分析、垂直能力榜、API 聚合路由、模型仓库、部署配方与推理引擎、趋势研究。2026.07 实访核对。\n\n#大模型 #LLM #榜单 #模型选型 #vLLM #SGLang #推理部署",
   "tags": ["大模型", "LLM榜单", "模型选型", "推理部署", "vLLM", "SGLang", "国产卡", "ModelDoctor"]
 }

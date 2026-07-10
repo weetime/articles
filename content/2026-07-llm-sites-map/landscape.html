@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root{
+    --ink:#1c1c22; --sub:#6b6e7b; --line:#e7e7ec; --paper:#ffffff; --bg:#f4f4f2;
+    --star:#f0a020; --stardim:#dcdce2;
+  }
+  html,body{ background:var(--bg); font-family:"Hiragino Sans GB","PingFang SC",-apple-system,"Microsoft YaHei",sans-serif; -webkit-font-smoothing:antialiased; }
+  #root{ width:1600px; padding:44px 44px 30px; background:var(--bg); }
+  .head{ display:flex; align-items:flex-end; justify-content:space-between; margin:2px 6px 26px; }
+  .title{ font-size:44px; font-weight:800; color:var(--ink); letter-spacing:.5px; }
+  .title small{ display:block; font-size:19px; font-weight:500; color:var(--sub); margin-top:10px; letter-spacing:0; }
+  .legend{ text-align:right; font-size:15px; color:var(--sub); line-height:1.7; }
+  .legend b{ color:var(--ink); }
+  .board{ columns:3; column-gap:20px; }
+  .cat{ break-inside:avoid; background:var(--paper); border:1px solid var(--line); border-radius:16px; margin:0 0 20px; overflow:hidden; box-shadow:0 1px 3px rgba(20,20,40,.04); }
+  .cat > h2{ font-size:20px; font-weight:800; color:#fff; padding:14px 18px; display:flex; align-items:center; justify-content:space-between; }
+  .cat > h2 span{ font-size:14px; font-weight:600; opacity:.85; }
+  .cat.hero{ border:2px solid; }
+  .items{ padding:8px 6px 10px; }
+  .row{ display:flex; align-items:center; justify-content:space-between; padding:9px 14px; border-radius:10px; }
+  .row:nth-child(even){ background:#fafafb; }
+  .nm{ font-size:17px; font-weight:700; color:var(--ink); }
+  .nm b{ font-weight:800; }
+  .tg{ font-size:13px; color:var(--sub); margin-left:2px; font-weight:500; }
+  .stars{ font-size:15px; letter-spacing:1px; white-space:nowrap; margin-left:12px; }
+  .stars .f{ color:var(--star); }
+  .stars .e{ color:var(--stardim); }
+  .foot{ margin:20px 8px 0; display:flex; justify-content:space-between; font-size:14px; color:var(--sub); }
+  .foot b{ color:var(--ink); }
+</style>
+</head>
+<body>
+<div id="root">
+  <div class="head">
+    <div class="title">大模型生态常用网站全景图
+      <small>看榜 · 选型 · 拿模型 · 部署 · 趋势 &nbsp;|&nbsp; 9 大类 · 50+ 站点</small>
+    </div>
+    <div class="legend">
+      <div>推荐指数 <b>★</b> = 权威性 × 不可替代性</div>
+      <div><span style="color:#f0a020">★★★★★</span> 事实标准，几乎必用&nbsp;·&nbsp;<span style="color:#f0a020">★★★</span> 特定场景补充</div>
+      <div>2026.07 逐站实访核对</div>
+    </div>
+  </div>
+
+  <div class="board" id="board"></div>
+
+  <div class="foot">
+    <div>制图 · <b>vLLM 生产工程</b> — 让推理从「能跑」到「敢上线」</div>
+    <div>recipes.mcpinfra.net · ModelDoctor · 2026.07</div>
+  </div>
+</div>
+
+<script>
+const CATS = [
+  {t:"综合榜单 / 竞技场", c:"#4f46e5", items:[
+    ["LMArena → Arena","人类盲测 Elo",5],
+    ["OpenLM Arena+","Elo × 硬基准对照",3],
+    ["Vellum Leaderboard","能力维度 + 成本",3],
+    ["Onyx Leaderboard","开/闭源对比",3],
+    ["LLMReference","基准数据库",3],
+    ["BenchLM","281+ 模型聚合",3],
+  ]},
+  {t:"中文评测榜", c:"#c0392b", items:[
+    ["SuperCLUE","中文通用月度榜",5],
+    ["OpenCompass 司南","学术式全维度",5],
+    ["FlagEval 天秤","智源·多模态",3],
+    ["C-Eval","中文 52 学科",3],
+    ["CMMLU","中文本土 67 学科",3],
+  ]},
+  {t:"选型 · 定价分析", c:"#0e8a7d", items:[
+    ["Artificial Analysis","端到端 API 实测",5],
+    ["LLM-Stats","智能/速度/价格综合",4],
+    ["DemandSphere","前沿模型宏观追踪",3],
+    ["LMmarketcap","351 模型综合分",3],
+  ]},
+  {t:"垂直能力榜", c:"#e0891b", items:[
+    ["SWE-bench","编码 Agent 事实标准",5],
+    ["MTEB / C-MTEB","embedding / RAG 选型",5],
+    ["BFCL","工具/函数调用 V4",4],
+    ["tau-bench","任务型 Agent",4],
+    ["LiveBench","每月换题防污染",4],
+    ["Context Arena","长上下文有效性",4],
+    ["ARC-AGI","抽象推理天花板",3],
+    ["Aider Polyglot","代码编辑(已冻结)",3],
+  ]},
+  {t:"发布追踪", c:"#5b6370", items:[
+    ["AI Release Tracker","全模型发布时间线",4],
+    ["LLM-Stats Updates","每小时更新",4],
+    ["LMmarketcap","周报 + newsletter",3],
+  ]},
+  {t:"API 聚合 / 路由", c:"#7c3aed", items:[
+    ["OpenRouter","统一入口 + 用量榜",5],
+    ["Groq","LPU 吞吐/延迟标杆",4],
+    ["Together AI","开源托管 + 微调",4],
+    ["Fireworks AI","高性能开源推理",4],
+    ["Replicate","一行代码调模型",3],
+  ]},
+  {t:"模型仓库 / 本地", c:"#2f8f46", items:[
+    ["Hugging Face","200 万+ 模型库",5],
+    ["ModelScope 魔搭","国内模型社区",4],
+    ["Ollama","本地 + 云端",4],
+  ]},
+  {t:"部署 · 推理引擎配方", c:"#1668c1", hero:true, items:[
+    ["recipes.vllm.ai","模型×GPU 给命令",5],
+    ["recipes.mcpinfra.net","vLLM + SGLang 双引擎",5],
+    ["vLLM","高吞吐推理引擎",5],
+    ["SGLang","RadixAttention",4],
+    ["TensorRT-LLM","NVIDIA 峰值吞吐",4],
+    ["NVIDIA Dynamo","分离式服务调度",4],
+    ["llm-d","KV 感知多 Pod",4],
+    ["MindIE / vllm-ascend","昇腾 910B(信创)",4],
+    ["vLLM production-stack","K8s 生产参考栈",4],
+    ["MLPerf Inference","硬件推理基准",3],
+  ]},
+  {t:"趋势 / 研究", c:"#8a6d3b", items:[
+    ["Epoch AI","增长趋势 + 数据库",5],
+    ["Stanford HAI Index","年度权威报告",4],
+    ["a16z LLMflation","推理成本论述",3],
+  ]},
+];
+const stars = n => `<span class="stars">${'<span class="f">★</span>'.repeat(n)}${'<span class="e">★</span>'.repeat(5-n)}</span>`;
+document.getElementById('board').innerHTML = CATS.map(cat=>{
+  const rows = cat.items.map(([nm,tg,s])=>`<div class="row"><div class="nm">${nm}<span class="tg"> · ${tg}</span></div>${stars(s)}</div>`).join('');
+  const hero = cat.hero ? ' hero' : '';
+  const hstyle = cat.hero ? `background:${cat.c};border-color:${cat.c}` : `background:${cat.c}`;
+  return `<div class="cat${hero}" style="${cat.hero?`border-color:${cat.c}`:''}"><h2 style="background:${cat.c}">${cat.t}<span>${cat.items.length}</span></h2><div class="items">${rows}</div></div>`;
+}).join('');
+</script>
+</body>
+</html>
