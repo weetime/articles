@@ -29,19 +29,23 @@
   .card .note::before{ content:"⚠ "; color:#e0a03a; }
   .foot{ display:flex; justify-content:space-between; align-items:center; margin-top:34px; padding-top:24px; border-top:1px solid var(--line); font-size:21px; color:#6b7090; }
   .foot b{ color:#aab0c8; }
-  /* cover */
-  .cover{ padding:96px 70px 72px; min-height:1120px; display:flex; flex-direction:column; }
-  .cover .chain{ margin-bottom:56px; }
-  .cover .kick{ font-size:26px; font-weight:700; letter-spacing:4px; color:#8b7df7; margin-bottom:30px; }
-  .cover .big{ font-size:82px; font-weight:900; line-height:1.16; letter-spacing:1px; }
+  /* cover — 正方形 1080×1080,内容居中(贴图封面按中心方形裁剪) */
+  .cover{ width:1080px; height:1080px; padding:70px 74px; display:flex; flex-direction:column;
+          align-items:center; justify-content:center; text-align:center; }
+  .cover::before{ top:-200px; right:-200px; opacity:.20; }
+  .cover .kick{ font-size:26px; font-weight:800; letter-spacing:6px; color:#8b7df7; margin-bottom:34px; }
+  .cover .big{ font-size:92px; font-weight:900; line-height:1.2; letter-spacing:2px; }
   .cover .big .g{ background:linear-gradient(90deg,#8b7df7,#38bdf8,#4ade80); -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .cover .csub{ font-size:30px; color:#aab0c8; margin-top:34px; line-height:1.6; font-weight:500; }
-  .chain{ display:flex; flex-wrap:wrap; gap:14px; margin-top:52px; }
-  .chain .step{ font-size:26px; font-weight:700; color:#eef0f8; background:#161628; border:1px solid var(--line); border-radius:14px; padding:16px 26px; }
-  .chain .step .n{ color:#8b7df7; margin-right:8px; }
-  .chain .arw{ align-self:center; color:#5a5f7a; font-size:26px; }
-  .legend{ margin-top:auto; background:#12121f; border:1px solid var(--line); border-radius:18px; padding:30px 34px; font-size:26px; color:#aab0c8; line-height:1.7; }
-  .legend b{ color:#eef0f8; } .legend .s{ color:#f5b942; letter-spacing:2px; }
+  .cover .csub{ font-size:31px; color:#c2c7dc; margin-top:38px; line-height:1.55; font-weight:600; }
+  .cover .csub b{ color:#fff; }
+  .cover .chain{ display:flex; flex-wrap:nowrap; gap:10px; margin:52px 0; justify-content:center; }
+  .cover .chain .step{ font-size:25px; font-weight:700; color:#eef0f8; background:#161628; border:1px solid var(--line); border-radius:14px; padding:14px 20px; white-space:nowrap; }
+  .cover .chain .step .n{ color:#8b7df7; margin-right:6px; }
+  .cover .chain .arw{ align-self:center; color:#5a5f7a; font-size:24px; }
+  .cover .coverlegend{ font-size:26px; color:#aab0c8; line-height:1.6; }
+  .cover .coverlegend .s{ color:#f5b942; letter-spacing:2px; }
+  .cover .brandline{ margin-top:40px; font-size:24px; color:#6b7090; letter-spacing:1px; }
+  .cover .brandline b{ color:#aab0c8; }
 </style></head>
 <body><div id="app"></div>
 <script>
@@ -133,9 +137,9 @@ function cardHTML(it){
   </div>`;
 }
 let html = `<div class="slide cover" style="--acc:#8b7df7">
-  <div class="kick">大模型生态 · 网站全景盘点</div>
-  <div class="big">大模型生态<br><span class="g">常用网站全景盘点</span></div>
-  <div class="csub"><b>9 大类 · 50+ 站点</b> · 每站附客观定位、上榜理由与推荐指数<br>推荐指数 <span style="color:#f5b942">★</span> = 权威性 × 不可替代性 · 2026.07 逐站实访核对</div>
+  <div class="kick">大 模 型 生 态</div>
+  <div class="big">常用网站<br><span class="g">全景盘点</span></div>
+  <div class="csub"><b>9 大类 · 50+ 站点</b><br>每站附客观定位 · 上榜理由 · 推荐指数</div>
   <div class="chain">
     <div class="step"><span class="n">①</span>看榜</div><div class="arw">→</div>
     <div class="step"><span class="n">②</span>选型</div><div class="arw">→</div>
@@ -143,8 +147,8 @@ let html = `<div class="slide cover" style="--acc:#8b7df7">
     <div class="step"><span class="n">④</span>部署</div><div class="arw">→</div>
     <div class="step"><span class="n">⑤</span>趋势</div>
   </div>
-  <div class="legend"><b>怎么看这份盘点:</b>分清榜单测的是<b>偏好还是能力</b>、<b>实测还是自报</b>;标称指标(如上下文)与有效表现常有差距;任何综合分都是特定权重下的产物。<br><span class="s">★★★★★</span> 事实标准几乎必用 · <span class="s">★★★</span> 特定场景补充</div>
-  <div class="foot"><div>制图 · <b>vLLM 生产工程</b></div><div>recipes.mcpinfra.net · ModelDoctor</div></div>
+  <div class="coverlegend"><span class="s">★</span> 推荐指数 = 权威性 × 不可替代性 · 2026.07 实访核对</div>
+  <div class="brandline"><b>vLLM 生产工程</b> · recipes.mcpinfra.net · ModelDoctor</div>
 </div>`;
 
 for(const c of CATS){
