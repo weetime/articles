@@ -24,17 +24,19 @@
 
 ![arena.ai 综合竞技场:Text / Agent / Code / Image / Video 等多个子竞技场,头部模型 Elo 置信区间高度重叠](./shots/01-lmarena.png)
 
-- **定位**:基于真人盲测投票的模型偏好排行,采用 Elo 评分,含 Text / Vision / WebDev / Agent 等多个子竞技场。
-- **上榜理由**:业界引用度最高的「人类偏好」基准,反映真实使用中的主观体验与口碑热度。
-- **注意**:2026 年初已由 `lmarena.ai` 整体更名并跳转至 **arena.ai**;偏好评分受回答风格、长度、排版影响(已引入 Style Control 缓解),头部模型 Elo 常处于同一置信区间,属统计并列,阅读时应关注误差范围。
+基于真人盲测投票的模型偏好排行,采用 Elo 评分,含 Text / Vision / WebDev / Agent 等多个子竞技场。
+
+**上榜理由** · 业界引用度最高的「人类偏好」基准,反映真实使用中的主观体验与口碑热度。
+
+**注意** · 2026 年初已由 `lmarena.ai` 整体更名并跳转至 **arena.ai**;偏好评分受回答风格、长度、排版影响(已引入 Style Control 缓解),头部模型 Elo 常处于同一置信区间,属统计并列,阅读时应关注误差范围。
 
 **其余站点**
 
-- **OpenLM Arena+** `openlm.ai/chatbot-arena` ★★★☆☆ — 将 Arena Elo 与多项硬基准并置对照。**上榜理由**:适合把「主观偏好」与「客观基准」放在同一视图比较。
-- **Vellum Leaderboard** `vellum.ai/llm-leaderboard` ★★★☆☆ — 厂商维护的 SOTA 基准聚合,附速度/成本。**上榜理由**:按能力维度快速查询当前领先者。
-- **Onyx Leaderboard** `onyx.app/llm-leaderboard` ★★★☆☆ — 开/闭源对比,含自部署视角。**上榜理由**:关注可自托管模型时的参考;更新频率偏低。
-- **LLMReference** `llmreference.com/benchmarks` ★★★☆☆ — 纯基准数据库,按任务列当前领先者。**上榜理由**:适合按具体工作负载反查对应基准。
-- **BenchLM** `benchlm.ai` ★★★☆☆ — 聚合 281+ 模型、区分「暂定/已验证」分数。**上榜理由**:一站式对比质量、成本、上下文,并标注置信度。
+- **OpenLM Arena+** `openlm.ai/chatbot-arena` ★★★☆☆ — 将 Arena Elo 与多项硬基准并置对照。**上榜理由** · 适合把「主观偏好」与「客观基准」放在同一视图比较。
+- **Vellum Leaderboard** `vellum.ai/llm-leaderboard` ★★★☆☆ — 厂商维护的 SOTA 基准聚合,附速度/成本。**上榜理由** · 按能力维度快速查询当前领先者。
+- **Onyx Leaderboard** `onyx.app/llm-leaderboard` ★★★☆☆ — 开/闭源对比,含自部署视角。**上榜理由** · 关注可自托管模型时的参考;更新频率偏低。
+- **LLMReference** `llmreference.com/benchmarks` ★★★☆☆ — 纯基准数据库,按任务列当前领先者。**上榜理由** · 适合按具体工作负载反查对应基准。
+- **BenchLM** `benchlm.ai` ★★★☆☆ — 聚合 281+ 模型、区分「暂定/已验证」分数。**上榜理由** · 一站式对比质量、成本、上下文,并标注置信度。
 
 > **说明**:老牌的 HuggingFace Open LLM Leaderboard 已于 2025 年正式停更归档,不再接受新提交,建议作为历史参考,不再当作活跃榜单。
 
@@ -48,16 +50,18 @@
 
 ![SuperCLUE 智能指数:六大任务综合评分,并将模型价格、生成耗时并列对照,最近更新 2026.07](./shots/02-superclue.png)
 
-- **定位**:国内影响力最大的中文通用综合榜,月度更新,覆盖数学推理、科学推理、代码、指令遵循、幻觉控制、智能体等任务。
-- **上榜理由**:能直观呈现国产与海外模型的能力梯队差距,并将综合分、价格、生成耗时并置,兼具选型参考价值。
-- **注意**:为单页应用,含总榜与多个专项/多模态子榜,引用时应注明具体榜单与期次。
+国内影响力最大的中文通用综合榜,月度更新,覆盖数学推理、科学推理、代码、指令遵循、幻觉控制、智能体等任务。
+
+**上榜理由** · 能直观呈现国产与海外模型的能力梯队差距,并将综合分、价格、生成耗时并置,兼具选型参考价值。
+
+**注意** · 为单页应用,含总榜与多个专项/多模态子榜,引用时应注明具体榜单与期次。
 
 **其余站点**
 
-- **OpenCompass 司南** `rank.opencompass.org.cn` ★★★★★ — 上海 AI Lab 的评测体系,覆盖 12 个一级维度,含官方评测榜、开源评测榜与竞技场投票榜三种口径。**上榜理由**:学术式全维度评测,中立、可追溯,细分学科表现查询能力强。
-- **FlagEval 天秤** `flageval.baai.ac.cn` ★★★☆☆ — 智源研究院的开放评测,支持多模态与多语言。**上榜理由**:关注多模态/跨模态基础模型评测时的参考。
-- **C-Eval** `cevalbenchmark.com` ★★★☆☆ — 中文 52 学科评测集(NeurIPS 2023)。**上榜理由**:中文学科知识评测的经典引用来源;站点证书已过期、维护转冷,访问时会有安全提示。
-- **CMMLU** `github.com/haonan-li/CMMLU` ★★★☆☆ — 中文本土化 67 学科数据集(含中国特有题型)。**上榜理由**:需要可复现的中文语境评测数据集时使用;更新依赖社区提交。
+- **OpenCompass 司南** `rank.opencompass.org.cn` ★★★★★ — 上海 AI Lab 的评测体系,覆盖 12 个一级维度,含官方评测榜、开源评测榜与竞技场投票榜三种口径。**上榜理由** · 学术式全维度评测,中立、可追溯,细分学科表现查询能力强。
+- **FlagEval 天秤** `flageval.baai.ac.cn` ★★★☆☆ — 智源研究院的开放评测,支持多模态与多语言。**上榜理由** · 关注多模态/跨模态基础模型评测时的参考。
+- **C-Eval** `cevalbenchmark.com` ★★★☆☆ — 中文 52 学科评测集(NeurIPS 2023)。**上榜理由** · 中文学科知识评测的经典引用来源;站点证书已过期、维护转冷,访问时会有安全提示。
+- **CMMLU** `github.com/haonan-li/CMMLU` ★★★☆☆ — 中文本土化 67 学科数据集(含中国特有题型)。**上榜理由** · 需要可复现的中文语境评测数据集时使用;更新依赖社区提交。
 
 ---
 
@@ -69,15 +73,17 @@
 
 ![Artificial Analysis:Intelligence Index、输出速度、价格、延迟的多维对比,以及同一模型在不同 provider 上的性能横评](./shots/05-artificial-analysis.png)
 
-- **定位**:独立的端到端 API 分析平台,通过真实发起请求测量输出速度、首 token 延迟、每任务成本,覆盖全模态,并提供同一模型在不同 provider 上的性能横评。
-- **上榜理由**:速度、价格、延迟等**第三方实测**数据是其核心价值,provider 横评可直接支撑「上哪家」的决策。
-- **注意**:其 Intelligence Index(智能合成分)仍是自定加权指标,宜作参考而非唯一依据;免费版默认仅展开部分模型,完整数据需订阅。
+独立的端到端 API 分析平台,通过真实发起请求测量输出速度、首 token 延迟、每任务成本,覆盖全模态,并提供同一模型在不同 provider 上的性能横评。
+
+**上榜理由** · 速度、价格、延迟等**第三方实测**数据是其核心价值,provider 横评可直接支撑「上哪家」的决策。
+
+**注意** · 其 Intelligence Index(智能合成分)仍是自定加权指标,宜作参考而非唯一依据;免费版默认仅展开部分模型,完整数据需订阅。
 
 **其余站点**
 
-- **LLM-Stats** `llm-stats.com` ★★★★☆ — 将验证过的基准分与每 token 价格合成综合分,覆盖 300+ 模型。**上榜理由**:首页快照卡片可一眼获取各维度领先者;数据含未发布 preview 模型,需注意区分。
-- **DemandSphere Frontier Model Tracker** `demandsphere.com/research` ★★★☆☆ — 偏发布节奏、地理与开闭源格局的宏观追踪。**上榜理由**:做行业趋势叙事时的素材来源。
-- **LMmarketcap** `lmmarketcap.com` ★★★☆☆ — 追踪 351 个模型,综合分含基准与能力权重。**上榜理由**:一站式对比 Elo、性价比、速度、上下文与价格。
+- **LLM-Stats** `llm-stats.com` ★★★★☆ — 将验证过的基准分与每 token 价格合成综合分,覆盖 300+ 模型。**上榜理由** · 首页快照卡片可一眼获取各维度领先者;数据含未发布 preview 模型,需注意区分。
+- **DemandSphere Frontier Model Tracker** `demandsphere.com/research` ★★★☆☆ — 偏发布节奏、地理与开闭源格局的宏观追踪。**上榜理由** · 做行业趋势叙事时的素材来源。
+- **LMmarketcap** `lmmarketcap.com` ★★★☆☆ — 追踪 351 个模型,综合分含基准与能力权重。**上榜理由** · 一站式对比 Elo、性价比、速度、上下文与价格。
 
 ---
 
@@ -89,19 +95,21 @@
 
 ![SWE-bench:Verified / Lite / Multilingual / Multimodal 多个变体榜,可按开闭源、模型、agent 过滤](./shots/07-swebench.png)
 
-- **定位**:以真实 GitHub issue 为题的编码修复基准,要求模型自主改代码、跑测试、修 bug。
-- **上榜理由**:目前最贴近真实工程的编码 Agent 基准之一,其中 Verified 子榜(500 道人工校验题)为业界最常引用口径。
-- **注意**:成绩是「scaffold(智能体框架)+ 模型」的组合分,更换框架分数会变;且题目源自公开仓库,存在训练数据污染与时间截止争议,宜作方向参考。
+以真实 GitHub issue 为题的编码修复基准,要求模型自主改代码、跑测试、修 bug。
+
+**上榜理由** · 目前最贴近真实工程的编码 Agent 基准之一,其中 Verified 子榜(500 道人工校验题)为业界最常引用口径。
+
+**注意** · 成绩是「scaffold(智能体框架)+ 模型」的组合分,更换框架分数会变;且题目源自公开仓库,存在训练数据污染与时间截止争议,宜作方向参考。
 
 **其余站点**
 
-- **MTEB / C-MTEB** `huggingface.co/spaces/mteb/leaderboard` ★★★★★ — 文本向量权威榜,覆盖检索、重排、分类等数十类任务与上百种语言,含中文子榜。**上榜理由**:RAG/检索的 embedding 选型标准;需注意其被刷榜/过拟合较多,应结合自有语料验证。
-- **BFCL(伯克利函数调用榜)** `gorilla.cs.berkeley.edu/leaderboard` ★★★★☆ — 工具/函数调用评测,已至 V4(agentic + web search)。**上榜理由**:Agent 工具调用能力的主要参考;注意区分原生 FC 与 prompt 两种口径。
-- **tau-bench(τ-bench)** `github.com/sierra-research/tau-bench` ★★★★☆ — 多轮对话 + 用户模拟 + 数据库状态的任务型 Agent 评测。**上榜理由**:补足 SWE-bench 覆盖不到的对话式 Agent 场景(如客服/工单)。
-- **LiveBench** `livebench.ai` ★★★★☆ — 每月更换题目以防污染,六大类客观可验证。**上榜理由**:关注抗污染、抗过拟合的动态评测时使用。
-- **Context Arena** `contextarena.ai` ★★★★☆ — 长上下文有效性可视化,基于多针检索看真实衰减。**上榜理由**:验证「标称上下文 ≠ 有效上下文」的专用工具。
-- **ARC-AGI** `arcprize.org` ★★★☆☆ — 抽象推理基准。**上榜理由**:衡量前沿推理上限;ARC-AGI-1 已于 2024 年底被 o3 大幅推进(约 87%),当前难点在 ARC-AGI-2/-3。
-- **Aider Polyglot** `aider.chat/docs/leaderboards` ★★★☆☆ — 多语言代码编辑能力榜。**上榜理由**:代码编辑维度的参考;数据疑似冻结在 2025-08,引用需注明。
+- **MTEB / C-MTEB** `huggingface.co/spaces/mteb/leaderboard` ★★★★★ — 文本向量权威榜,覆盖检索、重排、分类等数十类任务与上百种语言,含中文子榜。**上榜理由** · RAG/检索的 embedding 选型标准;需注意其被刷榜/过拟合较多,应结合自有语料验证。
+- **BFCL(伯克利函数调用榜)** `gorilla.cs.berkeley.edu/leaderboard` ★★★★☆ — 工具/函数调用评测,已至 V4(agentic + web search)。**上榜理由** · Agent 工具调用能力的主要参考;注意区分原生 FC 与 prompt 两种口径。
+- **tau-bench(τ-bench)** `github.com/sierra-research/tau-bench` ★★★★☆ — 多轮对话 + 用户模拟 + 数据库状态的任务型 Agent 评测。**上榜理由** · 补足 SWE-bench 覆盖不到的对话式 Agent 场景(如客服/工单)。
+- **LiveBench** `livebench.ai` ★★★★☆ — 每月更换题目以防污染,六大类客观可验证。**上榜理由** · 关注抗污染、抗过拟合的动态评测时使用。
+- **Context Arena** `contextarena.ai` ★★★★☆ — 长上下文有效性可视化,基于多针检索看真实衰减。**上榜理由** · 验证「标称上下文 ≠ 有效上下文」的专用工具。
+- **ARC-AGI** `arcprize.org` ★★★☆☆ — 抽象推理基准。**上榜理由** · 衡量前沿推理上限;ARC-AGI-1 已于 2024 年底被 o3 大幅推进(约 87%),当前难点在 ARC-AGI-2/-3。
+- **Aider Polyglot** `aider.chat/docs/leaderboards` ★★★☆☆ — 多语言代码编辑能力榜。**上榜理由** · 代码编辑维度的参考;数据疑似冻结在 2025-08,引用需注明。
 
 ---
 
@@ -109,9 +117,9 @@
 
 用于跟踪新模型发布节奏,避免遗漏,替代碎片化的社交媒体信息。
 
-- **AI Release Tracker** `aireleasetracker.com` ★★★★☆ — 收录自 ChatGPT 以来的全部前沿模型,含发布日期、参数量、上下文、开闭源及三项基准。**上榜理由**:免费无广告的完整发布时间线;所列跑分多为厂商自报,不宜作为能力裁判。
-- **LLM-Stats Updates** `llm-stats.com/llm-updates` ★★★★☆ — 每小时更新的发布/API 变更页,覆盖 53+ 组织。**上榜理由**:需要高频跟踪发布与接口变化时使用。
-- **LMmarketcap** `lmmarketcap.com` ★★★☆☆ — 发布追踪 + 周报 + newsletter。**上榜理由**:偏好邮件订阅式聚合信息时的补充。
+- **AI Release Tracker** `aireleasetracker.com` ★★★★☆ — 收录自 ChatGPT 以来的全部前沿模型,含发布日期、参数量、上下文、开闭源及三项基准。**上榜理由** · 免费无广告的完整发布时间线;所列跑分多为厂商自报,不宜作为能力裁判。
+- **LLM-Stats Updates** `llm-stats.com/llm-updates` ★★★★☆ — 每小时更新的发布/API 变更页,覆盖 53+ 组织。**上榜理由** · 需要高频跟踪发布与接口变化时使用。
+- **LMmarketcap** `lmmarketcap.com` ★★★☆☆ — 发布追踪 + 周报 + newsletter。**上榜理由** · 偏好邮件订阅式聚合信息时的补充。
 
 ---
 
@@ -123,16 +131,18 @@
 
 ![OpenRouter Rankings:基于真实 token 用量的模型排行,按周堆叠的用量趋势](./shots/09-openrouter.png)
 
-- **定位**:OpenAI 兼容的统一接口,聚合 400+ 模型、多家供应商,支持自动故障回落。
-- **上榜理由**:提供基于**真实 token 消耗量**的独家用量排行,反映生产环境中模型的实际采用度,与跑分榜形成互补。
-- **注意**:用量数据来自其自身平台流量,不等于全网市场份额,不宜过度外推。
+OpenAI 兼容的统一接口,聚合 400+ 模型、多家供应商,支持自动故障回落。
+
+**上榜理由** · 提供基于**真实 token 消耗量**的独家用量排行,反映生产环境中模型的实际采用度,与跑分榜形成互补。
+
+**注意** · 用量数据来自其自身平台流量,不等于全网市场份额,不宜过度外推。
 
 **其余站点**
 
-- **Groq** `groq.com` ★★★★☆ — 自研 LPU,主打吞吐与延迟。**上榜理由**:低延迟推理场景的性能标杆。
-- **Together AI** `together.ai` ★★★★☆ — 开源模型托管推理 + 微调 + GPU 集群。**上榜理由**:开源模型托管与定制的一站式平台。
-- **Fireworks AI** `fireworks.ai` ★★★★☆ — 主打高性能开源模型推理。**上榜理由**:追求推理速度的开源模型服务选项。
-- **Replicate** `replicate.com` ★★★☆☆ — 以一行代码调用开源模型(含多模态)。**上榜理由**:快速试用/集成开源模型时的便捷入口。
+- **Groq** `groq.com` ★★★★☆ — 自研 LPU,主打吞吐与延迟。**上榜理由** · 低延迟推理场景的性能标杆。
+- **Together AI** `together.ai` ★★★★☆ — 开源模型托管推理 + 微调 + GPU 集群。**上榜理由** · 开源模型托管与定制的一站式平台。
+- **Fireworks AI** `fireworks.ai` ★★★★☆ — 主打高性能开源模型推理。**上榜理由** · 追求推理速度的开源模型服务选项。
+- **Replicate** `replicate.com` ★★★☆☆ — 以一行代码调用开源模型(含多模态)。**上榜理由** · 快速试用/集成开源模型时的便捷入口。
 
 ---
 
@@ -144,14 +154,16 @@
 
 ![Hugging Face Models:按任务与热度筛选的模型库,AI 社区的基础设施](./shots/10-huggingface.png)
 
-- **定位**:AI 社区的基础设施,托管 200 万+ 模型、大量数据集与 Spaces,同时是众多榜单的宿主。
-- **上榜理由**:开源模型、数据集与演示的默认来源,几乎所有开源工作流的起点。
-- **注意**:部分模型为 gated 需申请;Spaces 可能休眠需重启。
+AI 社区的基础设施,托管 200 万+ 模型、大量数据集与 Spaces,同时是众多榜单的宿主。
+
+**上榜理由** · 开源模型、数据集与演示的默认来源,几乎所有开源工作流的起点。
+
+**注意** · 部分模型为 gated 需申请;Spaces 可能休眠需重启。
 
 **其余站点**
 
-- **ModelScope 魔搭** `modelscope.cn` ★★★★☆ — 阿里主导的国内模型社区,模型/数据集/创空间齐备。**上榜理由**:国内访问稳定、国产模型首发多,是 Hugging Face 的国内重要补充。
-- **Ollama** `ollama.com` ★★★★☆ — 本地运行开源模型的便捷工具。**上榜理由**:一行命令即可本地起模型;注意其已新增云端付费档,不再是纯本地方案。
+- **ModelScope 魔搭** `modelscope.cn` ★★★★☆ — 阿里主导的国内模型社区,模型/数据集/创空间齐备。**上榜理由** · 国内访问稳定、国产模型首发多,是 Hugging Face 的国内重要补充。
+- **Ollama** `ollama.com` ★★★★☆ — 本地运行开源模型的便捷工具。**上榜理由** · 一行命令即可本地起模型;注意其已新增云端付费档,不再是纯本地方案。
 
 ---
 
@@ -163,20 +175,22 @@
 
 ![recipes.mcpinfra.net:按 Provider × 硬件浏览部署配方,同时提供 vLLM 与 SGLang 的可复制 serve 命令](./shots/12-recipes-mcpinfra.png)
 
-- **定位**:部署配方站,按「模型 × GPU」直接给出可复制的 serve 命令。`recipes.vllm.ai` 为 vLLM 官方社区配方;`recipes.mcpinfra.net` 在其基础上同时提供 **vLLM 与 SGLang** 两种命令并附镜像选择器。
-- **上榜理由**:把「如何部署某模型」从翻文档拼参数,变为**开箱即用**的可复制命令,覆盖主流 GPU 与量化组合,显著降低起步成本。
-- **注意**:配方以 NVIDIA/AMD 为主,国产卡场景需结合下述昇腾链路。
+部署配方站,按「模型 × GPU」直接给出可复制的 serve 命令。`recipes.vllm.ai` 为 vLLM 官方社区配方;`recipes.mcpinfra.net` 在其基础上同时提供 **vLLM 与 SGLang** 两种命令并附镜像选择器。
+
+**上榜理由** · 把「如何部署某模型」从翻文档拼参数,变为**开箱即用**的可复制命令,覆盖主流 GPU 与量化组合,显著降低起步成本。
+
+**注意** · 配方以 NVIDIA/AMD 为主,国产卡场景需结合下述昇腾链路。
 
 **推理引擎与生产栈**
 
-- **vLLM** `docs.vllm.ai` ★★★★★ — 高吞吐推理引擎,PagedAttention,社区事实标准。**上榜理由**:开源推理服务的默认选型。
-- **SGLang** `docs.sglang.io` ★★★★☆ — 结构化生成 + RadixAttention。**上榜理由**:前缀复用密集场景吞吐表现突出;文档域名已由 .ai 迁至 .io。
-- **TensorRT-LLM** `nvidia.github.io/TensorRT-LLM` ★★★★☆ — NVIDIA 官方优化路线。**上榜理由**:追求 NVIDIA 硬件峰值吞吐时使用。
-- **NVIDIA Dynamo** `github.com/ai-dynamo/dynamo` ★★★★☆ — 数据中心级推理编排,prefill/decode 分离、KV 感知路由。**上榜理由**:大规模服务的分离式调度参考实现。
-- **llm-d** `llm-d.ai` ★★★★☆ — Kubernetes 原生分布式推理,已入 CNCF sandbox。**上榜理由**:K8s 上做 KV 感知多 Pod 路由的开源方案。
-- **MindIE / vllm-ascend** `hiascend.com` · `github.com/vllm-project/vllm-ascend` ★★★★☆ — 昇腾 910B 部署主力路径。**上榜理由**:信创/国产卡场景绕不开的推理链路;上游 NVIDIA 数字不能直接照搬,需按昇腾重新验证吞吐、显存与算子支持。
-- **vLLM production-stack** `github.com/vllm-project/production-stack` ★★★★☆ — K8s 生产参考栈(router + LMCache + 可观测)。**上榜理由**:从单机 serve 走向生产集群的参考架构。
-- **MLPerf Inference** `mlcommons.org` ★★★☆☆ — 硬件推理基准的行业标准。**上榜理由**:需要权威硬件推理数字时的官方结果表。
+- **vLLM** `docs.vllm.ai` ★★★★★ — 高吞吐推理引擎,PagedAttention,社区事实标准。**上榜理由** · 开源推理服务的默认选型。
+- **SGLang** `docs.sglang.io` ★★★★☆ — 结构化生成 + RadixAttention。**上榜理由** · 前缀复用密集场景吞吐表现突出;文档域名已由 .ai 迁至 .io。
+- **TensorRT-LLM** `nvidia.github.io/TensorRT-LLM` ★★★★☆ — NVIDIA 官方优化路线。**上榜理由** · 追求 NVIDIA 硬件峰值吞吐时使用。
+- **NVIDIA Dynamo** `github.com/ai-dynamo/dynamo` ★★★★☆ — 数据中心级推理编排,prefill/decode 分离、KV 感知路由。**上榜理由** · 大规模服务的分离式调度参考实现。
+- **llm-d** `llm-d.ai` ★★★★☆ — Kubernetes 原生分布式推理,已入 CNCF sandbox。**上榜理由** · K8s 上做 KV 感知多 Pod 路由的开源方案。
+- **MindIE / vllm-ascend** `hiascend.com` · `github.com/vllm-project/vllm-ascend` ★★★★☆ — 昇腾 910B 部署主力路径。**上榜理由** · 信创/国产卡场景绕不开的推理链路;上游 NVIDIA 数字不能直接照搬,需按昇腾重新验证吞吐、显存与算子支持。
+- **vLLM production-stack** `github.com/vllm-project/production-stack` ★★★★☆ — K8s 生产参考栈(router + LMCache + 可观测)。**上榜理由** · 从单机 serve 走向生产集群的参考架构。
+- **MLPerf Inference** `mlcommons.org` ★★★☆☆ — 硬件推理基准的行业标准。**上榜理由** · 需要权威硬件推理数字时的官方结果表。
 
 > **几条落地经验(经验值,需按自身负载核实)**:高并发 + 长 prompt/输出场景,P/D 分离对 TTFT 收益明显,低并发则不划算;FP8 量化通常质量损失小、吞吐提升明显,INT4 更省但精度敏感场景需先验证;长 system prompt / 多轮共享上下文的场景优先开启前缀复用(vLLM prefix cache / SGLang RadixAttention),近乎零成本换吞吐。官方 TTFT/吞吐数字仅供参考,应按「自身硬件 × 并发 × 输入输出长度」自行压测。
 
@@ -190,14 +204,16 @@
 
 ![Epoch AI Trends:推理成本、上下文窗口、训练算力等关键增长曲线与背后数据库](./shots/13-epoch-ai.png)
 
-- **定位**:前沿 AI 增长趋势仪表盘,背后附 Models / Data Centers / Hardware 数据库。
-- **上榜理由**:提供成本、上下文、算力等可引用的量级趋势(如推理成本每年约降 40×、上下文每年约涨 30×)。
-- **注意**:这些是**带定义前提、误差不小的量级估算**(如「成本降 40×」为固定能力档位下的估算),宜作趋势参照,不宜当精确值。
+前沿 AI 增长趋势仪表盘,背后附 Models / Data Centers / Hardware 数据库。
+
+**上榜理由** · 提供成本、上下文、算力等可引用的量级趋势(如推理成本每年约降 40×、上下文每年约涨 30×)。
+
+**注意** · 这些是**带定义前提、误差不小的量级估算**(如「成本降 40×」为固定能力档位下的估算),宜作趋势参照,不宜当精确值。
 
 **其余站点**
 
-- **Stanford HAI AI Index** `hai.stanford.edu/ai-index` ★★★★☆ — 年度权威报告(2026 版)。**上榜理由**:技术、投资、治理、社会影响的系统性年度数据,适合汇报引用。
-- **a16z LLMflation** `a16z.com/llmflation-llm-inference-cost` ★★★☆☆ — 推理成本下降的经典论述。**上榜理由**:阐述成本趋势的常引用来源;原文发布于 2024 年 11 月,引用需注明日期。
+- **Stanford HAI AI Index** `hai.stanford.edu/ai-index` ★★★★☆ — 年度权威报告(2026 版)。**上榜理由** · 技术、投资、治理、社会影响的系统性年度数据,适合汇报引用。
+- **a16z LLMflation** `a16z.com/llmflation-llm-inference-cost` ★★★☆☆ — 推理成本下降的经典论述。**上榜理由** · 阐述成本趋势的常引用来源;原文发布于 2024 年 11 月,引用需注明日期。
 
 ---
 

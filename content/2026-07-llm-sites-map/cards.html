@@ -29,9 +29,9 @@
   .card .note::before{ content:"⚠ "; color:#e0a03a; }
   .foot{ display:flex; justify-content:space-between; align-items:center; margin-top:34px; padding-top:24px; border-top:1px solid var(--line); font-size:21px; color:#6b7090; }
   .foot b{ color:#aab0c8; }
-  /* cover — 正方形 1080×1080,站名星图背景 + 中心强光 + 大标题 */
-  .cover{ width:1080px; height:1080px; position:relative; overflow:hidden;
-          background:radial-gradient(circle at 50% 44%, #191933 0%, #0c0c1a 58%, #07070f 100%); padding:0; }
+  /* cover — 竖图 1080×1440(3:4),站名星图背景 + 中心强光 + 大标题 */
+  .cover{ width:1080px; height:1440px; position:relative; overflow:hidden;
+          background:radial-gradient(circle at 50% 46%, #191933 0%, #0c0c1a 58%, #07070f 100%); padding:0; }
   .cover::before{ display:none; }
   .cons{ position:absolute; inset:-30px; display:flex; flex-wrap:wrap; align-content:center; justify-content:center; gap:20px 30px; padding:44px; }
   .cons span{ font-size:29px; font-weight:800; letter-spacing:.5px; white-space:nowrap; opacity:.17; }
@@ -149,7 +149,7 @@ CATS.forEach(c=>c.items.forEach(it=>{
   it[0].split(/\s·\s|\s\/\s|·|\//).map(s=>s.trim()).filter(s=>s && s.length<=22).forEach(n=>NAMES.push([n,c.acc]));
 }));
 const seen=new Set(); const uniq=NAMES.filter(([n])=>{ if(seen.has(n))return false; seen.add(n); return true; });
-const tiled=[...uniq,...uniq].map(([n,c],i)=>`<span style="color:${c}">${n}</span>`).join('');
+const tiled=[...uniq,...uniq,...uniq].map(([n,c],i)=>`<span style="color:${c}">${n}</span>`).join('');
 
 let html = `<div class="slide cover">
   <div class="cons">${tiled}</div>
