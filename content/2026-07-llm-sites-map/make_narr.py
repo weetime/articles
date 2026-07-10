@@ -15,8 +15,7 @@ SEGS = [
     "Artificial Analysis,端到端实测,真实发起请求,测量速度、价格与延迟。",
     "垂直能力,SWE-bench,以真实代码问题为题的编码修复基准,认准 Verified 子榜。",
     "获取模型,OpenRouter,统一接口聚合多家模型,并提供真实用量排行。",
-    "落地部署,recipes,按模型和显卡,给出可直接复制的启动命令。",
-    "recipes.mcpinfra,在此基础上,同时提供 vLLM 与 SGLang 两种命令。",
+    "落地部署,recipes.mcpinfra,按模型和显卡给出可复制的启动命令,兼容 vLLM 与 SGLang。",
 ]
 
 async def one(i, txt):

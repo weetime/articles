@@ -27,6 +27,8 @@ def font(sz, mono=False):
     return ImageFont.truetype(MONO if mono else FONT, sz)
 
 # per-site callout: (step tag, big label, sub, ascii-domain-for-chip)
+# recipes.vllm.ai 与 recipes.mcpinfra.net 高度重合,只保留后者 -> DROP 掉录制里的第 6 站
+DROP = {6}
 CALL = [
     ("① 综合竞技场 · 人类偏好", "真人盲测投票的偏好排行",   "arena.ai(原 LMArena)· Elo 评分",     "arena.ai/leaderboard"),
     ("① 中文评测榜",         "中文通用综合榜,月度更新",   "SuperCLUE",                            "superclueai.com"),
@@ -34,8 +36,7 @@ CALL = [
     ("② 选型 · 端到端实测",   "真实发起请求,测性能与价格", "Artificial Analysis",                  "artificialanalysis.ai"),
     ("③ 垂直能力 · 编码 Agent","真实 issue 编码修复基准",   "SWE-bench · 认准 Verified 子榜",       "swebench.com"),
     ("④ API 聚合 · 用量榜",   "真实 token 用量排行",       "OpenRouter",                           "openrouter.ai/rankings"),
-    ("⑤ 部署 · 配方",         "按模型 × GPU 给可复制命令",  "recipes.vllm.ai",                      "recipes.vllm.ai"),
-    ("⑤ 部署 · 双引擎",       "vLLM 与 SGLang 一键切换",   "recipes.mcpinfra.net",                 "recipes.mcpinfra.net"),
+    ("⑤ 部署 · 配方",         "按模型 × GPU 给可复制命令",  "recipes.mcpinfra.net · vLLM/SGLang",   "recipes.mcpinfra.net"),
 ]
 
 ARR = [(0,0),(0,17),(4.4,13.2),(7.6,20),(10.2,19),(6.9,12.2),(12.7,12.2)]
@@ -63,12 +64,14 @@ def main():
     webms = [f for f in os.listdir(SP) if f.endswith(".webm")]
     RAW = os.path.join(SP, webms[0])
     beats = json.load(open(f"{SP}/beats.json"))
+    beats = [b for i, b in enumerate(beats) if i not in DROP]   # keep 7 sites
+    N = len(beats)
     path  = [(p[0]/1000.0, p[1], p[2]) for p in json.load(open(f"{SP}/path.json"))["path"]]
 
     subprocess.run(["rm","-rf",OUTF]); os.makedirs(OUTF, exist_ok=True)
     fTag=font(30); fBig=font(46); fSub=font(26,mono=False); fUrl=font(23,mono=True); fBrand=font(24)
 
-    gidx = 0
+    gidx = 0; counts = []
     for bi, b in enumerate(beats):
         start = b["t"]
         wdir = f"{SP}/w{bi}"
@@ -91,7 +94,7 @@ def main():
             chipw = 96 + int(d.textlength(chip, font=fUrl))
             rrect(d, [56,110,chipw,152], 20, fill=(255,255,255,255), outline=(224,224,220,255), width=2)
             d.text((78,120), chip, font=fUrl, fill=(96,98,112,255))
-            d.text((W-150,120), f"{bi+1}/8", font=fBrand, fill=ACC)
+            d.text((W-150,120), f"{bi+1}/{N}", font=fBrand, fill=ACC)
             # screencast
             cv.alpha_composite(shot,(0,HEAD))
             # cursor + pulse
@@ -109,11 +112,13 @@ def main():
             d.text((58, fy+150), sub, font=fSub, fill=SUBINK)
             # progress dots
             dotx0 = 56; dy = fy+FOOT-34
-            for k in range(8):
+            for k in range(N):
                 fillc = ACC if k==bi else (208,208,204,255)
                 d.ellipse([dotx0+k*30, dy, dotx0+k*30+14, dy+14], fill=fillc)
             cv.convert("RGB").save(f"{OUTF}/{gidx:05d}.png"); gidx += 1
+        counts.append(len(frames))
         print("site", bi, "frames", len(frames), "total", gidx)
+    json.dump(counts, open(f"{SP}/sites.json","w"))
     print("DONE frames", gidx, "dur", gidx/FPS)
 
 if __name__ == "__main__":
