@@ -57,20 +57,20 @@
 <body><div id="app"></div>
 <script>
 const S = (n)=>`<span class="stars">${'<span class="f">★</span>'.repeat(n)}${'<span class="e">★</span>'.repeat(5-n)}</span>`;
-// [name, url, star, 定位, 上榜理由, {flag, note}]
+// [name, url, star, 定位, 用途, {flag, note}]
 const CATS = [
- {t:"综合榜单 / 竞技场", acc:"#8b7df7", idx:"01 / 09",
-  sub:"了解模型综合能力位次。分<b>人类偏好</b>(真人盲测)与<b>客观评测</b>两类口径,结论常有差异。",
+ {t:"综合评测 / 竞技场", acc:"#8b7df7", idx:"01 / 09",
+  sub:"了解模型综合能力表现。分<b>人类偏好</b>(真人盲测)与<b>客观评测</b>两类口径,结论常有差异。",
   items:[
-   ["LMArena → Arena","arena.ai",5,"真人盲测投票的偏好排行,Elo 评分","引用度最高的「人类偏好」基准,反映真实体验与口碑",{flag:1,note:"已更名 arena.ai;偏好≠能力,看误差范围"}],
-   ["OpenCompass 司南","rank.opencompass.org.cn",5,"上海 AI Lab 学术式全维度评测","12 维度、三种榜口径,中立可追溯",{flag:1}],
+   ["LMArena → Arena","arena.ai",5,"真人盲测投票的偏好对比,Elo 评分","引用度最高的「人类偏好」基准,反映真实体验与口碑",{flag:1,note:"已更名 arena.ai;偏好≠能力,看误差范围"}],
+   ["OpenCompass 司南","rank.opencompass.org.cn",5,"上海 AI Lab 学术式全维度评测","12 维度、三种口径,中立可追溯",{flag:1}],
    ["OpenLM Arena+","openlm.ai",3,"Elo 与硬基准并置对照","主观偏好与客观基准同视图比较"],
-   ["Vellum / Onyx / LLMReference / BenchLM","",3,"基准聚合 / 数据库类","按能力维度或工作负载反查领先者"],
+   ["Vellum / Onyx / LLMReference / BenchLM","",3,"基准聚合 / 数据库类","按能力维度或工作负载反查表现较强的模型"],
   ]},
- {t:"中文评测榜", acc:"#ff6b6b", idx:"02 / 09",
-  sub:"面向中文场景的评测体系,是国内选型与对标的重要依据,海外榜单少覆盖的视角。",
+ {t:"中文评测", acc:"#ff6b6b", idx:"02 / 09",
+  sub:"面向中文场景的评测体系,是国内选型与对标的重要依据,海外评测少覆盖的视角。",
   items:[
-   ["SuperCLUE","superclueai.com",5,"中文通用综合榜,月度更新","呈现国产/海外能力梯队,综合分+价格+耗时并置",{flag:1}],
+   ["SuperCLUE","superclueai.com",5,"中文通用综合评测,月度更新","呈现国产/海外能力水平,综合分+价格+耗时并置",{flag:1}],
    ["FlagEval 天秤","flageval.baai.ac.cn",3,"智源开放评测,多模态多语言","关注多模态基础模型评测时参考"],
    ["C-Eval","cevalbenchmark.com",3,"中文 52 学科评测集","经典引用源;证书过期、维护转冷"],
    ["CMMLU","github.com/haonan-li/CMMLU",3,"中文本土 67 学科数据集","需可复现中文语境评测时使用"],
@@ -79,18 +79,18 @@ const CATS = [
   sub:"明确候选后,在<b>质量、速度、价格</b>之间做工程权衡。选型阶段打开频率最高的一类。",
   items:[
    ["Artificial Analysis","artificialanalysis.ai",5,"端到端 API 实测:速度/价格/延迟","第三方实测数据 + provider 横评,支撑「上哪家」",{flag:1,note:"Intelligence Index 仍是自定加权,作参考"}],
-   ["LLM-Stats","llm-stats.com",4,"智能/速度/价格合成综合分,300+ 模型","首页卡片一眼获取各维度领先者",{note:"数据含未发布 preview 模型,需区分"}],
+   ["LLM-Stats","llm-stats.com",4,"智能/速度/价格合成综合分,300+ 模型","首页卡片一眼获取各维度表现较强的模型",{note:"数据含未发布 preview 模型,需区分"}],
    ["DemandSphere","demandsphere.com",3,"前沿模型宏观追踪","行业趋势叙事的素材来源"],
    ["LMmarketcap","lmmarketcap.com",3,"351 模型综合分","一站对比 Elo/性价比/速度/上下文"],
   ]},
- {t:"垂直 / 细分能力榜", acc:"#f0a850", idx:"04 / 09",
-  sub:"综合榜只反映整体水平,具体任务需看专项榜。同一模型不同任务排名差异往往很大。",
+ {t:"垂直 / 细分能力评测", acc:"#f0a850", idx:"04 / 09",
+  sub:"综合评测只反映整体水平,具体任务需看专项评测。同一模型不同任务表现差异往往很大。",
   items:[
-   ["SWE-bench","swebench.com",5,"真实 GitHub issue 编码修复","最贴近工程的编码 Agent 基准,认准 Verified 子榜",{flag:1,note:"scaffold+模型组合分;有污染争议"}],
-   ["MTEB / C-MTEB","huggingface.co/spaces/mteb",5,"文本向量权威榜,含中文子榜","RAG/检索的 embedding 选型标准",{flag:1,note:"被刷榜较多,结合自有语料验证"}],
+   ["SWE-bench","swebench.com",5,"真实 GitHub issue 编码修复","最贴近工程的编码 Agent 基准,认准 Verified 子集",{flag:1,note:"scaffold+模型组合分;有污染争议"}],
+   ["MTEB / C-MTEB","huggingface.co/spaces/mteb",5,"文本向量权威评测,含中文子集","RAG/检索的 embedding 选型标准",{flag:1,note:"被针对性优化较多,结合自有语料验证"}],
    ["BFCL","gorilla.cs.berkeley.edu",4,"工具/函数调用评测(V4)","Agent 工具调用主要参考"],
    ["tau-bench","github.com/sierra-research/tau-bench",4,"多轮+用户模拟的任务型 Agent","补 SWE-bench 覆盖不到的对话场景"],
-   ["LiveBench / Context Arena","",4,"抗污染动态榜 / 长上下文有效性","验证防污染与「标称≠有效」"],
+   ["LiveBench / Context Arena","",4,"抗污染动态评测 / 长上下文有效性","验证防污染与「标称≠有效」"],
    ["ARC-AGI / Aider","",3,"抽象推理 / 代码编辑","前沿推理上限;Aider 数据已冻结"],
   ]},
  {t:"模型发布追踪", acc:"#94a3b8", idx:"05 / 09",
@@ -103,7 +103,7 @@ const CATS = [
  {t:"API 聚合 / 路由", acc:"#a78bfa", idx:"06 / 09",
   sub:"以统一方式接入多家模型服务,或对比不同供应商的价格与性能。",
   items:[
-   ["OpenRouter","openrouter.ai",5,"OpenAI 兼容统一入口,聚合 400+ 模型","独家真实 token 用量榜,反映生产采用度",{flag:1,note:"用量为自身平台流量,勿过度外推"}],
+   ["OpenRouter","openrouter.ai",5,"OpenAI 兼容统一入口,聚合 400+ 模型","独家真实 token 用量分布,反映生产采用度",{flag:1,note:"用量为自身平台流量,勿过度外推"}],
    ["Groq","groq.com",4,"自研 LPU,主打吞吐与延迟","低延迟推理的性能标杆"],
    ["Together AI","together.ai",4,"开源托管推理 + 微调 + 集群","开源模型托管与定制一站式"],
    ["Fireworks AI / Replicate","",3,"高性能推理 / 一行代码调模型","快速试用与集成开源模型"],
@@ -111,7 +111,7 @@ const CATS = [
  {t:"模型仓库 / 本地运行", acc:"#4ade80", idx:"07 / 09",
   sub:"获取模型权重与数据集,或在本地运行开源模型。",
   items:[
-   ["Hugging Face","huggingface.co",5,"200 万+ 模型库 + 数据集 + Spaces","开源工作流的默认起点,众多榜单宿主",{flag:1}],
+   ["Hugging Face","huggingface.co",5,"200 万+ 模型库 + 数据集 + Spaces","开源工作流的默认起点,众多评测宿主",{flag:1}],
    ["ModelScope 魔搭","modelscope.cn",4,"阿里主导的国内模型社区","国内访问稳定、国产模型首发多,HF 重要补充",{flag:1}],
    ["Ollama","ollama.com",4,"本地运行开源模型的便捷工具","一行命令本地起模型",{note:"已加云端付费档,非纯本地"}],
   ]},
@@ -135,11 +135,11 @@ const CATS = [
 
 function cardHTML(it){
   const [nm,url,st,def,rz,opt={}] = it;
-  return `<div class="card${opt.flag?' flag':''}">
-    <div class="top"><div class="nm">${nm}</div>${opt.flag?'<div class="badge">旗舰</div>':''}${S(st)}</div>
+  return `<div class="card">
+    <div class="top"><div class="nm">${nm}</div></div>
     ${url?`<div class="url">${url}</div>`:''}
     <div class="def">${def}</div>
-    <div class="rz"><b>上榜理由 · </b>${rz}</div>
+    <div class="rz"><b>用途 · </b>${rz}</div>
     ${opt.note?`<div class="note">${opt.note}</div>`:''}
   </div>`;
 }
@@ -159,9 +159,9 @@ let html = `<div class="slide cover">
     <div class="kick">大 模 型 生 态</div>
     <div class="big">网站全景盘点</div>
     <div class="stat"><b>9 大类</b> · <b>50+ 站点</b></div>
-    <div class="csub">看榜 · 选型 · 拿模型 · 部署 · 趋势</div>
+    <div class="csub">看评测 · 选型 · 拿模型 · 部署 · 趋势</div>
     <div class="divider"></div>
-    <div class="legend2"><span class="s">★</span> 每站附客观定位 · 上榜理由 · 推荐指数</div>
+    <div class="legend2">每站附客观定位与用途说明</div>
     <div class="brandline"><b>vLLM 生产工程</b> · recipes.mcpinfra.net · ModelDoctor</div>
   </div>
 </div>`;
@@ -173,7 +173,7 @@ for(const c of CATS){
     <div class="sub">${c.sub}</div>
     <div class="rule"></div>
     ${c.items.map(cardHTML).join('')}
-    <div class="foot"><div><b>推荐指数</b> ★ = 权威性 × 不可替代性</div><div>recipes.mcpinfra.net · ModelDoctor · 2026.07</div></div>
+    <div class="foot"><div>按链路归类 · 定位与用途</div><div>recipes.mcpinfra.net · ModelDoctor · 2026.07</div></div>
   </div>`;
 }
 document.getElementById('app').innerHTML = html;
