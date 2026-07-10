@@ -23,7 +23,7 @@ DEMO = [
     ("发布追踪",       "榜首 · aireleasetracker.com · 全模型时间线"),
     ("API 聚合 · 路由","榜首 · openrouter.ai · 真实用量榜"),
     ("模型仓库 · 本地","榜首 · huggingface.co · 200 万+ 模型"),
-    ("部署 · 推理引擎","榜首 · recipes.mcpinfra.net · 可复制命令"),
+    ("部署 · 推理引擎","榜首 · recipes.vllm.ai · 官方部署配方"),
     ("趋势 · 研究",    "榜首 · epoch.ai · 增长趋势仪表盘"),
 ]
 

@@ -20,7 +20,7 @@ CATS = [
  ("发布追踪","新模型,别错过",[("AI Release Tracker",4),("LLM-Stats Updates",4),("LMmarketcap",3)],"榜首 · aireleasetracker.com · 全模型时间线"),
  ("API 聚合 · 路由","统一入口,谁被用得最多",[("OpenRouter",5),("Groq",4),("Together AI",4),("Fireworks AI",4),("Replicate",3)],"榜首 · openrouter.ai · 真实用量榜"),
  ("模型仓库 · 本地","权重与数据,从哪来",[("Hugging Face",5),("ModelScope 魔搭",4),("Ollama",4)],"榜首 · huggingface.co · 200 万+ 模型"),
- ("部署 · 推理引擎","把模型,跑起来",[("recipes.mcpinfra.net",5),("vLLM",5),("SGLang",4),("TensorRT-LLM",4),("NVIDIA Dynamo",4)],"榜首 · recipes.mcpinfra.net · 可复制命令"),
+ ("部署 · 推理引擎","把模型,跑起来",[("recipes.vllm.ai",5),("recipes.mcpinfra.net",5),("vLLM",5),("SGLang",4),("TensorRT-LLM",4)],"榜首 · recipes.vllm.ai · vLLM 官方配方"),
  ("趋势 · 研究","往哪走,看数据",[("Epoch AI",5),("Stanford HAI Index",4),("a16z LLMflation",3)],"榜首 · epoch.ai · 增长趋势仪表盘"),
 ]
 

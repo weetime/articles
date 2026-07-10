@@ -15,7 +15,7 @@ const SITES = [
   {url: 'https://aireleasetracker.com/',         settle: 3000, scroll: 320}, // 发布追踪
   {url: 'https://openrouter.ai/rankings',        settle: 3400, scroll: 260}, // API 聚合
   {url: 'https://huggingface.co/models',         settle: 3000, scroll: 300}, // 模型仓库
-  {url: 'https://recipes.mcpinfra.net/',         settle: 3200, scroll: 380}, // 部署
+  {url: 'https://recipes.vllm.ai/',         settle: 3200, scroll: 380}, // 部署
   {url: 'https://epoch.ai/trends',               settle: 4000, scroll: 300}, // 趋势
 ];
 
