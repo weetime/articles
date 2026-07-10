@@ -21,7 +21,7 @@ def card(section, page, kicker, line1, line2, sub_ink, sub_acc):
 # intro — hook
 card("网站全景 · 盘点", 0, "大 模 型 生 态",
      "工具站又多又杂?", "一张全景盘点。",
-     "按「看榜 · 选型 · 拿模型 · 部署 · 趋势」的链路,",
+     "按「看评测 · 选型 · 拿模型 · 部署 · 趋势」的链路,",
      "9 大类 50+ 站点,按链路逐类梳理、附定位与用途。"
      ).save(f"{HERE}/cards/intro.png")
 

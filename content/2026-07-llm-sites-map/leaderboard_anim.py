@@ -14,7 +14,7 @@ NFR = round(DUR*FPS)
 # (section, purpose headline, [ (name, 定位) ... ], footer note)
 CATS = [
  ("综合竞技场","看模型综合能力",[("LMArena → Arena","真人盲测 Elo"),("OpenLM Arena+","Elo × 硬基准"),("Vellum","基准聚合"),("Onyx","开/闭源对比"),("LLMReference","基准数据库")],"本类常用站点 · 打开看看"),
- ("中文评测榜","中文场景对标",[("SuperCLUE","中文月度综合"),("OpenCompass 司南","学术全维度"),("FlagEval 天秤","智源多模态"),("C-Eval","52 学科"),("CMMLU","本土 67 学科")],"本类常用站点 · 打开看看"),
+ ("中文评测","中文场景对标",[("SuperCLUE","中文月度综合"),("OpenCompass 司南","学术全维度"),("FlagEval 天秤","智源多模态"),("C-Eval","52 学科"),("CMMLU","本土 67 学科")],"本类常用站点 · 打开看看"),
  ("选型 · 定价","质量 × 速度 × 价格",[("Artificial Analysis","端到端实测"),("LLM-Stats","综合分 + 价格"),("DemandSphere","宏观追踪"),("LMmarketcap","综合分"),("Inference.net","价格横评")],"本类常用站点 · 打开看看"),
  ("垂直能力","按任务看专项",[("SWE-bench","编码修复"),("MTEB / C-MTEB","向量 / RAG"),("BFCL","工具调用"),("tau-bench","任务型 Agent"),("LiveBench","抗污染动态")],"本类常用站点 · 打开看看"),
  ("发布追踪","跟住新模型发布",[("AI Release Tracker","发布时间线"),("LLM-Stats Updates","每小时更新"),("LMmarketcap","周报订阅")],"本类常用站点 · 打开看看"),
