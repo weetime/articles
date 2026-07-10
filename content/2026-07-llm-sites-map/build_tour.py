@@ -16,7 +16,12 @@ OUTRO = os.path.join(HERE, "cards", "outro.png")
 WHOOSH= os.path.join(HERE, "whoosh.wav")
 OUT   = os.path.join(HERE, "video-portrait.mp4")
 
-INTRO_DUR, OUTRO_DUR, XF = 3.0, 3.2, 0.5
+def probe(p):
+    return float(subprocess.run(["ffprobe","-v","error","-show_entries","format=duration",
+                                 "-of","default=nk=1:nw=1",p],capture_output=True,text=True).stdout.strip())
+INTRO_MP3 = os.path.join(HERE, "intro.mp3")
+INTRO_DUR = round(probe(INTRO_MP3) + 0.9, 2)   # hold constellation through the hook
+OUTRO_DUR, XF = 3.2, 0.5
 TRANS = "slideleft"                       # PPT「推入」感
 
 # clip durations: intro, 7 sites (actual), outro
@@ -32,8 +37,10 @@ inputs  = ["-loop","1","-t",f"{INTRO_DUR}","-i",INTRO,
            "-loop","1","-t",f"{OUTRO_DUR}","-i",OUTRO]
 for i in range(NSEG):
     inputs += ["-i", os.path.join(HERE, f"seg{i}.mp3")]
-inputs += ["-i", WHOOSH]                  # last input = whoosh
+inputs += ["-i", WHOOSH]                  # whoosh
 WHI = 3 + NSEG
+inputs += ["-i", INTRO_MP3]               # intro voiceover (hook)
+INTROI = WHI + 1
 
 fc = []
 fc.append(f"[0:v]scale=8000:-1,zoompan=z='min(zoom+0.0009,1.12)':d={round(INTRO_DUR*FPS)}:"
@@ -62,8 +69,10 @@ fc.append(f"[{WHI}:a]asplit={nof}" + "".join(f"[w{j}]" for j in range(nof)))
 for j in range(nof):
     ms = max(0, round(offsets[j]*1000))
     fc.append(f"[w{j}]adelay={ms}|{ms},volume=0.7[ws{j}]")
-alla = "".join(f"[n{i}]" for i in range(NSEG)) + "".join(f"[ws{j}]" for j in range(nof))
-fc.append(f"{alla}amix=inputs={NSEG+nof}:normalize=0:dropout_transition=0[mx];[mx]alimiter=limit=0.95[a]")
+# intro hook voiceover, starts ~0.4s into the constellation
+fc.append(f"[{INTROI}:a]adelay=400|400[nintro]")
+alla = "[nintro]" + "".join(f"[n{i}]" for i in range(NSEG)) + "".join(f"[ws{j}]" for j in range(nof))
+fc.append(f"{alla}amix=inputs={1+NSEG+nof}:normalize=0:dropout_transition=0[mx];[mx]alimiter=limit=0.95[a]")
 
 cmd = ["ffmpeg","-y",*inputs,"-filter_complex",";".join(fc),
        "-map","[v]","-map","[a]","-r",str(FPS),

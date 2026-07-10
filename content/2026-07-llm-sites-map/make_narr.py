@@ -27,7 +27,19 @@ async def one(i, txt):
             print("retry", i, str(e)[:60]); await asyncio.sleep(2)
     raise RuntimeError(f"seg{i} failed")
 
+INTRO_TXT = "大模型工具站又多又杂?一张全景图,帮你理清常用站点。"
+
+async def one_named(name, txt):
+    for _ in range(4):
+        try:
+            c = edge_tts.Communicate(txt, VOICE, rate=RATE, proxy=PROXY)
+            await c.save(f"{name}.mp3"); return
+        except Exception as e:
+            print("retry", name, str(e)[:60]); await asyncio.sleep(2)
+    raise RuntimeError(f"{name} failed")
+
 async def main():
+    await one_named("intro", INTRO_TXT)
     for i, t in enumerate(SEGS):
         await one(i, t)
 
