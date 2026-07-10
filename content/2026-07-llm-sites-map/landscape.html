@@ -42,18 +42,19 @@
 </style></head><body><div id="root">
   <div class="top">
     <div class="ttl">大模型生态 · 网站<span class="g">全景图</span>
-      <small>按「看榜 → 选型 → 拿模型 → 部署 → 趋势」链路组织 · 9 大类 50+ 站点 · 推荐指数 ★ = 权威性 × 不可替代性 · 2026.07 实访核对</small>
+      <small>按「看榜 → 选型 → 拿模型 → 部署 → 趋势」链路组织 · 9 大类 50+ 站点 · 按链路归类 · 2026.07 逐站实访核对</small>
     </div>
     <div class="legend" id="legend"></div>
   </div>
   <div class="flow" id="flow"></div>
   <div class="bottom">
     <div class="pan">
-      <h4><i style="background:#f5b942"></i>推荐指数(★)怎么读</h4>
-      <div class="starrow"><span class="s">★★★★★</span>事实标准,该环节几乎必用</div>
-      <div class="starrow"><span class="s">★★★★☆</span>高价值,常用</div>
-      <div class="starrow"><span class="s">★★★☆☆</span>特定场景补充 / 已停更</div>
-      <p style="margin-top:8px">指数 = 行业引用度 × 是否有独家、不可替代的价值,非质量绝对排序。</p>
+      <h4><i style="background:#f5b942"></i>怎么用这张图</h4>
+      <ul>
+        <li>按<b>工作流五环节</b>(看榜→选型→拿模型→部署→趋势)对号入座</li>
+        <li>每格是<b>常用站点清单</b>,按需查阅、收藏,非排名</li>
+        <li>站点状态、定位与用途见公众号图文详解</li>
+      </ul>
     </div>
     <div class="pan">
       <h4><i style="background:#ef4444"></i>三条避坑</h4>
@@ -75,8 +76,8 @@
       <h4><i style="background:#8b5cf6"></i>图例</h4>
       <ul>
         <li><b>色块</b> = 链路的五个阶段</li>
-        <li><b>青色高亮框</b> = 落地部署(主场)</li>
-        <li><b>★</b> = 推荐指数(满分五星)</li>
+        
+        <li><b>青色高亮</b> = 落地部署(本文重点)</li>
       </ul>
     </div>
   </div>
@@ -98,7 +99,7 @@ const PH = [
    {t:"模型仓库 / 本地",items:[["Hugging Face",5],["ModelScope 魔搭",4],["Ollama",4]]},
  ]},
  {n:"④ 部署",en:"DEPLOY",c:"#22d3ee",hero:1,cats:[
-   {t:"部署 · 推理引擎与配方",hero:1,items:[["recipes.mcpinfra.net",5],["vLLM",5],["SGLang",4],["TensorRT-LLM",4],["NVIDIA Dynamo",4],["llm-d",4],["MindIE / vllm-ascend",4],["production-stack",4],["MLPerf",3]]},
+   {t:"部署 · 推理引擎与配方",hero:1,items:[["recipes.vllm.ai",5],["recipes.mcpinfra.net",5],["vLLM",5],["SGLang",4],["TensorRT-LLM",4],["NVIDIA Dynamo",4],["llm-d",4],["MindIE / vllm-ascend",4],["production-stack",4],["MLPerf",3]]},
  ]},
  {n:"⑤ 趋势",en:"TREND",c:"#f59e0b",cats:[
    {t:"趋势 / 研究",items:[["Epoch AI",5],["Stanford HAI Index",4],["a16z LLMflation",3]]},
@@ -108,7 +109,7 @@ const S=n=>`<span class="st">${'<b>★</b>'.repeat(n)}${'★'.repeat(5-n)}</span
 document.getElementById('legend').innerHTML = PH.map(p=>`<div class="lg"><i style="background:${p.c}"></i>${p.n.slice(2)} · ${p.en}</div>`).join('');
 document.getElementById('flow').innerHTML = PH.map((p,i)=>{
   const cats = p.cats.map(c=>{
-    const rows = c.items.map(([nm,s])=>`<div class="r"><span class="nm">${nm}</span>${S(s)}</div>`).join('');
+    const rows = c.items.map(([nm,s])=>`<div class="r"><span class="nm">${nm}</span></div>`).join('');
     return `<div class="cat${c.hero?' hero':''}"><h3><span class="dot" style="background:${p.c}"></span>${c.t}</h3><div class="rows">${rows}</div></div>`;
   }).join('');
   const arrow = i<PH.length-1?`<div class="arrow">→</div>`:'';
