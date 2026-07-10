@@ -8,7 +8,7 @@ from PIL import Image, ImageDraw, ImageFont
 SP   = "/private/tmp/claude-501/-Users-fangyong-articles/d9f008b4-9d6c-4705-b32b-60b2ffff57fc/scratchpad/tour"
 RAW  = None  # set from the .webm in SP
 FPS  = 30
-VIEW = 6.2                      # seconds kept per site
+VIEW = 6.6                      # seconds kept per site
 CW, CH = 1080, 1440             # screencast size
 W, H   = 1080, 1920            # portrait canvas
 HEAD   = 210                    # top band
@@ -28,14 +28,14 @@ def font(sz, mono=False):
 
 # per-site callout: (step tag, big label, sub, ascii-domain-for-chip)
 CALL = [
-    ("① 看榜 · 人类盲测",   "谁最强,先看真人怎么投",   "arena.ai(原 LMArena)· 盲测 Elo",      "arena.ai/leaderboard"),
-    ("① 看榜 · 中文榜",     "国产梯队,一眼看清",       "SuperCLUE · 月度中文综合榜",           "superclueai.com"),
-    ("② 选型 · 质量×价格",  "上哪个、多少钱",           "LLM-Stats · 综合分 + 300 模型",        "llm-stats.com"),
-    ("② 选型 · 端到端实测",  "不是抄跑分,是真发请求测",  "Artificial Analysis · 速度/价格/延迟",  "artificialanalysis.ai"),
-    ("③ 垂直 · 编码 Agent", "我这活它到底行不行",       "SWE-bench · 真实 GitHub issue 修复",   "swebench.com"),
-    ("④ 拿模型 · 真实用量",  "谁真被用得最多",           "OpenRouter · token 用量榜",            "openrouter.ai/rankings"),
-    ("⑤ 落地 · vLLM 配方",  "选模型×GPU,给可复制命令",  "recipes.vllm.ai · 官方部署配方",       "recipes.vllm.ai"),
-    ("⑤ 落地 · 双引擎(主场)", "从「能跑」到「敢上线」",   "recipes.mcpinfra.net · vLLM + SGLang", "recipes.mcpinfra.net"),
+    ("① 综合竞技场 · 人类偏好", "真人盲测投票的偏好排行",   "arena.ai(原 LMArena)· Elo 评分",     "arena.ai/leaderboard"),
+    ("① 中文评测榜",         "中文通用综合榜,月度更新",   "SuperCLUE",                            "superclueai.com"),
+    ("② 选型 · 定价分析",     "智能 × 速度 × 价格 综合分",  "LLM-Stats · 300+ 模型",               "llm-stats.com"),
+    ("② 选型 · 端到端实测",   "真实发起请求,测性能与价格", "Artificial Analysis",                  "artificialanalysis.ai"),
+    ("③ 垂直能力 · 编码 Agent","真实 issue 编码修复基准",   "SWE-bench · 认准 Verified 子榜",       "swebench.com"),
+    ("④ API 聚合 · 用量榜",   "真实 token 用量排行",       "OpenRouter",                           "openrouter.ai/rankings"),
+    ("⑤ 部署 · 配方",         "按模型 × GPU 给可复制命令",  "recipes.vllm.ai",                      "recipes.vllm.ai"),
+    ("⑤ 部署 · 双引擎",       "vLLM 与 SGLang 一键切换",   "recipes.mcpinfra.net",                 "recipes.mcpinfra.net"),
 ]
 
 ARR = [(0,0),(0,17),(4.4,13.2),(7.6,20),(10.2,19),(6.9,12.2),(12.7,12.2)]
@@ -87,7 +87,7 @@ def main():
             d.rectangle([0,0,W,HEAD], fill=BAND)
             d.rectangle([0,HEAD+CH,W,H], fill=BAND)
             # header: brand + window dots + url chip
-            d.text((56,58), "大模型网站全景 · 看榜 → 敢上线", font=fBrand, fill=INK)
+            d.text((56,58), "大模型生态 · 网站全景盘点", font=fBrand, fill=INK)
             chipw = 96 + int(d.textlength(chip, font=fUrl))
             rrect(d, [56,110,chipw,152], 20, fill=(255,255,255,255), outline=(224,224,220,255), width=2)
             d.text((78,120), chip, font=fUrl, fill=(96,98,112,255))

@@ -3,20 +3,20 @@
    Each seg anchors to a site window at k*VIEW seconds in the final cut."""
 import asyncio, subprocess, edge_tts
 
-VIEW = 6.2
+VIEW = 6.6
 VOICE = "zh-CN-YunyangNeural"
-RATE = "+8%"
+RATE = "+15%"
 PROXY = "http://127.0.0.1:7897"
 
 SEGS = [
-    "谁最强?先看真人怎么投。arena,原来的 LMArena,真人盲测。",
-    "中文场景看 SuperCLUE,国产模型的梯队,一眼就清楚。",
-    "该上哪个、多少钱?LLM-Stats 把质量和价格,拉成一个综合分。",
-    "Artificial Analysis 更狠,真发请求,实测速度、价格和延迟。",
-    "我这活它到底行不行?编码就看 SWE-bench,真实的代码修复。",
-    "谁真被用得最多?OpenRouter 的真实用量榜,最诚实。",
-    "选好了就落地。recipes 按模型和显卡,直接给你能跑的命令。",
-    "到我的主场,双引擎把模型,从能跑,做到敢上线。",
+    "综合竞技场,arena,原 LMArena,基于真人盲测投票的偏好排行。",
+    "中文场景,SuperCLUE,国内影响力最大的中文通用综合榜,月度更新。",
+    "选型定价,LLM-Stats,将基准分与每 token 价格,合成一个综合分。",
+    "Artificial Analysis,端到端实测,真实发起请求,测量速度、价格与延迟。",
+    "垂直能力,SWE-bench,以真实代码问题为题的编码修复基准,认准 Verified 子榜。",
+    "获取模型,OpenRouter,统一接口聚合多家模型,并提供真实用量排行。",
+    "落地部署,recipes,按模型和显卡,给出可直接复制的启动命令。",
+    "recipes.mcpinfra,在此基础上,同时提供 vLLM 与 SGLang 两种命令。",
 ]
 
 async def one(i, txt):

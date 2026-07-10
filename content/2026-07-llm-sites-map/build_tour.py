@@ -5,7 +5,7 @@ import os, subprocess
 SP    = "/private/tmp/claude-501/-Users-fangyong-articles/d9f008b4-9d6c-4705-b32b-60b2ffff57fc/scratchpad/tour"
 OFR   = f"{SP}/oframes"
 FPS   = 30
-VIEW  = 6.2
+VIEW  = 6.6
 NSEG  = 8
 HERE  = os.path.dirname(os.path.abspath(__file__))
 BGM   = os.path.join(HERE, "..", "2026-07-mcp-chronicle", "bgm-clean.wav")
