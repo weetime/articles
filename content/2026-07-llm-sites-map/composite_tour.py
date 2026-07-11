@@ -17,7 +17,7 @@ OUTF = f"{SP}/oframes"
 # per site (recording order = category order): (section, source line)
 DEMO = [
     ("综合竞技场",     "站点 · arena.ai · 真人盲测 Elo"),
-    ("中文评测",     "站点 · superclueai.com · 月度中文综合评测"),
+    ("中文评测",     "站点 · rank.opencompass.org.cn · 学术式全维度评测"),
     ("选型 · 定价",    "站点 · artificialanalysis.ai · 端到端实测"),
     ("垂直能力",       "站点 · swebench.com · 真实 issue 修复"),
     ("发布追踪",       "站点 · aireleasetracker.com · 全模型时间线"),

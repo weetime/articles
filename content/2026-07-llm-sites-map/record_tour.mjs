@@ -9,7 +9,7 @@ const W = 1080, H = 1440;
 // 9 类榜首(按分类顺序):榜单动画后切到该类第一名的实操
 const SITES = [
   {url: 'https://arena.ai/leaderboard',          settle: 3500, scroll: 420}, // 综合
-  {url: 'https://www.superclueai.com/homepage',  settle: 3200, scroll: 360}, // 中文
+  {url: 'https://rank.opencompass.org.cn/home',   settle: 4000, scroll: 380}, // 中文
   {url: 'https://artificialanalysis.ai/',        settle: 3600, scroll: 420}, // 选型
   {url: 'https://www.swebench.com/',             settle: 3000, scroll: 380}, // 垂直
   {url: 'https://aireleasetracker.com/',         settle: 3000, scroll: 320}, // 发布追踪
