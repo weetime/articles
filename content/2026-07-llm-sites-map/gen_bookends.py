@@ -15,20 +15,20 @@ def card(section, page, kicker, line1, line2, sub_ink, sub_acc):
     d.text((120,y), sub_ink, font=E.F(36), fill=E.INK2)
     b=d.textbbox((0,0),sub_ink,font=E.F(36))
     d.text((120,y+58), sub_acc, font=E.F(36, bold=True), fill=E.ACC)
-    d.text((120,E.H-150), "recipes.mcpinfra.net · ModelDoctor", font=E.F(23), fill=E.MUTE)
+    d.text((120,E.H-150), "大模型常用网站 · 梳理 · 2026.07", font=E.F(23), fill=E.MUTE)
     return im
 
 # intro — hook
-card("网站全景 · 盘点", 0, "大 模 型 生 态",
-     "工具站又多又杂?", "一张全景盘点。",
+card("网站全景 · 梳理", 0, "大 模 型 生 态",
+     "工具站又多又杂?", "一张全景梳理。",
      "按「看评测 · 选型 · 拿模型 · 部署 · 趋势」的链路,",
      "9 大类 50+ 站点,按链路逐类梳理、附定位与用途。"
      ).save(f"{HERE}/cards/intro.png")
 
-# outro — CTA
-card("完整盘点 · 收藏", 9, "看 完 这 一 轮",
-     "完整盘点,", "见公众号。",
-     "9 大类 50+ 站点 · 定位与用途 · 避坑要点 ·",
-     "部署配方,图文与全景图一并奉上。"
+# outro — 中立收尾,无导流/无公众号
+card("以上 · 常用网站梳理", 9, "看 完 这 一 轮",
+     "常用站点,", "先收藏备用。",
+     "9 大类 50+ 站点 · 按链路归类,",
+     "定位与用途,按需查阅取用。"
      ).save(f"{HERE}/cards/outro.png")
 print("intro/outro (editorial) written")
