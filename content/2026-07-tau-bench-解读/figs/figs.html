@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8">
+<style>
+:root{
+  --bg:#0b0e16; --bg2:#0a0d14; --panel:#141a24; --panel2:#10151d;
+  --line:#222a36; --line2:#2a3342; --track:#1b2230;
+  --ink:#eef1f7; --ink2:#c2c9d6; --ink3:#8b94a4; --ink4:#5e6677;
+  --violet:#9d8bff; --violet2:#b3a6ff; --cyan:#2bc4e6; --green:#3ddc84; --amber:#f0a93b; --rose:#ff5d7a; --off:#6b7484;
+  --chip:rgba(139,148,164,.14); --chipink:#9fb6d6;
+  --shadow:0 12px 40px #00000066;
+  --font:"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#05070c;font-family:var(--font);color:var(--ink)}
+.poster{width:1080px;margin:0 auto 40px;padding:76px 68px 52px;position:relative;overflow:hidden;
+  background:
+    radial-gradient(900px 460px at 88% -8%, rgba(157,139,255,.16), transparent 60%),
+    radial-gradient(760px 420px at -6% 108%, rgba(43,196,230,.12), transparent 60%),
+    linear-gradient(168deg,#0e131d 0%, var(--bg2) 82%)}
+.poster::before{content:"";position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
+  background-size:56px 56px;pointer-events:none}
+.poster>*{position:relative}
+.eyebrow{display:flex;align-items:center;gap:13px;font-size:23px;font-weight:700;color:var(--violet);letter-spacing:.04em}
+.eyebrow .d{width:13px;height:13px;border-radius:7px;background:var(--violet);box-shadow:0 0 16px var(--violet)}
+h1{font-size:60px;font-weight:850;letter-spacing:-1.8px;line-height:1.08;margin:22px 0 0}
+h1 .hl{background:linear-gradient(100deg,#9d8bff,#2bc4e6);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1 .rose{color:var(--rose)}
+.sub{font-size:25px;color:var(--ink3);font-weight:600;margin-top:18px;line-height:1.55}
+.sub b{color:var(--ink2)}
+.foot{display:flex;align-items:center;gap:11px;margin-top:44px;padding-top:26px;border-top:1px solid var(--line);
+  font-size:19px;color:var(--ink4);font-weight:600;letter-spacing:.02em}
+.foot b{color:var(--ink3)}
+.note{margin-top:30px;background:rgba(157,139,255,.08);border:1px solid rgba(157,139,255,.24);border-left:4px solid var(--violet);
+  border-radius:14px;padding:22px 26px;font-size:22px;line-height:1.6;color:var(--ink2)}
+.note b{color:var(--ink)}
+.card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line2);border-radius:22px;box-shadow:var(--shadow)}
+.grid{display:grid;gap:18px;margin-top:38px}
+code{background:var(--chip);border-radius:6px;padding:2px 9px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.82em;color:var(--chipink)}
+.cdot{width:12px;height:12px;border-radius:3px;flex:none}
+/* domains */
+.dom{display:grid;grid-template-columns:330px 240px 1fr;gap:0;align-items:center;padding:26px 30px}
+.dom+.dom{border-top:1px solid var(--line)}
+.dom .nm{font-size:26px;font-weight:850;letter-spacing:-.5px;padding-right:14px}
+.dom .meta{font-size:21px;color:var(--ink2);font-weight:700}
+.dom .basis{font-size:16px;color:var(--ink4);font-weight:600;margin-top:6px;letter-spacing:.02em}
+.dom .cap{font-size:22px;color:var(--ink2);font-weight:600;line-height:1.45}
+.dom .cap b{color:var(--ink)}
+/* rules */
+.rule{display:flex;gap:24px;align-items:flex-start;padding:28px 30px}
+.rule+.rule{border-top:1px solid var(--line)}
+.rule .t{font-size:29px;font-weight:850;color:var(--ink)}
+.rule .b{font-size:21px;color:var(--ink2);font-weight:600;line-height:1.55;margin-top:8px}
+.rule .b .x{color:var(--rose);font-weight:800}
+.rule .b .ok{color:var(--green);font-weight:800}
+.num{width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:850;color:#0b0e16;flex:none}
+/* flow */
+.flow{display:flex;flex-direction:column;gap:18px;margin-top:38px}
+.flowrow{display:flex;align-items:center;gap:16px}
+.box{flex:1;padding:24px 28px;border-radius:16px;font-size:22px;font-weight:700;line-height:1.4}
+.box .s{display:block;font-size:17px;font-weight:600;margin-top:7px;opacity:.9}
+.arrow{font-size:32px;font-weight:800;flex:none}
+.bad{background:rgba(255,93,122,.1);border:1px solid rgba(255,93,122,.38);color:var(--rose)}
+.good{background:rgba(61,220,132,.1);border:1px solid rgba(61,220,132,.36);color:var(--green)}
+.neu{background:var(--panel);border:1px solid var(--line2);color:var(--ink2)}
+/* funnel */
+.funnel{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:38px}
+.stage{border-radius:18px;padding:28px 34px;color:#08111c;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.stage .st{font-size:31px;font-weight:850}
+.stage .sd{font-size:19px;font-weight:650;margin-top:8px;line-height:1.4;opacity:.85}
+/* bars */
+.bars{display:flex;align-items:flex-end;gap:24px;height:250px;margin-top:22px}
+.bar{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.bar .v{font-size:27px;font-weight:850;letter-spacing:-.5px}
+.bar .col{width:72%;border-radius:12px 12px 0 0;margin-top:10px}
+.bar .k{font-size:19px;color:var(--ink3);font-weight:700;margin-top:12px}
+/* quad */
+.quad{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:34px}
+.qcard{padding:26px 28px}
+.qt{font-size:24px;font-weight:850;color:var(--ink)}
+.qd{font-size:19px;color:var(--ink3);font-weight:600;line-height:1.55;margin-top:8px}
+.qd b{color:var(--ink2)}
+.layer{height:28px;border-radius:9px;background:var(--track);overflow:hidden;position:relative;margin-top:12px}
+.layer .fill{height:100%;border-radius:9px}
+.stack{display:flex;height:34px;border-radius:9px;overflow:hidden;margin-top:14px;font-size:15px;font-weight:800;color:#08111c}
+.stack span{display:flex;align-items:center;justify-content:center;overflow:hidden;white-space:nowrap}
+.pill{display:inline-flex;align-items:center;gap:9px;font-size:20px;font-weight:700;color:var(--ink2);
+  background:var(--panel);border:1px solid var(--line2);border-radius:12px;padding:12px 20px}
+/* stepper */
+.pstep{display:flex;gap:22px;align-items:stretch}
+.pstep .rail{display:flex;flex-direction:column;align-items:center;flex:none}
+.pstep .idx{width:50px;height:50px;border-radius:15px;color:#0b0e16;font-size:22px;font-weight:850;display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 0 18px rgba(157,139,255,.4)}
+.pstep .line{width:3px;flex:1;background:var(--line2);margin:7px 0;border-radius:2px}
+.pstep .body{padding-bottom:20px;flex:1}
+.pstep .t{font-size:27px;font-weight:850;color:var(--ink);line-height:1.2}
+.pstep .t .stage{font-size:16px;font-weight:800;color:#0b0e16;border-radius:8px;padding:4px 11px;margin-left:12px;vertical-align:middle}
+.pstep .s{font-size:19px;color:var(--ink3);font-weight:600;margin-top:6px;line-height:1.45}
+/* flowchart (fig-0) */
+.flow2{display:flex;flex-direction:column;margin-top:36px}
+.lane{display:flex;align-items:stretch;gap:22px;background:linear-gradient(180deg,var(--panel),var(--panel2));
+  border:1px solid var(--line2);border-left:6px solid var(--lc);border-radius:20px;padding:26px 28px;box-shadow:var(--shadow)}
+.lane-label{width:58px;flex:none;display:flex;align-items:center;justify-content:center;
+  font-size:27px;font-weight:850;color:var(--lc);writing-mode:vertical-rl;letter-spacing:8px;text-shadow:0 0 20px var(--lc)}
+.lane-flow{display:flex;align-items:center;gap:14px;flex:1}
+.node{flex:1;background:var(--bg2);border:1px solid var(--line2);border-radius:15px;padding:18px 12px;text-align:center;min-width:0}
+.node .nb{display:inline-flex;width:34px;height:34px;border-radius:10px;color:#0b0e16;font-weight:850;font-size:18px;
+  align-items:center;justify-content:center;box-shadow:0 0 14px var(--nc)}
+.node .nl{font-size:21px;font-weight:850;color:var(--ink);white-space:nowrap;margin-top:10px}
+.node .tg{font-size:15px;font-weight:700;margin-top:6px}
+.ar{color:var(--ink4);font-size:26px;font-weight:800;flex:none}
+.vdown{text-align:center;font-size:30px;color:var(--violet);margin:12px 0;letter-spacing:0}
+.gate{margin-top:16px;font-size:18px;color:var(--amber);font-weight:750;text-align:center;letter-spacing:.02em}
+/* param table (fig-params) */
+.ptab{margin-top:22px}
+.ptab .cap2{font-size:20px;font-weight:800;color:var(--violet2);letter-spacing:.03em;margin:20px 0 8px}
+.prow{display:grid;grid-template-columns:400px 1fr;gap:0;align-items:center;padding:16px 24px}
+.prow+.prow{border-top:1px solid var(--line)}
+.prow .pk{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:19px;color:var(--cyan);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:16px}
+.prow .pv{font-size:20px;color:var(--ink2);font-weight:600;line-height:1.4}
+.prow .pv b{color:var(--ink)}
+.prow .pv code{background:var(--chip);border-radius:5px;padding:1px 7px;font-size:16px;color:var(--chipink)}
+/* terminal (fig-runbook) */
+.term{background:#070a11;border:1px solid var(--line2);border-radius:18px;padding:32px 34px;margin-top:22px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:21px;line-height:1.95}
+.term .c{color:#5fae86;display:block;margin-top:22px}
+.term .c:first-child{margin-top:0}
+.term .l{color:#e7eaf3;display:block;white-space:pre-wrap;word-break:break-word}
+.term .l .f{color:var(--cyan)}
+.term .l .s{color:var(--amber)}
+.term .l .m{color:var(--ink4)}
+</style></head>
+<body>
+
+<!-- ===== fig-0 pipeline overview ===== -->
+<section class="poster" id="p0">
+  <div class="eyebrow"><span class="d"></span>主线 · 一次评测的完整流程</div>
+  <h1>跟着跑一遍:<span class="hl">环境 → 报告</span></h1>
+  <div class="sub">三个阶段、十个步骤,每一步都建立在上一步跑通的基础上</div>
+  <div class="flow2">
+    <div class="lane" style="--lc:var(--violet)">
+      <div class="lane-label">准备</div>
+      <div class="lane-flow">
+        <div class="node"><span class="nb" style="--nc:#8b93a4;background:linear-gradient(135deg,#8b93a4,#5e6677)">0</span><div class="nl">选域</div></div>
+        <span class="ar">→</span>
+        <div class="node"><span class="nb" style="--nc:#9d8bff;background:linear-gradient(135deg,#9d8bff,#7d68ff)">1</span><div class="nl">环境</div></div>
+        <span class="ar">→</span>
+        <div class="node"><span class="nb" style="--nc:#9d8bff;background:linear-gradient(135deg,#9d8bff,#7d68ff)">2</span><div class="nl">服务检测</div></div>
+        <span class="ar">→</span>
+        <div class="node"><span class="nb" style="--nc:#2bc4e6;background:linear-gradient(135deg,#2bc4e6,#1796b4)">3</span><div class="nl">用户模拟器</div></div>
+        <span class="ar">→</span>
+        <div class="node"><span class="nb" style="--nc:#f0a93b;background:linear-gradient(135deg,#f0a93b,#d98a1f)">4</span><div class="nl">embedding</div><div class="tg" style="color:var(--amber)">仅 banking</div></div>
+      </div>
+    </div>
+    <div class="vdown">▼</div>
+    <div class="lane" style="--lc:var(--green)">
+      <div class="lane-label">开测</div>
+      <div style="flex:1">
+        <div class="lane-flow">
+          <div class="node"><span class="nb" style="--nc:#3ddc84;background:linear-gradient(135deg,#3ddc84,#22b96a)">5</span><div class="nl">smoke</div><div class="tg" style="color:var(--green)">冒烟</div></div>
+          <span class="ar">→</span>
+          <div class="node"><span class="nb" style="--nc:#2bc4e6;background:linear-gradient(135deg,#2bc4e6,#1796b4)">6</span><div class="nl">小集</div><div class="tg" style="color:var(--cyan)">调并发</div></div>
+          <span class="ar">→</span>
+          <div class="node"><span class="nb" style="--nc:#9d8bff;background:linear-gradient(135deg,#9d8bff,#7d68ff)">7</span><div class="nl">全量</div><div class="tg" style="color:var(--violet2)">4 域 × trials4</div></div>
+        </div>
+        <div class="gate">↺ smoke 不通过 → 回查「准备」各步,修好再进小集</div>
+      </div>
+    </div>
+    <div class="vdown">▼</div>
+    <div class="lane" style="--lc:var(--rose)">
+      <div class="lane-label">报告</div>
+      <div class="lane-flow">
+        <div class="node"><span class="nb" style="--nc:#9d8bff;background:linear-gradient(135deg,#9d8bff,#7d68ff)">8</span><div class="nl">出报告</div><div class="tg" style="color:var(--ink4)">聚合 pass^k</div></div>
+        <span class="ar">→</span>
+        <div class="node"><span class="nb" style="--nc:#ff5d7a;background:linear-gradient(135deg,#ff5d7a,#e0405f)">9</span><div class="nl">解读</div><div class="tg" style="color:var(--ink4)">判分落 DB</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="cdot" style="background:var(--violet)"></span><b>ModelDoctor</b> · mcpinfra.net · github.com/weetime</div>
+</section>
+
+<!-- ===== fig-1 domains ===== -->
+<section class="poster" id="p1">
+  <div class="eyebrow"><span class="d"></span>数据集 · 四个域</div>
+  <h1>四个域,各测<span class="hl">一种能力</span></h1>
+  <div class="sub">读分前先确认该域判分基准;起步一律先用小集,再上全量</div>
+  <div class="grid card" style="margin-top:38px;gap:0">
+    <div class="dom"><div class="nm" style="color:var(--cyan)">airline</div><div class="meta">50 · 全量<div class="basis">DB 末态 + COMMUNICATE</div></div><div class="cap"><b>策略闸门</b>:改签 / 取消规则最严,考「守边界」</div></div>
+    <div class="dom"><div class="nm" style="color:var(--violet)">retail</div><div class="meta">114 · 全量<div class="basis">DB 末态 + NL_ASSERTION</div></div><div class="cap"><b>实体消歧</b>:多订单 / 多变体近似项中选对 id</div></div>
+    <div class="dom"><div class="nm" style="color:var(--amber)">banking_knowledge</div><div class="meta">97 · 全量<div class="basis">ACTION 匹配 + DB</div></div><div class="cap"><b>异形工具协议 + 文档检索</b>:隐藏工具须解锁,698 文档 RAG</div></div>
+    <div class="dom"><div class="nm" style="color:var(--rose)">telecom</div><div class="meta"><div>small 20 <span style="color:var(--cyan)">→ 小集</span></div><div style="margin-top:3px">full 2285 <span style="color:var(--violet2)">→ 全量</span></div><div class="basis">ACTION + ENV_ASSERTION</div></div><div class="cap"><b>dual-control 排障</b>:用户也持工具,工作流最长 25–40 轮</div></div>
+  </div>
+  <div class="note"><b>大小 split:</b>小集(如 telecom 20)用于 smoke / 调并发 / 快速回归;全量(2285)用于置信度与区分度,后台长跑回填。</div>
+  <div class="foot"><span class="cdot" style="background:var(--violet)"></span><b>ModelDoctor</b> · mcpinfra.net · github.com/weetime</div>
+</section>
+
+<!-- ===== fig-2 user-sim ===== -->
+<section class="poster" id="p2">
+  <div class="eyebrow"><span class="d"></span>用户模拟器 · User-Simulator</div>
+  <h1>选用户模拟器的<span class="hl">三条铁律</span></h1>
+  <div class="sub">同一个外部 LLM 既扮用户、又判自然语言层;它决定评测能否复现</div>
+  <div class="grid card" style="margin-top:38px;gap:0">
+    <div class="rule"><div class="num" style="background:linear-gradient(135deg,#9d8bff,#7d68ff)">1</div><div><div class="t">版本必须锁定</div><div class="b">移动别名(deepseek-chat / gpt-4o)会随时间改指向 → <span class="x">基准不可复现</span> → 改用<span class="ok">版本锁定</span>的模型,口径写进报告</div></div></div>
+    <div class="rule"><div class="num" style="background:linear-gradient(135deg,#2bc4e6,#1796b4)">2</div><div><div class="t">独立于被测模型</div><div class="b">用被测模型自扮 = <span class="x">自判偏差</span>,对自身话术更宽容、分数虚高 → 必须用独立模型</div></div></div>
+    <div class="rule"><div class="num" style="background:linear-gradient(135deg,#3ddc84,#22b96a)">3</div><div><div class="t">关闭 CoT</div><div class="b">开启思维链 → 用户模拟器带推理噪声、content 常空。关闭 CoT;LiteLLM 会丢弃裸 kwarg,须 <b>extra_body</b> 透传</div></div></div>
+  </div>
+  <div class="note"><b>对齐公开榜:</b>官方固定 GPT-4.1 当用户模拟器。换任何模型 → 顺从度不同 → 任务难度变 → <b>绝对值不可对标公开榜</b>,只做同 harness 内部横比。</div>
+  <div class="foot"><span class="cdot" style="background:var(--violet)"></span><b>ModelDoctor</b> · mcpinfra.net · github.com/weetime</div>
+</section>
+
+<!-- ===== fig-3 embed ===== -->
+<section class="poster" id="p3">
+  <div class="eyebrow"><span class="d"></span>Embedding · banking 的隐藏依赖</div>
+  <h1>无 OpenAI,如何补<span class="hl">embedding</span></h1>
+  <div class="sub">banking 是 RAG 域:须在 698 文档中检索正确条款,才依赖 embedding 模型</div>
+  <div class="flow">
+    <div class="flowrow"><div class="box neu">tau2 OpenAIEmbedder<span class="s">一次性发送全部 698 文档</span></div><div class="arrow" style="color:var(--rose)">→</div><div class="box bad">bge-m3 网关<span class="s">单请求上限 32 → 直连 422 ✗</span></div></div>
+    <div style="text-align:center;font-size:21px;font-weight:800;color:var(--ink4);margin:4px 0">解法:中间加透明代理</div>
+    <div class="flowrow"><div class="box neu">tau2<span class="s">源码零改动</span></div><div class="arrow" style="color:var(--green)">→</div><div class="box good">透明嵌入代理<span class="s">切成 ≤32 逐批 · 保序合并</span></div><div class="arrow" style="color:var(--green)">→</div><div class="box neu">bge-m3<span class="s">别名 text-embedding-3-large</span></div></div>
+  </div>
+  <div class="note"><b>是否合适:</b>换 embedder = 换检索质量,bge-m3 与官方召回不同 → banking <b>不可跨 embedder 对比</b>。将 embedder 当作口径变量锁定。</div>
+  <div class="foot"><span class="cdot" style="background:var(--violet)"></span><b>ModelDoctor</b> · mcpinfra.net · github.com/weetime</div>
+</section>
+
+<!-- ===== fig-4 funnel ===== -->
+<section class="poster" id="p4">
+  <div class="eyebrow"><span class="d"></span>测试方法论</div>
+  <h1>smoke → 小集 → <span class="hl">全量</span></h1>
+  <div class="sub">三级递进,每级只放行「上一级完全干净」的配置</div>
+  <div class="funnel">
+    <div class="stage" style="width:100%;background:linear-gradient(90deg,#2bb96a,#3ddc84)"><div class="st">① smoke · 1 trial × 2–3 任务 · 低并发</div><div class="sd">坐实全链路通:user_stop 为主 · tool_calls 正常 · 无 ctx 超限 · 正常任务 reward=1.0</div></div>
+    <div class="arrow" style="color:var(--ink4)">▼</div>
+    <div class="stage" style="width:82%;background:linear-gradient(90deg,#1796b4,#2bc4e6)"><div class="st">② 小集 · telecom small 20</div><div class="sd">拿干净基线 · 在此确定并发 · 验证断点续跑与聚合脚本</div></div>
+    <div class="arrow" style="color:var(--ink4)">▼</div>
+    <div class="stage" style="width:64%;background:linear-gradient(90deg,#7d68ff,#9d8bff)"><div class="st">③ 全量 · 4 域 × trials=4</div><div class="sd">后台长跑 · 防挂 · 断点续 · trials≥4 才有 pass^k</div></div>
+  </div>
+  <div class="note"><b>为什么 trials≥4:</b>pass^k 需要每任务多次独立试验;flaky(时对时错)只有多 trial 才暴露,单 trial 会把不稳定的模型评成稳定。</div>
+  <div class="foot"><span class="cdot" style="background:var(--violet)"></span><b>ModelDoctor</b> · mcpinfra.net · github.com/weetime</div>
+</section>
+
+<!-- ===== fig-5 concurrency ===== -->
+<section class="poster" id="p5">
+  <div class="eyebrow"><span class="d"></span>工程编排 · 并发与超时</div>
+  <h1>并发<span class="rose">不是越高越快</span></h1>
+  <div class="sub">并发过高:长任务大量超时 / 重试,有效吞吐反而下降</div>
+  <div class="card" style="padding:32px 36px;margin-top:36px">
+    <div style="font-size:21px;font-weight:800;color:var(--ink3);margin-bottom:8px">有效吞吐随并发变化(示意)</div>
+    <div class="bars">
+      <div class="bar"><div class="v" style="color:var(--green)">稳</div><div class="col" style="height:120px;background:linear-gradient(180deg,#3ddc84,#22b96a)"></div><div class="k">MAXC 3</div></div>
+      <div class="bar"><div class="v" style="color:var(--green)">峰</div><div class="col" style="height:190px;background:linear-gradient(180deg,#3ddc84,#22b96a)"></div><div class="k">MAXC 6</div></div>
+      <div class="bar"><div class="v" style="color:var(--amber)">churn</div><div class="col" style="height:120px;background:linear-gradient(180deg,#f0a93b,#d98a1f)"></div><div class="k">MAXC 16</div></div>
+      <div class="bar"><div class="v" style="color:var(--rose)">空转</div><div class="col" style="height:66px;background:linear-gradient(180deg,#ff5d7a,#e0405f)"></div><div class="k">MAXC 24</div></div>
+    </div>
+  </div>
+  <div class="grid" style="grid-template-columns:1fr 1fr;margin-top:22px">
+    <div class="card qcard"><div class="qt">单请求 timeout = 180s</div><div class="qd">半开连接 fail-fast → 触发重试,<b>worker 不被长时间挂住</b></div></div>
+    <div class="card qcard"><div class="qt">对话 timeout = 600s</div><div class="qd">整条对话上限;<b>num_retries=4</b> 兜开场偶发错误;长任务 <b>MAXC≤3</b></div></div>
+  </div>
+  <div class="foot"><span class="cdot" style="background:var(--violet)"></span><b>ModelDoctor</b> · mcpinfra.net · github.com/weetime</div>
+</section>
+
+<!-- ===== fig-6 metrics ===== -->
+<section class="poster" id="p6">
+  <div class="eyebrow"><span class="d"></span>指标与图 · 怎么读</div>
+  <h1>看什么图,<span class="hl">怎么读</span></h1>
+  <div class="sub">pass^k = mean C(c,k)/C(n,k) · 通过=reward≥0.999 · infra 剔除 · 只算 n≥k</div>
+  <div class="quad">
+    <div class="card qcard">
+      <div class="qt">pass^k 衰减</div>
+      <div class="bars" style="height:140px;gap:16px">
+        <div class="bar"><div class="col" style="height:118px;background:#3ddc84"></div><div class="k">p¹</div></div>
+        <div class="bar"><div class="col" style="height:104px;background:#46e58c"></div><div class="k">p²</div></div>
+        <div class="bar"><div class="col" style="height:88px;background:#f0a93b"></div><div class="k">p³</div></div>
+        <div class="bar"><div class="col" style="height:74px;background:#ff5d7a"></div><div class="k">p⁴</div></div>
+      </div>
+      <div class="qd">回落陡 = <b>flaky 主导</b></div>
+    </div>
+    <div class="card qcard">
+      <div class="qt">失分结构(NL vs DB)</div>
+      <div class="qd" style="margin-top:10px">自然语言层<div class="layer"><div class="fill" style="width:94%;background:#3ddc84"></div></div></div>
+      <div class="qd">后端数据库层<div class="layer"><div class="fill" style="width:52%;background:#ff5d7a"></div></div></div>
+      <div class="qd"><b>NL 全过 · DB 挂 = 判分必须落 DB</b></div>
+    </div>
+    <div class="card qcard">
+      <div class="qt">一致性分桶</div>
+      <div class="stack"><span style="width:24%;background:#3ddc84">稳过</span><span style="width:54%;background:#f0a93b">flaky</span><span style="width:22%;background:#6b7484">全灭</span></div>
+      <div class="qd" style="margin-top:14px">一半以上 flaky = <b>会做但不稳</b></div>
+    </div>
+    <div class="card qcard">
+      <div class="qt">终止分布(体检)</div>
+      <div class="stack"><span style="width:70%;background:#2bc4e6">user_stop</span><span style="width:14%;background:#ff5d7a">infra</span><span style="width:9%;background:#f0a93b">超限</span><span style="width:7%;background:#6b7484"></span></div>
+      <div class="qd" style="font-size:16px;margin-top:8px"><span style="color:#6b7484;font-weight:800">▪</span> 末段=timeout</div>
+      <div class="qd" style="margin-top:6px">infra 高 = 链路问题,<b>先跑干净再读分</b></div>
+    </div>
+  </div>
+  <div class="note" style="border-color:var(--rose);background:rgba(255,93,122,.08);border-color:rgba(255,93,122,.28)"><b>结论口径:</b>生产每请求约一次机会,可靠水位取 <b>pass^k(如 pass⁴)</b>,不取 pass¹。</div>
+  <div class="foot"><span class="cdot" style="background:var(--violet)"></span><b>ModelDoctor</b> · mcpinfra.net · github.com/weetime</div>
+</section>
+
+<!-- ===== fig-7 params ===== -->
+<section class="poster" id="p7">
+  <div class="eyebrow"><span class="d"></span>参数速查</div>
+  <h1>跑一次要设的<span class="hl">核心参数</span></h1>
+  <div class="sub">上表 = 评测命令参数,下表 = 被测端点部署参数</div>
+  <div class="ptab card" style="padding:10px 6px 14px">
+    <div class="cap2" style="padding-left:20px">tau2 run · 评测参数</div>
+    <div class="prow"><div class="pk">--domain</div><div class="pv">评测域:airline / retail / banking_knowledge / telecom</div></div>
+    <div class="prow"><div class="pk">--agent-llm(-args)</div><div class="pv"><b>被测 Agent 端点</b>:<code>openai/&lt;model&gt;</code> + api_base / key / num_retries / timeout</div></div>
+    <div class="prow"><div class="pk">--user-llm(-args)</div><div class="pv"><b>用户模拟器</b>(兼判自然语言层):版本锁定模型 + <code>extra_body</code> 关闭 CoT</div></div>
+    <div class="prow"><div class="pk">--num-trials</div><div class="pv">每任务独立试验数,<b>≥ 4</b> 才可算 pass^k</div></div>
+    <div class="prow"><div class="pk">--num-tasks</div><div class="pv">限制任务数,仅 smoke / 小集使用</div></div>
+    <div class="prow"><div class="pk">--task-split-name</div><div class="pv">域的 split:telecom <code>small</code> (20) / <code>full</code> (2285)</div></div>
+    <div class="prow"><div class="pk">--max-concurrency</div><div class="pv">任务级并发,中等;<b>长任务 ≤ 3</b></div></div>
+    <div class="prow"><div class="pk">--timeout</div><div class="pv">整条对话超时(秒),建议 <b>600</b></div></div>
+    <div class="prow"><div class="pk">--save-to / --auto-resume</div><div class="pv">结果目录 + 断点续跑;<b>给目录,非文件名</b></div></div>
+  </div>
+  <div class="ptab card" style="padding:10px 6px 14px;margin-top:24px">
+    <div class="cap2" style="padding-left:20px">被测 Agent 端点 · 部署参数</div>
+    <div class="prow"><div class="pk">--enable-auto-tool-choice</div><div class="pv">允许模型自主决定调用工具</div></div>
+    <div class="prow"><div class="pk">--tool-call-parser</div><div class="pv">解析 <code>tool_calls</code>:Qwen3 <code>hermes</code> / GLM <code>glm47</code> / DeepSeek <code>deepseekv4</code></div></div>
+    <div class="prow"><div class="pk">--reasoning-parser</div><div class="pv">思考型模型 <code>qwen3</code> / <code>glm45</code>,分离思维链</div></div>
+    <div class="prow"><div class="pk">--context-length</div><div class="pv"><b>≥ 任务实际长度</b>(建议 64k);8k 会因 19k+ token 判负</div></div>
+  </div>
+  <div class="foot"><span class="cdot" style="background:var(--violet)"></span><b>ModelDoctor</b> · mcpinfra.net · github.com/weetime</div>
+</section>
+
+<!-- ===== fig-8 runbook (terminal) ===== -->
+<section class="poster" id="p8">
+  <div class="eyebrow"><span class="d"></span>命令速查 · RUNBOOK</div>
+  <h1>照着跑:<span class="hl">环境 → 报告</span></h1>
+  <div class="sub">注释固定在命令上方;<code>$AGENT_LLM</code> / <code>$USER_LLM</code> 为端点与模拟器配置</div>
+  <div class="term">
+    <span class="c"># 环境(也可 uv sync;banking 需 --extra knowledge)</span>
+    <span class="l">conda create -n tau2 python=3.12 -y</span>
+    <span class="l">git clone .../sierra-research/tau2-bench ~/tau2bench</span>
+    <span class="l">cd ~/tau2bench && pip install -e .</span>
+    <span class="c"># 用户模拟器:版本锁定 + 关闭 CoT(extra_body 透传)</span>
+    <span class="l">export USER_LLM=<span class="s">"deepseek/deepseek-v4-pro"</span></span>
+    <span class="l">export USER_LLM_ARGS=<span class="s">'{"extra_body":{"thinking":{"type":"disabled"}}}'</span></span>
+    <span class="c"># 就绪探针:发带 tools 的请求,须返回 tool_calls</span>
+    <span class="l">curl -s "$BASE/chat/completions" -d '{...tools...}' <span class="m">\</span></span>
+    <span class="l">  | grep -q <span class="s">'"tool_calls"'</span> && echo READY</span>
+    <span class="c"># 冒烟:1 trial × 2 任务,坐实全链路</span>
+    <span class="l">tau2 run <span class="f">--domain</span> airline <span class="f">--num-trials</span> 1 <span class="f">--num-tasks</span> 2</span>
+    <span class="c"># 全量:每域 4 trials;--save-to 目录、--auto-resume 断点续</span>
+    <span class="l">tau2 run <span class="f">--domain</span> $DOMAIN <span class="f">--num-trials</span> 4 <span class="f">--max-concurrency</span> 3 <span class="m">\</span></span>
+    <span class="l">  <span class="f">--timeout</span> 600 <span class="f">--save-to</span> $OUT/$DOMAIN <span class="f">--auto-resume</span></span>
+    <span class="c"># 中断后重跑同一命令即可续跑(自动跳过已完成)</span>
+    <span class="c"># 聚合 pass^k:通过=reward≥0.999,取 C(c,k)/C(n,k) 对各任务均值</span>
+  </div>
+  <div class="foot"><span class="cdot" style="background:var(--violet)"></span><b>ModelDoctor</b> · mcpinfra.net · github.com/weetime</div>
+</section>
+
+<!-- ===== cover (2.35:1 banner, centered & safe-margined) ===== -->
+<section id="cover" style="width:1920px;height:817px;margin:0 auto 40px;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 240px;
+  background:radial-gradient(1200px 600px at 82% -14%, rgba(157,139,255,.22), transparent 60%),radial-gradient(1000px 560px at 12% 118%, rgba(43,196,230,.15), transparent 60%),linear-gradient(150deg,#0e131d 0%,#0a0d14 84%)">
+  <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.026) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.026) 1px,transparent 1px);background-size:60px 60px"></div>
+  <div style="position:relative;display:flex;flex-direction:column;align-items:center">
+    <div style="display:inline-flex;align-items:center;gap:14px;font-size:28px;font-weight:700;color:var(--violet);letter-spacing:.06em;
+      background:rgba(157,139,255,.1);border:1px solid rgba(157,139,255,.3);border-radius:999px;padding:12px 30px">
+      <span style="width:13px;height:13px;border-radius:7px;background:var(--violet);box-shadow:0 0 16px var(--violet)"></span>τ-bench · 对话式 Agent 评测方法论
+    </div>
+    <h1 style="font-size:104px;margin-top:38px;line-height:1.06;letter-spacing:-2px">评测实战:<span class="hl">方法论与踩坑复盘</span></h1>
+    <div style="font-size:36px;color:var(--ink2);font-weight:650;margin-top:30px;line-height:1.5">把对话式 Agent 基准 <b style="color:var(--ink)">跑对、跑准、可复现</b></div>
+    <div style="width:150px;height:5px;border-radius:3px;margin-top:40px;background:linear-gradient(90deg,#9d8bff,#2bc4e6)"></div>
+    <div style="font-size:26px;color:var(--ink3);font-weight:600;margin-top:34px;letter-spacing:.02em">数据集 · 用户模拟器 · embedding · 并发编排 · pass^k · RUNBOOK</div>
+    <div style="font-size:22px;color:var(--ink4);font-weight:600;margin-top:40px;letter-spacing:.02em"><b style="color:var(--ink3)">ModelDoctor</b> · mcpinfra.net · github.com/weetime</div>
+  </div>
+</section>
+
+</body></html>

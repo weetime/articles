@@ -1,0 +1,743 @@
+<title>Agent 评测知识图谱 · τ-bench 定位</title>
+<style>
+  :root{
+    --bg:#0f1117; --bg2:#12141c;
+    --panel:rgba(22,25,34,.82); --panel-solid:#161922;
+    --border:rgba(150,163,196,.16);
+    --text:#e7eaf3; --dim:rgba(231,234,243,.58); --faint:rgba(231,234,243,.38);
+    --gold:#f5b342; --coral:#fb923c;
+    --shadow:0 18px 50px rgba(0,0,0,.55);
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#f4f6fb; --bg2:#eef1f8;
+      --panel:rgba(255,255,255,.86); --panel-solid:#ffffff;
+      --border:rgba(40,52,84,.16);
+      --text:#181d2c; --dim:rgba(24,29,44,.6); --faint:rgba(24,29,44,.4);
+      --gold:#c77d0a; --coral:#d9660d;
+      --shadow:0 18px 44px rgba(30,41,74,.16);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0f1117; --bg2:#12141c;
+    --panel:rgba(22,25,34,.82); --panel-solid:#161922;
+    --border:rgba(150,163,196,.16);
+    --text:#e7eaf3; --dim:rgba(231,234,243,.58); --faint:rgba(231,234,243,.38);
+    --gold:#f5b342; --coral:#fb923c; --shadow:0 18px 50px rgba(0,0,0,.55);
+  }
+  :root[data-theme="light"]{
+    --bg:#f4f6fb; --bg2:#eef1f8;
+    --panel:rgba(255,255,255,.86); --panel-solid:#ffffff;
+    --border:rgba(40,52,84,.16);
+    --text:#181d2c; --dim:rgba(24,29,44,.6); --faint:rgba(24,29,44,.4);
+    --gold:#c77d0a; --coral:#d9660d; --shadow:0 18px 44px rgba(30,41,74,.16);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;overflow:hidden}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:ui-sans-serif,-apple-system,"SF Pro Text","Segoe UI",Roboto,"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  #graph{position:fixed;inset:0;display:block;touch-action:none;cursor:grab}
+  #graph.grabbing{cursor:grabbing}
+
+  /* ---- Left drawer ---- */
+  .drawer{
+    position:fixed;top:16px;left:16px;width:340px;max-width:calc(100vw - 32px);
+    max-height:calc(100vh - 32px);display:flex;flex-direction:column;gap:14px;
+    padding:18px 18px 16px;border-radius:16px;background:var(--panel);
+    border:1px solid var(--border);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    box-shadow:var(--shadow);z-index:6;overflow:auto;
+  }
+  .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  h1{margin:0;font-size:21px;line-height:1.2;letter-spacing:-.01em;text-wrap:balance}
+  .thesis{margin:0;font-size:13px;line-height:1.6;color:var(--dim)}
+  .thesis b{color:var(--text);font-weight:650}
+  .search{position:relative}
+  .search input{
+    width:100%;padding:9px 11px 9px 32px;border-radius:10px;border:1px solid var(--border);
+    background:var(--bg2);color:var(--text);font-size:13px;font-family:inherit;outline:none;
+  }
+  .search input:focus{border-color:var(--gold)}
+  .search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);opacity:.5}
+  .legend{display:flex;flex-direction:column;gap:2px}
+  .legend .lg-title{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:2px 0 4px}
+  .lg{
+    display:flex;align-items:center;gap:9px;padding:6px 8px;border-radius:9px;cursor:pointer;
+    font-size:12.5px;color:var(--text);user-select:none;transition:background .12s;
+  }
+  .lg:hover{background:var(--bg2)}
+  .lg.off{opacity:.34}
+  .lg .dot{width:11px;height:11px;border-radius:50%;flex:none;box-shadow:0 0 8px var(--c)}
+  .lg .dot{background:var(--c)}
+  .lg .ct{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--faint);font-size:11px}
+  .guide{
+    border-top:1px solid var(--border);padding-top:12px;font-size:12px;line-height:1.6;color:var(--dim);
+  }
+  .guide b{color:var(--gold)}
+  .foot{font-size:11px;color:var(--faint);line-height:1.5}
+  .foot kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;background:var(--bg2);
+    border:1px solid var(--border);border-radius:4px;padding:1px 5px}
+
+  /* ---- Right info card ---- */
+  .info{
+    position:fixed;top:16px;right:16px;width:322px;max-width:calc(100vw - 32px);
+    padding:18px;border-radius:16px;background:var(--panel);border:1px solid var(--border);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow);
+    z-index:6;transform:translateX(0);transition:opacity .18s, transform .18s;
+  }
+  .info.empty .close{display:none}
+  .info .badge{display:inline-block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    font-weight:700;padding:3px 9px;border-radius:999px;margin-bottom:10px}
+  .info h2{margin:0 0 4px;font-size:18px;line-height:1.25;letter-spacing:-.01em}
+  .info .sub{margin:0 0 12px;font-size:11.5px;color:var(--faint);letter-spacing:.02em}
+  .info p{margin:0;font-size:13px;line-height:1.65;color:var(--dim)}
+  .info p b{color:var(--text);font-weight:600}
+  .info .stat{color:var(--coral);font-weight:700}
+  .info .when{margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:12.5px;line-height:1.6;color:var(--dim)}
+  .info .when b{color:var(--text)}
+  .info .close{position:absolute;top:12px;right:12px;width:26px;height:26px;border-radius:8px;
+    border:1px solid var(--border);background:transparent;color:var(--dim);cursor:pointer;font-size:15px;line-height:1;
+    display:flex;align-items:center;justify-content:center}
+  .info .close:hover{background:var(--bg2);color:var(--text)}
+  .info .links{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px}
+  .info .chip{font-size:11px;padding:4px 9px;border-radius:8px;background:var(--bg2);border:1px solid var(--border);
+    color:var(--dim);cursor:pointer}
+  .info .chip:hover{color:var(--text);border-color:var(--gold)}
+
+  /* ---- controls ---- */
+  .ctrls{position:fixed;bottom:16px;right:16px;display:flex;gap:8px;z-index:6}
+  .ctrls button{
+    width:38px;height:38px;border-radius:11px;border:1px solid var(--border);background:var(--panel);
+    color:var(--text);cursor:pointer;font-size:16px;backdrop-filter:blur(10px);box-shadow:var(--shadow);
+    display:flex;align-items:center;justify-content:center}
+  .ctrls button:hover{border-color:var(--gold)}
+  .theme-btn{position:fixed;bottom:16px;left:16px;z-index:6;height:38px;padding:0 14px;border-radius:11px;
+    border:1px solid var(--border);background:var(--panel);color:var(--dim);cursor:pointer;font-size:12px;
+    backdrop-filter:blur(10px);box-shadow:var(--shadow)}
+  .theme-btn:hover{color:var(--text);border-color:var(--gold)}
+
+  @media (max-width:720px){
+    .drawer{width:calc(100vw - 24px);left:12px;top:12px;max-height:44vh}
+    .info{right:12px;left:12px;width:auto;top:auto;bottom:64px;max-height:42vh;overflow:auto}
+    .ctrls{bottom:12px;right:12px}
+    .theme-btn{bottom:12px;left:12px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<canvas id="graph"></canvas>
+
+<div class="drawer" id="drawer">
+  <div>
+    <div class="eyebrow">Agent 评测 · 知识图谱</div>
+    <h1>「Agent 评测」不是一件事</h1>
+  </div>
+  <p class="thesis">它至少分成 <b>五类基准</b> 与一层 <b>评测框架</b>。<b style="color:var(--gold)">τ 系列</b> 只占其中一格:<b>对话式工具 Agent + 策略遵循</b>。看清它的坐标,才知道什么时候该用它、什么时候该换别的。</p>
+  <div class="search">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <input id="search" placeholder="搜节点(τ / BFCL / SWE-bench…)" autocomplete="off">
+  </div>
+  <div class="legend" id="legend">
+    <div class="lg-title">点击色块可筛选</div>
+  </div>
+  <div class="guide">
+    <b>何时用 τ:</b>产品是面向用户的对话式 Agent,要在后端系统上<b style="color:var(--text)">真执行动作</b>(订票 / 下单 / 改账户 / 开通),还得守业务策略,且你在乎<b style="color:var(--text)">可靠性</b>(pass^k)。<br>
+    <b>何时换别的:</b>只测函数调用格式→BFCL;改代码→SWE-bench;开浏览器 / 桌面→WebArena / OSWorld;开放式研究→GAIA;自有领域→Inspect / OpenAI Evals 自建。
+  </div>
+  <div class="foot">
+    <kbd>拖拽</kbd> 移动节点 · <kbd>滚轮</kbd> 缩放 · <kbd>点击</kbd> 看定位。橙色节点=本地实测证据。
+  </div>
+</div>
+
+<div class="info empty" id="info">
+  <button class="close" id="close" aria-label="关闭">×</button>
+  <div id="info-body">
+    <div class="badge" style="background:rgba(245,179,66,.14);color:var(--gold)">从这里开始</div>
+    <h2>点任意节点看它的定位</h2>
+    <p>图谱中心是 <b>τ-bench</b>。往外挂的是它<b>独有的机制</b>(用户模拟器 / 策略 / pass^k / 按 DB 末态判分),以及四个<b>本地实测证据</b>(橙色)。<br><br>四周的其它彩色簇,是<b>别的评测坐标</b>——每一格回答的问题都不同。</p>
+    <div class="when"><b>核心判断:</b>先问「我到底要测 Agent 的<b>哪种能力</b>」,再挑基准。用错基准,比没测更误导。</div>
+  </div>
+</div>
+
+<div class="ctrls">
+  <button id="reheat" title="重排布局">↻</button>
+  <button id="reset" title="重置视图">⌂</button>
+</div>
+<button class="theme-btn" id="themeBtn">◐ 主题</button>
+
+<script>
+(function(){
+"use strict";
+
+// ---------------- DATA ----------------
+// group -> color key; kind -> size role
+const GROUPS = {
+  root:  {c:"#9fb0d6", name:"根 · Agent 评测"},
+  c1:    {c:"#f5b342", name:"对话式工具 Agent + 策略 (τ 的主场)"},
+  c2:    {c:"#38bdf8", name:"函数调用正确性"},
+  c3:    {c:"#a78bfa", name:"编码 Agent"},
+  c4:    {c:"#34d399", name:"Web / GUI / 电脑操作"},
+  c5:    {c:"#fb7185", name:"通用长程助手"},
+  c6:    {c:"#818cf8", name:"评测框架 / 工具(自带数据)"},
+  ev:    {c:"#fb923c", name:"本地实测证据(你的数据)"},
+};
+
+const KIND_BADGE = {
+  root:"根节点", cat:"类别", bench:"基准", concept:"机制 / 指标",
+  evidence:"实测 · 你的数据", harness:"框架 / 工具"
+};
+
+// r = radius, g = group, k = kind
+const N = [
+  // root
+  {id:"root", lbl:"Agent 评测", g:"root", k:"root", r:26,
+   desc:"评测 AI Agent 的能力,不是单一维度。大方向分两支:<b>基准</b>(固定数据集 + 打分,测通用能力)与 <b>评测框架</b>(自带数据,测你自己的场景)。基准内部又按「测什么」分成好几格——τ 只是其中一格。",
+   when:"<b>先定位再选型:</b>不同格子的分数不能互相换算。一个模型 τ 分高,不代表它会开浏览器或改代码。"},
+
+  // categories
+  {id:"c1", lbl:"对话式工具 Agent + 策略", g:"c1", k:"cat", r:20,
+   desc:"多轮对话中,由<b>模拟用户</b>逐步透露信息,Agent 要调工具、改后端数据库,<b>还要守业务策略</b>(该拒的拒、该转人工的转)。最贴近「客服 / 办事型」落地产品。<b>τ 系列的主场。</b>",
+   when:"<b>改用它,当你要问:</b>模型能不能在真实业务规则下,把一通对话真正「办成事」——而不只是「答得对」。"},
+  {id:"c2", lbl:"函数调用正确性", g:"c2", k:"cat", r:18,
+   desc:"给一个请求,模型能否<b>选对函数、填对参数</b>(单个 / 并行 / 多个 / 无需调用)。用 AST 匹配或可执行校验判分。<b>不含用户模拟、不含多轮策略。</b>",
+   when:"<b>改用它,当你要问:</b>模型的 tool-calling <b>格式</b>稳不稳?比 τ 便宜快得多,但测不出「该不该调、办没办成」。"},
+  {id:"c3", lbl:"编码 Agent", g:"c3", k:"cat", r:18,
+   desc:"解决真实代码仓库的 issue、改多个文件、让隐藏测试通过。评测的是<b>长程编辑 + 工程闭环</b>。",
+   when:"<b>改用它,当你要问:</b>模型能不能当 coding agent。与 τ 完全不同的能力轴。"},
+  {id:"c4", lbl:"Web / GUI / 电脑操作", g:"c4", k:"cat", r:18,
+   desc:"驱动<b>浏览器或桌面</b>,点击、输入、读页面,在沙盒或真站点里达成目标。常带视觉输入。",
+   when:"<b>改用它,当你要问:</b>模型能不能操作 GUI。τ 的工具是结构化 API 调用,不测「看屏幕点按钮」。"},
+  {id:"c5", lbl:"通用长程助手", g:"c5", k:"cat", r:18,
+   desc:"开放式任务,需要 <b>web + 工具 + 多步推理链</b>组合,答案通常唯一可校验。测的是「通用助手」的综合闭环。",
+   when:"<b>改用它,当你要问:</b>模型作为通用研究 / 助手的天花板。任务无固定策略面,不像 τ 那样测合规边界。"},
+  {id:"c6", lbl:"评测框架 / 工具", g:"c6", k:"cat", r:18,
+   desc:"<b>不是基准,是基础设施</b>:自己带数据 / 任务 / 判分逻辑,它们负责跑、打分、追踪(trace)。当没有公开基准贴合你的私有领域时用。",
+   when:"<b>改用它,当你要问:</b>模型在<b>我自己的</b>领域 / 策略下表现如何。可以拿它照 τ 的思路自建一套私有 harness。"},
+
+  // tau family
+  {id:"tau", lbl:"τ-bench", g:"c1", k:"bench", r:22,
+   desc:"Sierra 提出。<b>airline / retail</b> 两域。首创把四件事合一:<b>用户模拟器 + 工具调用 + 策略遵循 + 按 DB 末态判分</b>,并用 <b>pass^k</b> 量可靠性。它衡量的是「对话式办事 Agent」的真实能力,而非话术。",
+   when:"<b>用它,当:</b>你在为客服 / 工单 / 办事型对话 Agent 选模型,且在乎「一次就办对」的可靠性。这是该场景下最贴合的公开基准。"},
+  {id:"tau2", lbl:"τ²-bench", g:"c1", k:"bench", r:15,
+   desc:"在 τ 上新增 <b>telecom</b> 域与 <b>dual-control(双向控制)</b>:环境里<b>用户也能操作</b>,Agent 必须<b>引导用户</b>去做(「现在点设置→APN」),而不是自己一手执行。更接近远程排障场景。",
+   when:"<b>用它,当:</b>你的 Agent 要与用户<b>协同操作</b>同一系统(远程支持、共同填单),而非单方执行。"},
+  {id:"tau3", lbl:"τ³-bench", g:"c1", k:"bench", r:15,
+   desc:"再加 <b>banking_knowledge</b> 域与「<b>可发现工具</b>」协议:特权动作被藏起来,须先 <code>unlock</code> 再按约定调用。压的是<b>异形工具协议的鲁棒性</b>——知识全懂 ≠ 玩得转协议。",
+   when:"<b>用它,当:</b>你的工具体系有权限门 / 动态发现 / 非标调用约定,想知道模型扛不扛得住。"},
+  {id:"almita", lbl:"ALMITA", g:"c1", k:"bench", r:9,
+   desc:"另一条客服 Agent 评测路线,侧重从真实对话<b>自动生成测试用例</b>再判定。与 τ 同属对话式 Agent 格,思路互补。",
+   when:"<b>用它,当:</b>你想用自动化用例覆盖客服对话,而非固定任务集。"},
+  {id:"intell", lbl:"IntellAgent", g:"c1", k:"bench", r:9,
+   desc:"开源框架,用<b>策略图</b>自动合成多样对话场景,批量压测 Agent 的策略遵循。可看作「自建 τ 式评测」的工具。",
+   when:"<b>用它,当:</b>你要为私有策略大规模生成对话测试,而公开域(airline 等)不贴合。"},
+
+  // tau concepts / mechanisms
+  {id:"usersim", lbl:"用户模拟器", g:"c1", k:"concept", r:11,
+   desc:"由<b>另一个 LLM 扮客户</b>,多轮逐步给信息——正是它让 τ「像真人办事」。<b>官方榜固定 GPT-4.1</b>;若换更顺从的模型(如 deepseek-chat),任务会偏简单,<b>绝对值不可对标公开榜</b>,只在同一 harness 内部可比。",
+   when:"<b>方法学红线:</b>报分必须写清 user-sim 是谁。你的本地跑用 deepseek-chat,只能内部横比,不能贴公开榜。"},
+  {id:"policy", lbl:"策略遵循", g:"c1", k:"concept", r:11,
+   desc:"该拒绝的请求拒绝、该转人工的转、不做 policy 禁止的写操作。<b>这是「能力测不出、只有 τ 测得到」的东西</b>——也是很多模型真正掉分的地方。",
+   when:"<b>为什么关键:</b>生产事故往往不是「不会」,是「越界办了不该办的」。τ 把这条当判分项。"},
+  {id:"passk", lbl:"pass^k(可靠性)", g:"c1", k:"concept", r:12,
+   desc:"同一任务做 <b>k 次独立试验、次次都成功</b>的比例。生产每个请求≈只有一次机会,所以 <b>pass^k 才是真实水位</b>。<b>pass¹ 高、pass^k 低 = 会做但不稳(flaky)</b>——单跑一次会被骗。",
+   when:"<b>选型看 pass^k 不看 pass¹:</b>大量任务「时对时错」,单次成功率严重高估可靠性。"},
+  {id:"dbjudge", lbl:"按 DB / env 末态判分", g:"c1", k:"concept", r:12,
+   desc:"按<b>后端数据库 / 环境的真实末态</b>判分,而非「话说得对不对」。<b>只用 LLM-judge 会严重高估模型</b>——因为自然语言层几乎人人过,区分度全在后端状态。",
+   when:"<b>判分红线:</b>只要判分不落到 DB/env 正确性上,τ 就失去了意义。"},
+  {id:"dualctrl", lbl:"dual-control", g:"c1", k:"concept", r:11,
+   desc:"τ² 的核心机制:Agent 与用户<b>都能改环境</b>。Agent 得判断哪步该自己做、哪步该指挥用户做,并处理用户操作的不确定性。",
+   when:"贴近远程排障 / 协同办事——比 τ 单方执行更难。"},
+  {id:"disctool", lbl:"可发现工具协议", g:"c1", k:"concept", r:11,
+   desc:"τ³ 的核心机制:特权工具隐藏,须先 <code>unlock</code> 得到真名、再按 <b>JSON 字符串</b>约定调用。考的是对<b>非标工具协议</b>的鲁棒性。",
+   when:"很多模型在这里整体崩塌——见「banking 4.7% 断崖」。"},
+  {id:"domains", lbl:"四个域", g:"c1", k:"concept", r:11,
+   desc:"<b>airline / retail / telecom / banking_knowledge</b>,策略面与难度递增。airline 策略最严、banking 协议最刁钻、telecom 工作流最长。",
+   when:"选与你业务最像的域,别只看总均分。"},
+
+  // evidence (local)
+  {id:"ev1", lbl:"会说话 ≠ 会办事", g:"ev", k:"evidence", r:14,
+   desc:"<b>【本地实测 · Qwen3-32B】</b>airline 103 条失败里 <span class='stat'>87 条「沟通过 · DB 挂」</span>;retail <span class='stat'>110/110 失败全部通过 NL 检查</span>。自然语言层几乎全过,<b>后端状态层大面积挂</b>。这就是为什么判分必须落在 DB 上——只看沟通 / 只用 LLM-judge 会把这个模型评高一大截。",
+   when:"实证了「按 DB 末态判分」的必要性。"},
+  {id:"ev2", lbl:"可靠性衰减 Pass¹→Pass⁴", g:"ev", k:"evidence", r:14,
+   desc:"<b>【本地实测 · DeepSeek-V4-Flash @ PPU】</b>airline <span class='stat'>Pass¹ 81.5% → Pass⁴ 68%</span>、retail <span class='stat'>85.7% → 66.7%</span>。约 <b>1/3 任务 4 次做不到次次对</b>。生产每请求一次机会,真实可靠水位接近 Pass⁴ 而非 Pass¹。",
+   when:"实证了「看 pass^k 不看 pass¹」。单 trial 根本看不出。"},
+  {id:"ev3", lbl:"context 8k→64k 门槛", g:"ev", k:"evidence", r:14,
+   desc:"<b>【本地实测 · 工程侧最大教训】</b>Agent 多轮对话 + 工具 schema <b>动辄 19k+ token</b>。基线 8k 上下文下大量任务直接 <code>ContextWindowExceeded</code> 判负——<b>看着像模型不行,其实是部署配置不匹配 Agent 场景</b>。放开 <span class='stat'>64k 后 0 超限</span>,才拿到真实能力数。",
+   when:"跑 τ 前先确认 context-length ≥ 任务实际长度,否则测的是部署不是模型。"},
+  {id:"ev4", lbl:"banking 4.7% 断崖", g:"ev", k:"evidence", r:14,
+   desc:"<b>【本地实测 · Qwen3-32B @ τ³ banking】</b>Pass¹ 仅 <span class='stat'>4.7%</span>——<b>不是一致性问题,是协议整体崩塌</b>:① 幻觉隐藏工具名(没 unlock 就瞎调);② 调用约定错(<code>arguments</code> 传 dict,API 要 JSON 字符串);③ 把写操作甩给用户去做。<b>知识全懂,却玩不转异形工具协议。</b>",
+   when:"实证了「可发现工具协议」是硬门槛——32B 级模型可能在这里归零。"},
+
+  // c2 leaves
+  {id:"bfcl", lbl:"BFCL", g:"c2", k:"bench", r:12,
+   desc:"Berkeley Function-Calling Leaderboard。测<b>单 / 并行 / 多函数调用 + 无需调用</b>的判别,AST + 可执行校验。后续版本加了简单多轮。<b>tool-calling 格式的事实标准。</b>",
+   when:"想快速、便宜地筛「函数调用格式对不对」时首选;但它不测策略、不测办没办成。"},
+  {id:"toolbench", lbl:"ToolBench", g:"c2", k:"bench", r:9,
+   desc:"面向大规模真实 API(数千个)的工具学习基准,测多工具规划与调用。",
+   when:"关注海量 API 覆盖与工具检索时用。"},
+  {id:"apibank", lbl:"API-Bank", g:"c2", k:"bench", r:9,
+   desc:"评测 LLM 规划、检索、正确调用 API 的能力,含多步 API 工作流。",
+   when:"关注 API 工作流规划正确性时用。"},
+
+  // c3
+  {id:"swe", lbl:"SWE-bench", g:"c3", k:"bench", r:13,
+   desc:"从真实 GitHub 仓库取 issue,要求 Agent 改代码让<b>隐藏测试通过</b>。coding agent 的标杆。",
+   when:"评测「解 bug / 实现功能」的工程闭环时用。"},
+  {id:"swev", lbl:"SWE-bench Verified", g:"c3", k:"bench", r:11,
+   desc:"SWE-bench 经人工核验、去噪的高质量子集,是当下引用最多的 coding-agent 口径。",
+   when:"要一份干净可信的 coding 分时用它,而非原始集。"},
+  {id:"tbench", lbl:"Terminal-Bench", g:"c3", k:"bench", r:9,
+   desc:"在真实终端环境里完成任务(装依赖、跑脚本、修环境),测命令行 Agent。",
+   when:"评测 CLI / 运维型 Agent 时用。"},
+
+  // c4
+  {id:"webarena", lbl:"WebArena", g:"c4", k:"bench", r:12,
+   desc:"自托管的真实网站沙盒(电商 / 论坛 / Gitea 等),Agent 靠浏览操作完成任务,按末态判分。",
+   when:"评测浏览器操作 Agent 的功能正确性时用。"},
+  {id:"webvoy", lbl:"WebVoyager", g:"c4", k:"bench", r:9,
+   desc:"在<b>真实线上网站</b>上用视觉 + 浏览完成端到端任务,更贴近真实但更难复现。",
+   when:"想测真实站点上的视觉网页 Agent 时用。"},
+  {id:"osworld", lbl:"OSWorld", g:"c4", k:"bench", r:11,
+   desc:"真实<b>桌面操作系统</b>环境(跨应用、跨文件),测 computer-use Agent。",
+   when:"评测「电脑操作 / computer use」时用,是该轴的代表。"},
+  {id:"mind2web", lbl:"Mind2Web", g:"c4", k:"bench", r:9,
+   desc:"覆盖大量真实网站与任务的通用 Web Agent 数据集,测跨站泛化。",
+   when:"关注 Web Agent 泛化广度时用。"},
+
+  // c5
+  {id:"gaia", lbl:"GAIA", g:"c5", k:"bench", r:12,
+   desc:"通用助手基准:真实世界问题,须<b>组合 web + 工具 + 多步推理</b>,答案唯一可校验。人类高分、早期模型低分。",
+   when:"评测「通用助手」综合能力天花板时用;无固定策略面,不测合规边界。"},
+  {id:"agentbench", lbl:"AgentBench", g:"c5", k:"bench", r:10,
+   desc:"多环境(OS / DB / 游戏 / web 等)统一评测 LLM-as-Agent 的综合基准。",
+   when:"想一次覆盖多类环境做总体画像时用。"},
+  {id:"browsecomp", lbl:"BrowseComp", g:"c5", k:"bench", r:9,
+   desc:"专测<b>深度网络检索</b>:答案难找但易验证,压 Agent 的搜寻与信息整合。",
+   when:"评测研究 / 检索型 Agent 时用。"},
+
+  // c6 harnesses
+  {id:"inspect", lbl:"Inspect", g:"c6", k:"harness", r:11,
+   desc:"UK AISI 出品的开源评测框架,自带任务 / 工具 / 打分,适合<b>自建 τ 式私有评测</b>。",
+   when:"要在自己领域搭一套严谨、可复现的 Agent 评测时首选之一。"},
+  {id:"oaievals", lbl:"OpenAI Evals", g:"c6", k:"harness", r:10,
+   desc:"开源评测框架 + registry,自定义数据集与判分逻辑跑评测。",
+   when:"要快速自建评测、复用社区模板时用。"},
+  {id:"langsmith", lbl:"LangSmith", g:"c6", k:"harness", r:10,
+   desc:"LangChain 的 trace + 评测平台,擅长<b>生产链路追踪 + 在线 / 离线评测</b>。",
+   when:"已用 LangChain、想把评测接进生产可观测时用。"},
+  {id:"deepeval", lbl:"DeepEval", g:"c6", k:"harness", r:9,
+   desc:"开源 LLM/Agent 单元测试框架,内置多种指标(含 LLM-as-judge),像 pytest 一样写断言。",
+   when:"想把 Agent 评测当单元测试写进 CI 时用。"},
+  {id:"ragas", lbl:"Ragas", g:"c6", k:"harness", r:9,
+   desc:"专测 <b>RAG</b> 质量(忠实度 / 相关性 / 召回)。是评测框架里的垂直一支。",
+   when:"你的系统核心是检索增强、想测答案是否有据可依时用。"},
+];
+
+const E = [
+  ["root","c1","is"],["root","c2","is"],["root","c3","is"],["root","c4","is"],["root","c5","is"],["root","c6","is"],
+  // tau family under c1
+  ["c1","tau","is"],["c1","almita","is"],["c1","intell","is"],
+  ["tau","tau2","add"],["tau2","tau3","add"],
+  // tau mechanisms
+  ["tau","usersim","m"],["tau","policy","m"],["tau","passk","m"],["tau","dbjudge","m"],["tau","domains","m"],
+  ["tau2","dualctrl","m"],["tau3","disctool","m"],
+  // evidence links
+  ["ev1","dbjudge","ev"],["ev1","policy","ev"],
+  ["ev2","passk","ev"],
+  ["ev3","tau","ev"],["ev3","usersim","ev"],
+  ["ev4","disctool","ev"],["ev4","domains","ev"],
+  // c2
+  ["c2","bfcl","is"],["c2","toolbench","is"],["c2","apibank","is"],
+  // c3
+  ["c3","swe","is"],["swe","swev","add"],["c3","tbench","is"],
+  // c4
+  ["c4","webarena","is"],["c4","webvoy","is"],["c4","osworld","is"],["c4","mind2web","is"],
+  // c5
+  ["c5","gaia","is"],["c5","agentbench","is"],["c5","browsecomp","is"],
+  // c6
+  ["c6","inspect","is"],["c6","oaievals","is"],["c6","langsmith","is"],["c6","deepeval","is"],["c6","ragas","is"],
+];
+
+// rest length by edge kind
+const REST = {is:150, add:100, m:78, ev:66};
+
+// ---------------- SETUP ----------------
+const cv = document.getElementById("graph");
+const ctx = cv.getContext("2d");
+const nodes = N.map(n=>({...n, x:0, y:0, vx:0, vy:0}));
+const byId = {}; nodes.forEach(n=>byId[n.id]=n);
+const edges = E.map(([s,t,k])=>({s:byId[s], t:byId[t], k, rest:REST[k]}));
+// adjacency for highlight
+const adj = {}; nodes.forEach(n=>adj[n.id]=new Set());
+edges.forEach(e=>{adj[e.s.id].add(e.t.id); adj[e.t.id].add(e.s.id);});
+
+const hidden = new Set();       // hidden groups
+let dpr=1, W=0, H=0;
+const cam = {s:1, x:0, y:0};
+let hover=null, selected=null, dragNode=null, panning=false;
+let px=0, py=0, moved=0;
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// initial layout: categories on a ring, leaves scattered near parent
+(function seed(){
+  byId.root.x=0; byId.root.y=0; byId.root.fixed=true;
+  const cats=["c1","c2","c3","c4","c5","c6"];
+  cats.forEach((c,i)=>{
+    const a = -Math.PI/2 + i/cats.length*Math.PI*2;
+    byId[c].x = Math.cos(a)*230; byId[c].y = Math.sin(a)*230;
+  });
+  nodes.forEach(n=>{
+    if(n.x===0 && n.y===0 && n.id!=="root"){
+      // place near a connected already-seeded node
+      const nb = [...adj[n.id]].map(id=>byId[id]).find(p=>p.x||p.y);
+      const bx = nb? nb.x : 0, by = nb? nb.y : 0;
+      n.x = bx + (Math.random()*2-1)*90;
+      n.y = by + (Math.random()*2-1)*90;
+    }
+  });
+})();
+
+// ---------------- THEME ----------------
+let PAL;
+function isDark(){
+  const a=document.documentElement.getAttribute("data-theme");
+  if(a) return a==="dark";
+  return matchMedia("(prefers-color-scheme: dark)").matches;
+}
+function buildPalette(){
+  const d=isDark();
+  PAL={
+    dark:d,
+    bg: d? "#0f1117":"#f4f6fb",
+    edge: d? "rgba(150,163,196,.16)":"rgba(40,52,84,.20)",
+    edgeHi: d? "rgba(245,179,66,.55)":"rgba(199,125,10,.6)",
+    label: d? "#e7eaf3":"#181d2c",
+    labelDim: d? "rgba(231,234,243,.42)":"rgba(24,29,44,.5)",
+    ring: d? "rgba(15,17,23,.9)":"rgba(244,246,251,.95)",
+    glow: d? .9:.35,
+  };
+}
+buildPalette();
+
+function resize(){
+  dpr = Math.min(window.devicePixelRatio||1, 2);
+  W = window.innerWidth; H = window.innerHeight;
+  cv.width = W*dpr; cv.height = H*dpr;
+  cv.style.width=W+"px"; cv.style.height=H+"px";
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  cam.x = W/2; cam.y = H/2;
+}
+window.addEventListener("resize", ()=>{resize(); draw();});
+resize();
+
+// ---------------- PHYSICS ----------------
+const REP=9200, K=0.016, G=0.0065, DAMP=0.9, MAXV=9;
+let alpha = 1;
+
+function vis(n){ return !hidden.has(n.g); }
+
+function step(){
+  const act = nodes.filter(vis);
+  for(const n of act){ n.fx=0; n.fy=0; }
+  // repulsion
+  for(let i=0;i<act.length;i++){
+    const a=act[i];
+    for(let j=i+1;j<act.length;j++){
+      const b=act[j];
+      let dx=a.x-b.x, dy=a.y-b.y, d2=dx*dx+dy*dy;
+      if(d2<0.01){ dx=Math.random()-0.5; dy=Math.random()-0.5; d2=1; }
+      if(d2>360000) continue; // ignore very far (perf/spread)
+      const f=REP/d2, d=Math.sqrt(d2), ux=dx/d, uy=dy/d;
+      a.fx+=ux*f; a.fy+=uy*f; b.fx-=ux*f; b.fy-=uy*f;
+    }
+  }
+  // springs
+  for(const e of edges){
+    if(!vis(e.s)||!vis(e.t)) continue;
+    let dx=e.t.x-e.s.x, dy=e.t.y-e.s.y, d=Math.hypot(dx,dy)||0.01;
+    const f=K*(d-e.rest), ux=dx/d, uy=dy/d;
+    e.s.fx+=ux*f; e.s.fy+=uy*f; e.t.fx-=ux*f; e.t.fy-=uy*f;
+  }
+  // gravity + integrate
+  for(const n of act){
+    if(n.fixed || n===dragNode) continue;
+    n.fx += -n.x*G; n.fy += -n.y*G;
+    const m = Math.max(1, n.r/9);
+    n.vx = (n.vx + n.fx/m*alpha)*DAMP;
+    n.vy = (n.vy + n.fy/m*alpha)*DAMP;
+    n.vx=Math.max(-MAXV,Math.min(MAXV,n.vx));
+    n.vy=Math.max(-MAXV,Math.min(MAXV,n.vy));
+    n.x+=n.vx; n.y+=n.vy;
+  }
+  alpha*=0.994;
+  if(alpha<0.02) alpha=0.02;
+}
+
+// ---------------- DRAW ----------------
+function W2S(x,y){ return [x*cam.s+cam.x, y*cam.s+cam.y]; }
+function S2W(x,y){ return [(x-cam.x)/cam.s, (y-cam.y)/cam.s]; }
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  const focus = hover||selected;
+  const nb = focus? adj[focus.id] : null;
+
+  // edges
+  ctx.lineWidth = 1;
+  for(const e of edges){
+    if(!vis(e.s)||!vis(e.t)) continue;
+    const hot = focus && (e.s===focus||e.t===focus);
+    const [x1,y1]=W2S(e.s.x,e.s.y), [x2,y2]=W2S(e.t.x,e.t.y);
+    ctx.beginPath();
+    ctx.moveTo(x1,y1); ctx.lineTo(x2,y2);
+    if(hot){ ctx.strokeStyle=PAL.edgeHi; ctx.lineWidth=1.6; }
+    else { ctx.strokeStyle= focus? (PAL.dark?"rgba(150,163,196,.07)":"rgba(40,52,84,.08)") : PAL.edge; ctx.lineWidth=1; }
+    ctx.stroke();
+  }
+
+  // nodes
+  for(const n of nodes){
+    if(!vis(n)) continue;
+    const [sx,sy]=W2S(n.x,n.y);
+    const r = n.r*cam.s;
+    if(sx<-80||sx>W+80||sy<-80||sy>H+80){ /* still may need label off-screen: skip */ continue; }
+    const col = GROUPS[n.g].c;
+    const dim = focus && n!==focus && !(nb&&nb.has(n.id));
+
+    ctx.globalAlpha = dim? 0.28 : 1;
+    // glow
+    if((n===focus || n.id==="tau" || n.k==="evidence") && !dim){
+      ctx.shadowColor=col; ctx.shadowBlur=(n===focus?26:16)*PAL.glow;
+    } else { ctx.shadowBlur=0; }
+    // fill
+    ctx.beginPath(); ctx.arc(sx,sy,r,0,7);
+    ctx.fillStyle=col; ctx.fill();
+    ctx.shadowBlur=0;
+    // ring for evidence + focus
+    if(n.k==="evidence"){ ctx.lineWidth=2; ctx.strokeStyle=PAL.ring; ctx.stroke();
+      ctx.beginPath(); ctx.arc(sx,sy,r+3.5,0,7); ctx.lineWidth=1.5; ctx.strokeStyle=col; ctx.globalAlpha=(dim?0.28:0.7); ctx.stroke(); }
+    if(n===focus){ ctx.beginPath(); ctx.arc(sx,sy,r+4,0,7); ctx.lineWidth=2; ctx.strokeStyle=col; ctx.stroke(); }
+
+    // label
+    const big = n.k==="root"||n.k==="cat"||n.id==="tau";
+    const showLabel = big || n.k==="evidence" || n===focus || (nb&&nb.has(n.id)) || cam.s>1.15;
+    if(showLabel){
+      ctx.globalAlpha = dim? 0.4 : 1;
+      const fs = (n.k==="root"?15: n.k==="cat"?13: n.id==="tau"?14: n.k==="evidence"?12: 11.5);
+      ctx.font = `${big||n.k==="evidence"?600:500} ${fs}px ui-sans-serif,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif`;
+      ctx.textAlign="center"; ctx.textBaseline="top";
+      const ly = sy + r + 5;
+      const txt = n.lbl;
+      // halo for legibility
+      ctx.lineWidth=3; ctx.strokeStyle=PAL.bg; ctx.lineJoin="round";
+      ctx.strokeText(txt, sx, ly);
+      ctx.fillStyle = (n===focus||big||n.k==="evidence")? PAL.label : PAL.labelDim;
+      ctx.fillText(txt, sx, ly);
+    }
+    ctx.globalAlpha=1;
+  }
+}
+
+// ---------------- LOOP ----------------
+let running=true, idle=0;
+function frame(){
+  if(!running) return;
+  const before = alpha;
+  if(!reduce || dragNode){ step(); }
+  draw();
+  // stop when settled & no interaction, restart on demand
+  if(!dragNode && alpha<=0.021 && !reduce){ idle++; } else { idle=0; }
+  if(idle>60){ running=false; }
+  requestAnimationFrame(frame);
+}
+function kick(a){ alpha=Math.max(alpha,a||0.6); if(!running){ running=true; requestAnimationFrame(frame);} }
+if(reduce){ for(let i=0;i<420;i++) step(); draw(); }
+else requestAnimationFrame(frame);
+
+// ---------------- PICK ----------------
+function pick(mx,my){
+  let best=null, bd=1e9;
+  for(const n of nodes){
+    if(!vis(n)) continue;
+    const [sx,sy]=W2S(n.x,n.y);
+    const r=n.r*cam.s+6;
+    const d=(mx-sx)**2+(my-sy)**2;
+    if(d<r*r && d<bd){ bd=d; best=n; }
+  }
+  return best;
+}
+
+// ---------------- INTERACTION ----------------
+cv.addEventListener("pointermove", ev=>{
+  const mx=ev.clientX, my=ev.clientY;
+  if(dragNode){
+    const [wx,wy]=S2W(mx,my); dragNode.x=wx; dragNode.y=wy; dragNode.vx=0; dragNode.vy=0;
+    moved+=Math.abs(mx-px)+Math.abs(my-py); px=mx; py=my; kick(0.5); return;
+  }
+  if(panning){
+    cam.x+=mx-px; cam.y+=my-py; px=mx; py=my;
+    moved+=1; if(!running) draw(); return;
+  }
+  const h=pick(mx,my);
+  if(h!==hover){ hover=h; cv.style.cursor=h?"pointer":"grab"; if(!running) draw(); }
+});
+cv.addEventListener("pointerdown", ev=>{
+  cv.setPointerCapture(ev.pointerId);
+  px=ev.clientX; py=ev.clientY; moved=0;
+  const h=pick(px,py);
+  if(h){ dragNode=h; h.fixed0=h.fixed; h.fixed=false; }
+  else { panning=true; cv.classList.add("grabbing"); }
+});
+cv.addEventListener("pointerup", ev=>{
+  cv.classList.remove("grabbing");
+  const wasNode=dragNode;
+  if(wasNode){ if(wasNode.id==="root") wasNode.fixed=true; else wasNode.fixed=wasNode.fixed0; }
+  if(moved<6){
+    const h=pick(ev.clientX,ev.clientY);
+    if(h){ select(h); } else { select(null); }
+  }
+  dragNode=null; panning=false;
+});
+cv.addEventListener("pointercancel", ()=>{dragNode=null;panning=false;cv.classList.remove("grabbing");});
+
+cv.addEventListener("wheel", ev=>{
+  ev.preventDefault();
+  const mx=ev.clientX, my=ev.clientY;
+  const [wx,wy]=S2W(mx,my);
+  const f = Math.exp(-ev.deltaY*0.0014);
+  cam.s = Math.max(0.35, Math.min(3.2, cam.s*f));
+  cam.x = mx - wx*cam.s; cam.y = my - wy*cam.s;
+  if(!running) draw();
+}, {passive:false});
+
+// ---------------- INFO PANEL ----------------
+const info=document.getElementById("info");
+const infoBody=document.getElementById("info-body");
+const defaultInfo=infoBody.innerHTML;
+function badgeColor(n){ return GROUPS[n.g].c; }
+function select(n){
+  selected=n;
+  if(!n){ info.classList.add("empty"); infoBody.innerHTML=defaultInfo; hover=null; if(!running)draw(); kick(0.15); return; }
+  info.classList.remove("empty");
+  const col=badgeColor(n);
+  const links=[...adj[n.id]].map(id=>byId[id]).filter(vis);
+  const chips = links.map(l=>`<span class="chip" data-id="${l.id}">${l.lbl}</span>`).join("");
+  infoBody.innerHTML = `
+    <div class="badge" style="background:${hexA(col,.15)};color:${col}">${KIND_BADGE[n.k]||""}</div>
+    <h2>${n.lbl}</h2>
+    <div class="sub">${GROUPS[n.g].name}</div>
+    <p>${n.desc}</p>
+    ${n.when?`<div class="when">${n.when}</div>`:""}
+    ${chips?`<div class="links">${chips}</div>`:""}
+  `;
+  infoBody.querySelectorAll(".chip").forEach(c=>c.addEventListener("click",()=>{
+    const t=byId[c.dataset.id]; if(t){ select(t); centerOn(t); }
+  }));
+  centerOn(n, false);
+  if(!running)draw(); kick(0.15);
+}
+function hexA(hex,a){
+  const h=hex.replace("#",""); const r=parseInt(h.slice(0,2),16),g=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+function centerOn(n, zoom){
+  // gently move camera so node is centred-ish (bias right to avoid info panel)
+  const tx = W*0.42, ty=H*0.5;
+  cam.x = tx - n.x*cam.s; cam.y = ty - n.y*cam.s;
+  if(!running) draw();
+}
+document.getElementById("close").addEventListener("click", ()=>select(null));
+
+// ---------------- LEGEND ----------------
+const legend=document.getElementById("legend");
+const counts={}; nodes.forEach(n=>counts[n.g]=(counts[n.g]||0)+1);
+Object.keys(GROUPS).forEach(g=>{
+  if(g==="root") return;
+  const row=document.createElement("div");
+  row.className="lg"; row.dataset.g=g;
+  row.style.setProperty("--c", GROUPS[g].c);
+  row.innerHTML=`<span class="dot"></span><span>${GROUPS[g].name}</span><span class="ct">${counts[g]||0}</span>`;
+  row.addEventListener("click", ()=>{
+    if(hidden.has(g)){ hidden.delete(g); row.classList.remove("off"); }
+    else { hidden.add(g); row.classList.add("off"); if(selected&&selected.g===g) select(null); }
+    kick(0.7);
+  });
+  legend.appendChild(row);
+});
+
+// ---------------- SEARCH ----------------
+const search=document.getElementById("search");
+search.addEventListener("keydown", e=>{
+  if(e.key!=="Enter") return;
+  const q=search.value.trim().toLowerCase();
+  if(!q) return;
+  const hit=nodes.find(n=>vis(n)&&(n.lbl.toLowerCase().includes(q)));
+  if(hit){ cam.s=Math.max(cam.s,1.2); select(hit); centerOn(hit); kick(0.2); }
+});
+
+// ---------------- CONTROLS ----------------
+document.getElementById("reheat").addEventListener("click", ()=>{
+  nodes.forEach(n=>{ if(!n.fixed){ n.vx=(Math.random()-.5)*4; n.vy=(Math.random()-.5)*4; }});
+  kick(1);
+});
+document.getElementById("reset").addEventListener("click", ()=>{
+  cam.s=1; resize(); select(null); kick(0.4);
+});
+
+// ---------------- THEME TOGGLE ----------------
+const themeBtn=document.getElementById("themeBtn");
+themeBtn.addEventListener("click", ()=>{
+  const cur=isDark(); document.documentElement.setAttribute("data-theme", cur?"light":"dark");
+  buildPalette(); if(!running)draw(); kick(0.1);
+});
+new MutationObserver(()=>{buildPalette(); if(!running)draw();})
+  .observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ()=>{
+  if(!document.documentElement.getAttribute("data-theme")){ buildPalette(); if(!running)draw(); }
+});
+
+// ================= AUTO TOUR (portrait video) =================
+if(location.search.indexOf("tour")>=0){
+  document.documentElement.setAttribute("data-theme","dark"); buildPalette();
+  const st=document.createElement("style");
+  st.textContent=`.drawer,.ctrls,.theme-btn{display:none!important}
+.info{left:44px!important;right:44px!important;top:238px!important;bottom:auto!important;width:auto!important;max-width:none!important;max-height:600px!important;overflow:hidden!important;background:rgba(9,13,21,.92)!important;border:1px solid rgba(157,139,255,.38)!important;border-radius:22px!important;padding:30px 34px!important;box-shadow:0 22px 64px rgba(0,0,0,.6)!important;transition:opacity .3s!important}
+.info.empty{display:none!important}
+.info .close,.info .links{display:none!important}
+.info .badge{font-size:19px!important;padding:5px 15px!important;margin-bottom:14px!important}
+.info h2{font-size:46px!important;line-height:1.2!important}
+.info .sub{font-size:22px!important;margin-bottom:16px!important}
+.info p{font-size:29px!important;line-height:1.62!important}
+.info .stat{font-size:29px!important}
+.info .when{font-size:26px!important;margin-top:15px!important;padding-top:15px!important}`;
+  document.head.appendChild(st);
+  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+  const eio=k=>k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+  function easeTo(ts,tx,ty,ms){return new Promise(res=>{
+    const s0=cam.s,x0=cam.x,y0=cam.y,t0=performance.now();
+    (function step(t){let k=Math.min(1,(t-t0)/ms);k=eio(k);
+      cam.s=s0+(ts-s0)*k; cam.x=x0+(tx-x0)*k; cam.y=y0+(ty-y0)*k; draw();
+      k<1?requestAnimationFrame(step):res();})(t0);});}
+  function camFor(n,scale){return [scale, W*0.5-n.x*scale, H*0.60-n.y*scale];}
+  function fitBox(){let xs=[],ys=[];nodes.forEach(n=>{if(vis(n)){xs.push(n.x);ys.push(n.y);}});
+    const a=Math.min(...xs),b=Math.max(...xs),c=Math.min(...ys),d=Math.max(...ys);
+    const cx=(a+b)/2,cy=(c+d)/2,s=Math.min((W*0.84)/(b-a+1),(H*0.66)/(d-c+1),1.15);
+    return [s, W*0.5-cx*s, H*0.46-cy*s];}
+  async function runTour(){
+    const T = window.__TOUR;                 // {settle, steps:[{fit|id, scale, ease, hold}]}
+    kick(1); await sleep(T.settle); running=false; alpha=0.02; draw();
+    for(const b of T.steps){
+      if(b.fit){ select(null); const [s,x,y]=fitBox(); await easeTo(s,x,y,b.ease); }
+      else { const n=byId[b.id]; select(n); const [s,x,y]=camFor(n,b.scale); await easeTo(s,x,y,b.ease); }
+      await sleep(b.hold);
+    }
+    window.__tourDone=true;
+  }
+  window.__tourDone=false;
+  (function wait(){ if(window.__TOUR) setTimeout(runTour,400); else setTimeout(wait,100); })();
+}
+
+})();
+</script>
