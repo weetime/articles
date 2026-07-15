@@ -1,0 +1,21 @@
+import {chromium} from 'playwright-core';
+import {readFileSync} from 'fs';
+import {execSync} from 'child_process';
+const CHROME='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+const DIR='/Users/fangyong/articles/content/2026-07-guidellm-解读/graph';
+const tour=JSON.parse(readFileSync(DIR+'/tour.json','utf8'));
+const b=await chromium.launch({executablePath:CHROME,headless:true,args:['--no-sandbox','--force-color-profile=srgb']});
+const ctx=await b.newContext({viewport:{width:1080,height:1920},deviceScaleFactor:2,
+  recordVideo:{dir:DIR+'/rec',size:{width:1080,height:1920}}});
+await ctx.addInitScript(t=>{window.__TOUR=t;}, tour);
+const p=await ctx.newPage();
+await p.goto('file://'+DIR+'/graph-tour.html?tour=1',{waitUntil:'load'});
+console.log('tour running…');
+await p.waitForFunction('window.__tourDone===true', null, {timeout:180000});
+await p.waitForTimeout(600);
+const video=p.video();
+await ctx.close();
+const src=await video.path();
+await b.close();
+execSync(`ffmpeg -y -v error -i "${src}" -c:v libx264 -crf 20 -pix_fmt yuv420p -r 30 "${DIR}/graph-tour.mp4"`);
+console.log('DONE', DIR+'/graph-tour.mp4');

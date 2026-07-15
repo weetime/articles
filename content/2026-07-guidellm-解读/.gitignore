@@ -1,0 +1,19 @@
+# 原始压测大文件(单个 20-58M);只保留 summary_real.json
+runs/**/sweep.json
+runs/**/throughput.json
+runs/**/rt_constant.json
+runs/**/rt_poisson.json
+runs/**/sync.json
+runs/**/constant.json
+runs/**/poisson.json
+# 视频构建中间态(可再生)
+graph/rec/
+graph/rec_term/
+graph/*.mp3
+graph/*.wav
+graph/*.mp4
+graph/_*.mp4
+video/
+# 重复/临时视频
+*copy*.mp4
+runs/orig_args_*.json

@@ -1,0 +1,662 @@
+<title>guidellm 能力图谱 · 性能测试工具篇 4</title>
+<style>
+  :root{
+    --bg:#0f1117; --bg2:#12141c;
+    --panel:rgba(22,25,34,.82); --panel-solid:#161922;
+    --border:rgba(150,163,196,.16);
+    --text:#e7eaf3; --dim:rgba(231,234,243,.58); --faint:rgba(231,234,243,.38);
+    --gold:#9d8bff; --coral:#2bc4e6;
+    --shadow:0 18px 50px rgba(0,0,0,.55);
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#f4f6fb; --bg2:#eef1f8;
+      --panel:rgba(255,255,255,.86); --panel-solid:#ffffff;
+      --border:rgba(40,52,84,.16);
+      --text:#181d2c; --dim:rgba(24,29,44,.6); --faint:rgba(24,29,44,.4);
+      --gold:#6d4bff; --coral:#0891b2;
+      --shadow:0 18px 44px rgba(30,41,74,.16);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0f1117; --bg2:#12141c;
+    --panel:rgba(22,25,34,.82); --panel-solid:#161922;
+    --border:rgba(150,163,196,.16);
+    --text:#e7eaf3; --dim:rgba(231,234,243,.58); --faint:rgba(231,234,243,.38);
+    --gold:#9d8bff; --coral:#2bc4e6; --shadow:0 18px 50px rgba(0,0,0,.55);
+  }
+  :root[data-theme="light"]{
+    --bg:#f4f6fb; --bg2:#eef1f8;
+    --panel:rgba(255,255,255,.86); --panel-solid:#ffffff;
+    --border:rgba(40,52,84,.16);
+    --text:#181d2c; --dim:rgba(24,29,44,.6); --faint:rgba(24,29,44,.4);
+    --gold:#6d4bff; --coral:#0891b2; --shadow:0 18px 44px rgba(30,41,74,.16);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;overflow:hidden}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:ui-sans-serif,-apple-system,"SF Pro Text","Segoe UI",Roboto,"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  #graph{position:fixed;inset:0;display:block;touch-action:none;cursor:grab}
+  #graph.grabbing{cursor:grabbing}
+
+  /* ---- Left drawer ---- */
+  .drawer{
+    position:fixed;top:16px;left:16px;width:340px;max-width:calc(100vw - 32px);
+    max-height:calc(100vh - 32px);display:flex;flex-direction:column;gap:14px;
+    padding:18px 18px 16px;border-radius:16px;background:var(--panel);
+    border:1px solid var(--border);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    box-shadow:var(--shadow);z-index:6;overflow:auto;
+  }
+  .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  h1{margin:0;font-size:21px;line-height:1.2;letter-spacing:-.01em;text-wrap:balance}
+  .thesis{margin:0;font-size:13px;line-height:1.6;color:var(--dim)}
+  .thesis b{color:var(--text);font-weight:650}
+  .search{position:relative}
+  .search input{
+    width:100%;padding:9px 11px 9px 32px;border-radius:10px;border:1px solid var(--border);
+    background:var(--bg2);color:var(--text);font-size:13px;font-family:inherit;outline:none;
+  }
+  .search input:focus{border-color:var(--gold)}
+  .search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);opacity:.5}
+  .legend{display:flex;flex-direction:column;gap:2px}
+  .legend .lg-title{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:2px 0 4px}
+  .lg{
+    display:flex;align-items:center;gap:9px;padding:6px 8px;border-radius:9px;cursor:pointer;
+    font-size:12.5px;color:var(--text);user-select:none;transition:background .12s;
+  }
+  .lg:hover{background:var(--bg2)}
+  .lg.off{opacity:.34}
+  .lg .dot{width:11px;height:11px;border-radius:50%;flex:none;box-shadow:0 0 8px var(--c)}
+  .lg .dot{background:var(--c)}
+  .lg .ct{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--faint);font-size:11px}
+  .guide{
+    border-top:1px solid var(--border);padding-top:12px;font-size:12px;line-height:1.6;color:var(--dim);
+  }
+  .guide b{color:var(--gold)}
+  .foot{font-size:11px;color:var(--faint);line-height:1.5}
+  .foot kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;background:var(--bg2);
+    border:1px solid var(--border);border-radius:4px;padding:1px 5px}
+
+  /* ---- Right info card ---- */
+  .info{
+    position:fixed;top:16px;right:16px;width:322px;max-width:calc(100vw - 32px);
+    padding:18px;border-radius:16px;background:var(--panel);border:1px solid var(--border);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow);
+    z-index:6;transform:translateX(0);transition:opacity .18s, transform .18s;
+  }
+  .info.empty .close{display:none}
+  .info .badge{display:inline-block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    font-weight:700;padding:3px 9px;border-radius:999px;margin-bottom:10px}
+  .info h2{margin:0 0 4px;font-size:18px;line-height:1.25;letter-spacing:-.01em}
+  .info .sub{margin:0 0 12px;font-size:11.5px;color:var(--faint);letter-spacing:.02em}
+  .info p{margin:0;font-size:13px;line-height:1.65;color:var(--dim)}
+  .info p b{color:var(--text);font-weight:600}
+  .info .stat{color:var(--coral);font-weight:700}
+  .info .when{margin-top:12px;padding-top:12px;border-top:1px solid var(--border);font-size:12.5px;line-height:1.6;color:var(--dim)}
+  .info .when b{color:var(--text)}
+  .info .close{position:absolute;top:12px;right:12px;width:26px;height:26px;border-radius:8px;
+    border:1px solid var(--border);background:transparent;color:var(--dim);cursor:pointer;font-size:15px;line-height:1;
+    display:flex;align-items:center;justify-content:center}
+  .info .close:hover{background:var(--bg2);color:var(--text)}
+  .info .links{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px}
+  .info .chip{font-size:11px;padding:4px 9px;border-radius:8px;background:var(--bg2);border:1px solid var(--border);
+    color:var(--dim);cursor:pointer}
+  .info .chip:hover{color:var(--text);border-color:var(--gold)}
+
+  /* ---- controls ---- */
+  .ctrls{position:fixed;bottom:16px;right:16px;display:flex;gap:8px;z-index:6}
+  .ctrls button{
+    width:38px;height:38px;border-radius:11px;border:1px solid var(--border);background:var(--panel);
+    color:var(--text);cursor:pointer;font-size:16px;backdrop-filter:blur(10px);box-shadow:var(--shadow);
+    display:flex;align-items:center;justify-content:center}
+  .ctrls button:hover{border-color:var(--gold)}
+  .theme-btn{position:fixed;bottom:16px;left:16px;z-index:6;height:38px;padding:0 14px;border-radius:11px;
+    border:1px solid var(--border);background:var(--panel);color:var(--dim);cursor:pointer;font-size:12px;
+    backdrop-filter:blur(10px);box-shadow:var(--shadow)}
+  .theme-btn:hover{color:var(--text);border-color:var(--gold)}
+
+  @media (max-width:720px){
+    .drawer{width:calc(100vw - 24px);left:12px;top:12px;max-height:44vh}
+    .info{right:12px;left:12px;width:auto;top:auto;bottom:64px;max-height:42vh;overflow:auto}
+    .ctrls{bottom:12px;right:12px}
+    .theme-btn{bottom:12px;left:12px}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<canvas id="graph"></canvas>
+
+<div class="drawer" id="drawer">
+  <div>
+    <div class="eyebrow">LLM 服务评测 · 知识图谱</div>
+    <h1>同一个端点,你怎么压,决定你报什么数</h1>
+  </div>
+  <p class="thesis">性能测试工具篇 · 第 4 篇,主角是 <b style="color:var(--gold)">guidellm</b> —— vLLM 官方生态的参考压测器。这张图的核心,是它的 <b style="color:var(--amber)">rate-type 家族</b>:同步、吞吐、恒定速率、泊松 —— <b>施压方式不同,同一个服务给的数字天差地别</b>。</p>
+  <div class="search">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <input id="search" placeholder="搜节点(synchronous / throughput / poisson / sweep…)" autocomplete="off">
+  </div>
+  <div class="legend" id="legend">
+    <div class="lg-title">点击色块可筛选</div>
+  </div>
+  <div class="guide">
+    <b>guidellm 是什么:</b>vLLM / Neural Magic 生态的<b style="color:var(--text)">参考压测器</b>,对 OpenAI 兼容端点发压;内置<b style="color:var(--text)">合成负载</b>,无需数据集就能精确控制 token 形状。<br>
+    <b>本图怎么读:</b>中心是 guidellm,<b style="color:var(--amber)">橙黄的 rate-type 家族是主角</b> —— 它决定「怎么施压」;本文实测就是把这四种施压方式,对同一个端点各跑一遍。
+  </div>
+  <div class="foot">
+    <kbd>拖拽</kbd> 移动节点 · <kbd>滚轮</kbd> 缩放 · <kbd>点击</kbd> 看定位。橙色节点=本次实测数据。
+  </div>
+</div>
+
+<div class="info empty" id="info">
+  <button class="close" id="close" aria-label="关闭">×</button>
+  <div id="info-body">
+    <div class="badge" style="background:rgba(157,139,255,.16);color:var(--gold)">从这里开始</div>
+    <h2>点任意节点看它的定位</h2>
+    <p>图谱中心是 <b>guidellm</b>。主角是 <b style="color:var(--amber)">rate-type 家族</b>(橙黄):同步、吞吐、恒定、泊松 —— 决定「怎么施压」。往外还挂着<b>核心指标</b>(青)、<b>合成负载</b>(绿),外圈是<b>同类压测工具</b>。<br><br>橙色节点是本次实测 —— 把四种施压方式对同一端点各跑一遍。</p>
+    <div class="when"><b>核心认知:</b>压测报的不是「一个数」,是「某种施压方式下的数」;<b>换了 rate-type,延迟和吞吐的取舍完全不同</b>。</div>
+  </div>
+</div>
+
+<div class="ctrls">
+  <button id="reheat" title="重排布局">↻</button>
+  <button id="reset" title="重置视图">⌂</button>
+</div>
+<button class="theme-btn" id="themeBtn">◐ 主题</button>
+
+<script>
+(function(){
+"use strict";
+
+// ---------------- DATA ----------------
+const GROUPS = {
+  root:   {c:"#9fb0d6", name:"根 · LLM 服务评测"},
+  perf:   {c:"#9d8bff", name:"guidellm · 能力主场"},
+  press:  {c:"#f0a93b", name:"rate-type 家族 · 施压方式"},
+  metric: {c:"#2bc4e6", name:"核心指标"},
+  load:   {c:"#3ddc84", name:"合成负载 / 数据"},
+  tools:  {c:"#818cf8", name:"同类压测工具"},
+  ev:     {c:"#fb923c", name:"本次实测(rate-type 对照)"},
+};
+
+const KIND_BADGE = {
+  root:"根节点", cat:"分支", hub:"压测器 · 主角", tool:"同类压测器",
+  metric:"指标", press:"施压方式", load:"负载", concept:"边界",
+  evidence:"实测 · 你的数据"
+};
+
+// r = radius, g = group, k = kind
+const N = [
+  {id:"root", lbl:"LLM 服务评测", g:"root", k:"root", r:26,
+   desc:"给一套推理服务体检,分两件事:<b>精度</b>——答得准不准;<b>性能</b>——扛得快不快、稳不稳。<b>guidellm 属于性能这一支</b>,是一把标准的压测工具。",
+   when:"<b>先分清:</b>精度看分数,性能看延迟-吞吐;本图展开 guidellm 在性能压测里的能力。"},
+
+  {id:"perf", lbl:"性能压测", g:"perf", k:"cat", r:20,
+   desc:"把<b>请求</b>打进端点,量它的<b>延迟</b>与<b>吞吐</b>,在 SLO 内找可交付的产能。压测器负责发压、计时、汇总分位。",
+   when:"<b>做它,当:</b>你要给一套已部署的服务定容量、做选型、或验证某个部署改动的效果。"},
+
+  {id:"guidellm", lbl:"guidellm", g:"perf", k:"hub", r:24,
+   desc:"vLLM / Neural Magic 生态的<b>参考压测器</b>:一条 <code>guidellm benchmark run</code> 对 <b>OpenAI 兼容端点</b>发压。它的招牌有两个:<b style='color:#f0a93b'>rate-type 家族</b>——细粒度控制「怎么施压」;以及<b>内置合成负载</b>——无需数据集就能精确锁定 token 形状。",
+   when:"<b>用它,当:</b>你在 vLLM 生态里,想要一把口径标准、施压方式可控、结果可复现的压测器。"},
+  {id:"openai_ep", lbl:"OpenAI 兼容端点", g:"perf", k:"concept", r:12,
+   desc:"<code>--backend openai_http --target &lt;url&gt;</code>:对任意 OpenAI 兼容服务发压(vLLM / SGLang / 网关都行)。鉴权 / 自定义头走 <code>--request-formatter-kwargs</code> 注入。",
+   when:"<b>用它:</b>被测是标准 <code>/v1/chat/completions</code> 端点,换服务不改工具。"},
+  {id:"limits", lbl:"max-seconds / max-requests", g:"perf", k:"concept", r:11,
+   desc:"每档跑多久、跑多少:<code>--max-seconds</code> 控时长,<code>--max-requests</code> 控请求数;还有 <code>--warmup / --cooldown</code> 掐头去尾,避免冷启动污染统计。",
+   when:"<b>用它:</b>让每个 rate-type 的统计窗口干净、可比。"},
+
+  // 核心指标
+  {id:"ttft", lbl:"TTFT", g:"metric", k:"metric", r:12,
+   desc:"<b>time to first token</b>:从发出请求到吐出第一个 token 的时间,受<b>排队</b>与 prefill 影响,决定「等多久开始出字」。<b>并发一高、排队一长,TTFT 就炸</b>。",
+   when:"<b>看它:</b>交互式场景的体感门槛,给 p95 / p99 定上限。"},
+  {id:"tpot", lbl:"TPOT / ITL", g:"metric", k:"metric", r:12,
+   desc:"<b>逐 token 的解码速度</b>:TPOT 每个输出 token 的平均解码时间,ITL 相邻 token 的间隔 —— 决定流式出字流不流畅。",
+   when:"<b>看它:</b>出字顺不顺;相对稳,不像 TTFT 那样随排队暴涨。"},
+  {id:"latency", lbl:"请求延迟 p50 / p95", g:"metric", k:"metric", r:13,
+   desc:"端到端<b>整条请求</b>的耗时,看 p50 / p95 分位。<b>p95 尾延迟</b>最能暴露排队:施压越猛,p95 和 p50 拉得越开。",
+   when:"<b>看它:</b>用户实际等待;报延迟一定报 p95,别只报均值。"},
+  {id:"tput", lbl:"吞吐 req/s · tok/s", g:"metric", k:"metric", r:13,
+   desc:"每秒完成的<b>请求数</b>与<b>输出 token 数</b>,还有平均<b>并发度</b>。吞吐越高越好 —— 但代价往往是延迟。",
+   when:"<b>看它:</b>产能;但吞吐永远要和延迟、并发一起报,单看一个数会骗人。"},
+
+  // 合成负载 / 数据
+  {id:"synthetic", lbl:"合成负载(招牌)", g:"load", k:"load", r:14,
+   desc:"guidellm 的招牌能力:<code>--data 'prompt_tokens=512,output_tokens=128'</code>,<b>无需任何数据集</b>就能精确锁定输入 / 输出 token 形状。换机器、换时间,同一负载<b>可复现</b>。",
+   when:"<b>用它:</b>要严格可比的延迟-吞吐基线 —— 排除语料噪声,只变施压方式。"},
+  {id:"dataset", lbl:"HF / 本地数据集", g:"load", k:"load", r:11,
+   desc:"也能吃 HuggingFace 数据集或本地 <code>jsonl</code>(<code>--data &lt;id&gt;</code>),用真实语料的长度分布压测。",
+   when:"<b>用它:</b>要贴近生产语料,而非合成定长。"},
+  {id:"processor", lbl:"tokenizer / processor", g:"load", k:"load", r:11,
+   desc:"<code>--processor Qwen/Qwen3-32B</code>:用被测模型的分词器精确数 token,合成负载才能命中目标长度。",
+   when:"<b>用它:</b>非标准模型名要显式指定,否则 token 计数不准。"},
+
+  // rate-type 家族 —— 主角
+  {id:"presscat", lbl:"rate-type 家族", g:"press", k:"cat", r:19,
+   desc:"guidellm 的<b>核心概念</b>:<code>--rate-type</code> 决定「怎么把请求打进去」。<b>同一个端点、同一份负载,换一种施压方式,延迟和吞吐的取舍完全不同</b>。这就是本片的主线。",
+   when:"<b>先想清:</b>你要量的是「延迟地板」「吞吐天花板」,还是「某个真实到达节奏下的表现」。"},
+  {id:"synchronous", lbl:"synchronous · 同步", g:"press", k:"press", r:13,
+   desc:"<b>一次只发一条</b>,上一条回完再发下一条(并发恒为 1)。量到的是这套服务的<b>延迟地板</b> —— 没有任何排队时的最快响应。",
+   when:"<b>用它:</b>要单请求延迟基线、SLA 的最优情形;但吞吐也是<b>地板</b>,不代表产能。"},
+  {id:"throughput", lbl:"throughput · 打满", g:"press", k:"press", r:13,
+   desc:"<b>尽可能多地并发</b>(或封顶到 <code>--rate</code>),把服务压到饱和。量到的是<b>吞吐天花板</b> —— 但排队拉满,p95 延迟 / TTFT 会剧烈恶化。",
+   when:"<b>用它:</b>要产能上限、算副本数;但别拿这里的延迟当用户体验。"},
+  {id:"constant", lbl:"constant · 恒定速率", g:"press", k:"press", r:12,
+   desc:"<b>开环</b>按固定 QPS 均匀发压(<code>--rate 2</code> = 每秒 2 条,匀速)。贴近「稳态运营」下的表现,延迟通常很平。",
+   when:"<b>用它:</b>验证「目标 QPS 下服务稳不稳」,是最贴近日常负载的一档。"},
+  {id:"poisson", lbl:"poisson · 泊松到达", g:"press", k:"press", r:13,
+   desc:"<b>开环</b>按目标 QPS <b>泊松到达</b>:均值和 constant 一样,但到达是<b>突发抖动</b>的。真实流量长这样 —— 于是<b>尾延迟被放大</b>,最能暴露排队。",
+   when:"<b>用它:</b>要贴近真实到达节奏;别只测匀速,现实流量是抖的。"},
+  {id:"sweep", lbl:"sweep · 一条命令扫全谱", g:"press", k:"press", r:12,
+   desc:"<code>--rate-type sweep</code>:从同步基线自动扫到吞吐饱和,一条命令<b>画出整条延迟-吞吐曲线</b>并定位 SLO 拐点。",
+   when:"<b>用它:</b>不想手动逐档调,想一次拿到全谱与拐点。"},
+
+  // 同类工具
+  {id:"toolscat", lbl:"同类压测工具", g:"tools", k:"cat", r:17,
+   desc:"和 guidellm 站在同一位置的标准压测器,思路相近:对端点发压、量延迟吞吐、扫并发 / 速率。选谁看引擎生态与报告习惯。",
+   when:"<b>换用它们,当:</b>你已深度绑定某套引擎栈,用其原生压测更顺手。"},
+  {id:"evalscope", lbl:"evalscope", g:"tools", k:"tool", r:10,
+   desc:"魔搭(ModelScope)的压测器,自带 ShareGPT、并发扫描顺手 —— 本系列讲过的一篇(找容量拐点)。",
+   when:"做通用并发扫描、找容量拐点时顺手。"},
+  {id:"aiperf", lbl:"AIPerf", g:"tools", k:"tool", r:10,
+   desc:"NVIDIA 开源的标准压测器(genai-perf 后继),多端点、口径完整 —— 本系列讲过的一篇(前缀缓存验证)。",
+   when:"要社区通用、覆盖对话 / 向量 / 重排多端点时用。"},
+  {id:"vllmbench", lbl:"vllm bench serve", g:"tools", k:"tool", r:10,
+   desc:"vLLM 自带 <code>bench serve</code>,轻量、贴合 vLLM 内部指标。",
+   when:"只测 vLLM、想少装依赖时用。"},
+  {id:"inferperf", lbl:"inference-perf", g:"tools", k:"tool", r:10,
+   desc:"Kubernetes 社区(WG-Serving)的推理压测器,面向多引擎、可对接 Prometheus。",
+   when:"在 K8s 上做跨引擎标准化压测时用。"},
+
+  // 本次实测
+  {id:"ev1", lbl:"本次实测 · 同端点 · 四种施压", g:"ev", k:"evidence", r:15,
+   desc:"<b>【实测】</b>对同一个 <b>Qwen3-32B</b>(Higress 网关)端点、同一份合成负载,只切 <code>--rate-type</code> 各跑一遍:<br><b>synchronous</b> 0.3 req/s · p95 3.6s → <b>throughput</b> 3.85 req/s · p95 17s。吞吐涨约 <b>13 倍</b>,p95 延迟涨约 <b>4.7 倍</b>。而 constant 与 poisson 同为 2 req/s 目标,泊松的突发到达把 p95 从 3.4s 抬到 5.5s。<br><b>同一个端点,你怎么压,决定你报什么数。</b>",
+   when:"实证了 rate-type 才是压测报告的隐藏前提;脱离施压方式谈「吞吐」「延迟」没有意义。"},
+];
+
+const E = [
+  ["root","perf","is"],
+  ["perf","guidellm","is"],["perf","toolscat","is"],
+  // guidellm 直属
+  ["guidellm","openai_ep","m"],["guidellm","limits","m"],
+  // rate-type 家族(主角)
+  ["guidellm","presscat","is"],
+  ["presscat","synchronous","is"],["presscat","throughput","is"],["presscat","constant","is"],["presscat","poisson","is"],["presscat","sweep","is"],
+  // 指标
+  ["guidellm","ttft","m"],["guidellm","tpot","m"],["guidellm","latency","m"],["guidellm","tput","m"],
+  // 负载
+  ["guidellm","synthetic","m"],["guidellm","dataset","m"],["guidellm","processor","m"],
+  // 关联:施压方式直接牵动的指标
+  ["throughput","tput","add"],["synchronous","latency","add"],["poisson","ttft","add"],
+  // 工具
+  ["toolscat","evalscope","is"],["toolscat","aiperf","is"],["toolscat","vllmbench","is"],["toolscat","inferperf","is"],
+  // 证据
+  ["presscat","ev1","ev"],["synthetic","ev1","add"],
+];
+
+const REST = {is:150, add:110, m:80, ev:66};
+
+// ---------------- SETUP ----------------
+const cv = document.getElementById("graph");
+const ctx = cv.getContext("2d");
+const nodes = N.map(n=>({...n, x:0, y:0, vx:0, vy:0}));
+const byId = {}; nodes.forEach(n=>byId[n.id]=n);
+const edges = E.map(([s,t,k])=>({s:byId[s], t:byId[t], k, rest:REST[k]}));
+const adj = {}; nodes.forEach(n=>adj[n.id]=new Set());
+edges.forEach(e=>{adj[e.s.id].add(e.t.id); adj[e.t.id].add(e.s.id);});
+
+const hidden = new Set();
+let dpr=1, W=0, H=0;
+const cam = {s:1, x:0, y:0};
+let hover=null, selected=null, dragNode=null, panning=false;
+let px=0, py=0, moved=0;
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+(function seed(){
+  byId.root.x=0; byId.root.y=0; byId.root.fixed=true;
+  const cats=["perf","guidellm","presscat","toolscat"];
+  cats.forEach((c,i)=>{
+    const a = -Math.PI/2 + i/cats.length*Math.PI*2;
+    byId[c].x = Math.cos(a)*230; byId[c].y = Math.sin(a)*230;
+  });
+  nodes.forEach(n=>{
+    if(n.x===0 && n.y===0 && n.id!=="root"){
+      const nb = [...adj[n.id]].map(id=>byId[id]).find(p=>p.x||p.y);
+      const bx = nb? nb.x : 0, by = nb? nb.y : 0;
+      n.x = bx + (Math.random()*2-1)*90;
+      n.y = by + (Math.random()*2-1)*90;
+    }
+  });
+})();
+
+// ---------------- THEME ----------------
+let PAL;
+function isDark(){
+  const a=document.documentElement.getAttribute("data-theme");
+  if(a) return a==="dark";
+  return matchMedia("(prefers-color-scheme: dark)").matches;
+}
+function buildPalette(){
+  const d=isDark();
+  PAL={
+    dark:d,
+    bg: d? "#0f1117":"#f4f6fb",
+    edge: d? "rgba(150,163,196,.16)":"rgba(40,52,84,.20)",
+    edgeHi: d? "rgba(157,139,255,.55)":"rgba(109,75,255,.6)",
+    label: d? "#e7eaf3":"#181d2c",
+    labelDim: d? "rgba(231,234,243,.42)":"rgba(24,29,44,.5)",
+    ring: d? "rgba(15,17,23,.9)":"rgba(244,246,251,.95)",
+    glow: d? .9:.35,
+  };
+}
+buildPalette();
+
+function resize(){
+  dpr = Math.min(window.devicePixelRatio||1, 2);
+  W = window.innerWidth; H = window.innerHeight;
+  cv.width = W*dpr; cv.height = H*dpr;
+  cv.style.width=W+"px"; cv.style.height=H+"px";
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  cam.x = W/2; cam.y = H/2;
+}
+window.addEventListener("resize", ()=>{resize(); draw();});
+resize();
+
+// ---------------- PHYSICS ----------------
+const REP=9200, K=0.016, G=0.0065, DAMP=0.9, MAXV=9;
+let alpha = 1;
+
+function vis(n){ return !hidden.has(n.g); }
+
+function step(){
+  const act = nodes.filter(vis);
+  for(const n of act){ n.fx=0; n.fy=0; }
+  for(let i=0;i<act.length;i++){
+    const a=act[i];
+    for(let j=i+1;j<act.length;j++){
+      const b=act[j];
+      let dx=a.x-b.x, dy=a.y-b.y, d2=dx*dx+dy*dy;
+      if(d2<0.01){ dx=Math.random()-0.5; dy=Math.random()-0.5; d2=1; }
+      if(d2>360000) continue;
+      const f=REP/d2, d=Math.sqrt(d2), ux=dx/d, uy=dy/d;
+      a.fx+=ux*f; a.fy+=uy*f; b.fx-=ux*f; b.fy-=uy*f;
+    }
+  }
+  for(const e of edges){
+    if(!vis(e.s)||!vis(e.t)) continue;
+    let dx=e.t.x-e.s.x, dy=e.t.y-e.s.y, d=Math.hypot(dx,dy)||0.01;
+    const f=K*(d-e.rest), ux=dx/d, uy=dy/d;
+    e.s.fx+=ux*f; e.s.fy+=uy*f; e.t.fx-=ux*f; e.t.fy-=uy*f;
+  }
+  for(const n of act){
+    if(n.fixed || n===dragNode) continue;
+    n.fx += -n.x*G; n.fy += -n.y*G;
+    const m = Math.max(1, n.r/9);
+    n.vx = (n.vx + n.fx/m*alpha)*DAMP;
+    n.vy = (n.vy + n.fy/m*alpha)*DAMP;
+    n.vx=Math.max(-MAXV,Math.min(MAXV,n.vx));
+    n.vy=Math.max(-MAXV,Math.min(MAXV,n.vy));
+    n.x+=n.vx; n.y+=n.vy;
+  }
+  alpha*=0.994;
+  if(alpha<0.02) alpha=0.02;
+}
+
+// ---------------- DRAW ----------------
+function W2S(x,y){ return [x*cam.s+cam.x, y*cam.s+cam.y]; }
+function S2W(x,y){ return [(x-cam.x)/cam.s, (y-cam.y)/cam.s]; }
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  const focus = hover||selected;
+  const nb = focus? adj[focus.id] : null;
+
+  ctx.lineWidth = 1;
+  for(const e of edges){
+    if(!vis(e.s)||!vis(e.t)) continue;
+    const hot = focus && (e.s===focus||e.t===focus);
+    const [x1,y1]=W2S(e.s.x,e.s.y), [x2,y2]=W2S(e.t.x,e.t.y);
+    ctx.beginPath();
+    ctx.moveTo(x1,y1); ctx.lineTo(x2,y2);
+    if(hot){ ctx.strokeStyle=PAL.edgeHi; ctx.lineWidth=1.6; }
+    else { ctx.strokeStyle= focus? (PAL.dark?"rgba(150,163,196,.07)":"rgba(40,52,84,.08)") : PAL.edge; ctx.lineWidth=1; }
+    ctx.stroke();
+  }
+
+  for(const n of nodes){
+    if(!vis(n)) continue;
+    const [sx,sy]=W2S(n.x,n.y);
+    const r = n.r*cam.s;
+    if(sx<-80||sx>W+80||sy<-80||sy>H+80){ continue; }
+    const col = GROUPS[n.g].c;
+    const dim = focus && n!==focus && !(nb&&nb.has(n.id));
+
+    ctx.globalAlpha = dim? 0.28 : 1;
+    if((n===focus || n.id==="guidellm" || n.k==="evidence") && !dim){
+      ctx.shadowColor=col; ctx.shadowBlur=(n===focus?26:16)*PAL.glow;
+    } else { ctx.shadowBlur=0; }
+    ctx.beginPath(); ctx.arc(sx,sy,r,0,7);
+    ctx.fillStyle=col; ctx.fill();
+    ctx.shadowBlur=0;
+    if(n.k==="evidence"){ ctx.lineWidth=2; ctx.strokeStyle=PAL.ring; ctx.stroke();
+      ctx.beginPath(); ctx.arc(sx,sy,r+3.5,0,7); ctx.lineWidth=1.5; ctx.strokeStyle=col; ctx.globalAlpha=(dim?0.28:0.7); ctx.stroke(); }
+    if(n===focus){ ctx.beginPath(); ctx.arc(sx,sy,r+4,0,7); ctx.lineWidth=2; ctx.strokeStyle=col; ctx.stroke(); }
+
+    const big = n.k==="root"||n.k==="cat"||n.id==="guidellm";
+    const showLabel = big || n.k==="evidence" || n===focus || (nb&&nb.has(n.id)) || cam.s>1.15;
+    if(showLabel){
+      ctx.globalAlpha = dim? 0.4 : 1;
+      const fs = (n.k==="root"?15: n.k==="cat"?13: n.id==="guidellm"?14: n.k==="evidence"?12: 11.5);
+      ctx.font = `${big||n.k==="evidence"?600:500} ${fs}px ui-sans-serif,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif`;
+      ctx.textAlign="center"; ctx.textBaseline="top";
+      const ly = sy + r + 5;
+      const txt = n.lbl;
+      ctx.lineWidth=3; ctx.strokeStyle=PAL.bg; ctx.lineJoin="round";
+      ctx.strokeText(txt, sx, ly);
+      ctx.fillStyle = (n===focus||big||n.k==="evidence")? PAL.label : PAL.labelDim;
+      ctx.fillText(txt, sx, ly);
+    }
+    ctx.globalAlpha=1;
+  }
+}
+
+// ---------------- LOOP ----------------
+let running=true, idle=0;
+function frame(){
+  if(!running) return;
+  if(!reduce || dragNode){ step(); }
+  draw();
+  if(!dragNode && alpha<=0.021 && !reduce){ idle++; } else { idle=0; }
+  if(idle>60){ running=false; }
+  requestAnimationFrame(frame);
+}
+function kick(a){ alpha=Math.max(alpha,a||0.6); if(!running){ running=true; requestAnimationFrame(frame);} }
+if(reduce){ for(let i=0;i<420;i++) step(); draw(); }
+else requestAnimationFrame(frame);
+
+// ---------------- PICK ----------------
+function pick(mx,my){
+  let best=null, bd=1e9;
+  for(const n of nodes){
+    if(!vis(n)) continue;
+    const [sx,sy]=W2S(n.x,n.y);
+    const r=n.r*cam.s+6;
+    const d=(mx-sx)**2+(my-sy)**2;
+    if(d<r*r && d<bd){ bd=d; best=n; }
+  }
+  return best;
+}
+
+// ---------------- INTERACTION ----------------
+cv.addEventListener("pointermove", ev=>{
+  const mx=ev.clientX, my=ev.clientY;
+  if(dragNode){
+    const [wx,wy]=S2W(mx,my); dragNode.x=wx; dragNode.y=wy; dragNode.vx=0; dragNode.vy=0;
+    moved+=Math.abs(mx-px)+Math.abs(my-py); px=mx; py=my; kick(0.5); return;
+  }
+  if(panning){
+    cam.x+=mx-px; cam.y+=my-py; px=mx; py=my;
+    moved+=1; if(!running) draw(); return;
+  }
+  const h=pick(mx,my);
+  if(h!==hover){ hover=h; cv.style.cursor=h?"pointer":"grab"; if(!running) draw(); }
+});
+cv.addEventListener("pointerdown", ev=>{
+  cv.setPointerCapture(ev.pointerId);
+  px=ev.clientX; py=ev.clientY; moved=0;
+  const h=pick(px,py);
+  if(h){ dragNode=h; h.fixed0=h.fixed; h.fixed=false; }
+  else { panning=true; cv.classList.add("grabbing"); }
+});
+cv.addEventListener("pointerup", ev=>{
+  cv.classList.remove("grabbing");
+  const wasNode=dragNode;
+  if(wasNode){ if(wasNode.id==="root") wasNode.fixed=true; else wasNode.fixed=wasNode.fixed0; }
+  if(moved<6){
+    const h=pick(ev.clientX,ev.clientY);
+    if(h){ select(h); } else { select(null); }
+  }
+  dragNode=null; panning=false;
+});
+cv.addEventListener("pointercancel", ()=>{dragNode=null;panning=false;cv.classList.remove("grabbing");});
+
+cv.addEventListener("wheel", ev=>{
+  ev.preventDefault();
+  const mx=ev.clientX, my=ev.clientY;
+  const [wx,wy]=S2W(mx,my);
+  const f = Math.exp(-ev.deltaY*0.0014);
+  cam.s = Math.max(0.35, Math.min(3.2, cam.s*f));
+  cam.x = mx - wx*cam.s; cam.y = my - wy*cam.s;
+  if(!running) draw();
+}, {passive:false});
+
+// ---------------- INFO PANEL ----------------
+const info=document.getElementById("info");
+const infoBody=document.getElementById("info-body");
+const defaultInfo=infoBody.innerHTML;
+function badgeColor(n){ return GROUPS[n.g].c; }
+function select(n){
+  selected=n;
+  if(!n){ info.classList.add("empty"); infoBody.innerHTML=defaultInfo; hover=null; if(!running)draw(); kick(0.15); return; }
+  info.classList.remove("empty");
+  const col=badgeColor(n);
+  const links=[...adj[n.id]].map(id=>byId[id]).filter(vis);
+  const chips = links.map(l=>`<span class="chip" data-id="${l.id}">${l.lbl}</span>`).join("");
+  infoBody.innerHTML = `
+    <div class="badge" style="background:${hexA(col,.15)};color:${col}">${KIND_BADGE[n.k]||""}</div>
+    <h2>${n.lbl}</h2>
+    <div class="sub">${GROUPS[n.g].name}</div>
+    <p>${n.desc}</p>
+    ${n.when?`<div class="when">${n.when}</div>`:""}
+    ${chips?`<div class="links">${chips}</div>`:""}
+  `;
+  infoBody.querySelectorAll(".chip").forEach(c=>c.addEventListener("click",()=>{
+    const t=byId[c.dataset.id]; if(t){ select(t); centerOn(t); }
+  }));
+  centerOn(n, false);
+  if(!running)draw(); kick(0.15);
+}
+function hexA(hex,a){
+  const h=hex.replace("#",""); const r=parseInt(h.slice(0,2),16),g=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+function centerOn(n, zoom){
+  const tx = W*0.42, ty=H*0.5;
+  cam.x = tx - n.x*cam.s; cam.y = ty - n.y*cam.s;
+  if(!running) draw();
+}
+document.getElementById("close").addEventListener("click", ()=>select(null));
+
+// ---------------- LEGEND ----------------
+const legend=document.getElementById("legend");
+const counts={}; nodes.forEach(n=>counts[n.g]=(counts[n.g]||0)+1);
+Object.keys(GROUPS).forEach(g=>{
+  if(g==="root") return;
+  const row=document.createElement("div");
+  row.className="lg"; row.dataset.g=g;
+  row.style.setProperty("--c", GROUPS[g].c);
+  row.innerHTML=`<span class="dot"></span><span>${GROUPS[g].name}</span><span class="ct">${counts[g]||0}</span>`;
+  row.addEventListener("click", ()=>{
+    if(hidden.has(g)){ hidden.delete(g); row.classList.remove("off"); }
+    else { hidden.add(g); row.classList.add("off"); if(selected&&selected.g===g) select(null); }
+    kick(0.7);
+  });
+  legend.appendChild(row);
+});
+
+// ---------------- SEARCH ----------------
+const search=document.getElementById("search");
+search.addEventListener("keydown", e=>{
+  if(e.key!=="Enter") return;
+  const q=search.value.trim().toLowerCase();
+  if(!q) return;
+  const hit=nodes.find(n=>vis(n)&&(n.lbl.toLowerCase().includes(q)));
+  if(hit){ cam.s=Math.max(cam.s,1.2); select(hit); centerOn(hit); kick(0.2); }
+});
+
+// ---------------- CONTROLS ----------------
+document.getElementById("reheat").addEventListener("click", ()=>{
+  nodes.forEach(n=>{ if(!n.fixed){ n.vx=(Math.random()-.5)*4; n.vy=(Math.random()-.5)*4; }});
+  kick(1);
+});
+document.getElementById("reset").addEventListener("click", ()=>{
+  cam.s=1; resize(); select(null); kick(0.4);
+});
+
+// ---------------- THEME TOGGLE ----------------
+const themeBtn=document.getElementById("themeBtn");
+themeBtn.addEventListener("click", ()=>{
+  const cur=isDark(); document.documentElement.setAttribute("data-theme", cur?"light":"dark");
+  buildPalette(); if(!running)draw(); kick(0.1);
+});
+new MutationObserver(()=>{buildPalette(); if(!running)draw();})
+  .observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", ()=>{
+  if(!document.documentElement.getAttribute("data-theme")){ buildPalette(); if(!running)draw(); }
+});
+
+// ================= AUTO TOUR (portrait video) =================
+if(location.search.indexOf("tour")>=0){
+  document.documentElement.setAttribute("data-theme","dark"); buildPalette();
+  const st=document.createElement("style");
+  st.textContent=`.drawer,.ctrls,.theme-btn{display:none!important}
+.info{left:44px!important;right:44px!important;top:238px!important;bottom:auto!important;width:auto!important;max-width:none!important;max-height:600px!important;overflow:hidden!important;background:rgba(9,13,21,.92)!important;border:1px solid rgba(157,139,255,.38)!important;border-radius:22px!important;padding:30px 34px!important;box-shadow:0 22px 64px rgba(0,0,0,.6)!important;transition:opacity .3s!important}
+.info.empty{display:none!important}
+.info .close,.info .links{display:none!important}
+.info .badge{font-size:19px!important;padding:5px 15px!important;margin-bottom:14px!important}
+.info h2{font-size:46px!important;line-height:1.2!important}
+.info .sub{font-size:22px!important;margin-bottom:16px!important}
+.info p{font-size:29px!important;line-height:1.62!important}
+.info .stat{font-size:29px!important}
+.info .when{font-size:26px!important;margin-top:15px!important;padding-top:15px!important}`;
+  document.head.appendChild(st);
+  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+  const eio=k=>k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+  function easeTo(ts,tx,ty,ms){return new Promise(res=>{
+    const s0=cam.s,x0=cam.x,y0=cam.y,t0=performance.now();
+    (function step(t){let k=Math.min(1,(t-t0)/ms);k=eio(k);
+      cam.s=s0+(ts-s0)*k; cam.x=x0+(tx-x0)*k; cam.y=y0+(ty-y0)*k; draw();
+      k<1?requestAnimationFrame(step):res();})(t0);});}
+  function camFor(n,scale){return [scale, W*0.5-n.x*scale, H*0.60-n.y*scale];}
+  function fitBox(){let xs=[],ys=[];nodes.forEach(n=>{if(vis(n)){xs.push(n.x);ys.push(n.y);}});
+    const a=Math.min(...xs),b=Math.max(...xs),c=Math.min(...ys),d=Math.max(...ys);
+    const cx=(a+b)/2,cy=(c+d)/2,s=Math.min((W*0.84)/(b-a+1),(H*0.66)/(d-c+1),1.15);
+    return [s, W*0.5-cx*s, H*0.46-cy*s];}
+  async function runTour(){
+    const T = window.__TOUR;
+    kick(1); await sleep(T.settle); running=false; alpha=0.02; draw();
+    for(const b of T.steps){
+      if(b.fit){ select(null); const [s,x,y]=fitBox(); await easeTo(s,x,y,b.ease); }
+      else { const n=byId[b.id]; select(n); const [s,x,y]=camFor(n,b.scale); await easeTo(s,x,y,b.ease); }
+      await sleep(b.hold);
+    }
+    window.__tourDone=true;
+  }
+  window.__tourDone=false;
+  (function wait(){ if(window.__TOUR) setTimeout(runTour,400); else setTimeout(wait,100); })();
+}
+
+})();
+</script>

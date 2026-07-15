@@ -1,0 +1,21 @@
+import {chromium} from 'playwright-core';
+import {readFileSync} from 'fs';
+import {execSync} from 'child_process';
+const CHROME='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+const DIR='/Users/fangyong/articles/content/2026-07-guidellm-解读/graph';
+const play=JSON.parse(readFileSync(DIR+'/play.json','utf8'));
+const b=await chromium.launch({executablePath:CHROME,headless:true,args:['--no-sandbox','--force-color-profile=srgb']});
+const ctx=await b.newContext({viewport:{width:1080,height:1920},deviceScaleFactor:2,
+  recordVideo:{dir:DIR+'/rec_term',size:{width:1080,height:1920}}});
+await ctx.addInitScript(p=>{window.__PLAY=p;}, play);
+const p=await ctx.newPage();
+await p.goto('file://'+DIR+'/term.html',{waitUntil:'load'});
+console.log('terminal replay running…');
+await p.waitForFunction('window.__playDone===true', null, {timeout:180000});
+await p.waitForTimeout(500);
+const video=p.video();
+await ctx.close();
+const src=await video.path();
+await b.close();
+execSync(`ffmpeg -y -v error -i "${src}" -c:v libx264 -crf 20 -pix_fmt yuv420p -r 30 "${DIR}/term.mp4"`);
+console.log('DONE', DIR+'/term.mp4');

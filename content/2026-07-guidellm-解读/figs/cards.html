@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8">
+<style>
+:root{
+  --bg:#0b0f18; --card:#0e131e; --bar:#131a26; --border:rgba(150,163,196,.18);
+  --txt:#dfe6f2; --dim:rgba(223,230,242,.55); --faint:rgba(223,230,242,.34);
+  --prompt:#9d8bff; --cyan:#2bc4e6; --green:#3ddc84; --amber:#f0a93b; --rose:#ff5d7a; --violet:#9d8bff;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,"Cascadia Code",monospace;
+  --sans:"PingFang SC","Microsoft YaHei",-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;font-family:var(--sans)}
+.wrap{width:1080px;padding:26px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:22px;overflow:hidden;
+  box-shadow:0 22px 60px rgba(10,14,25,.18)}
+.chrome{display:flex;align-items:center;gap:9px;padding:16px 24px;background:var(--bar);border-bottom:1px solid var(--border)}
+.chrome i{width:12px;height:12px;border-radius:50%;display:block}
+.chrome .t{margin-left:12px;font-size:19px;color:var(--dim);font-family:var(--mono)}
+.body{padding:26px 30px}
+/* runbook */
+.log{font-family:var(--mono);font-size:22px;line-height:1.7;color:var(--txt);white-space:pre-wrap;word-break:break-word}
+.log .cm{color:var(--green)} .log .p{color:var(--prompt);font-weight:700} .log .fl{color:var(--cyan)}
+.log .note{color:var(--faint)}
+.log .sec{display:block;margin-top:16px}
+.log .sec:first-child{margin-top:0}
+/* selection table */
+.sel .row{display:flex;gap:20px;align-items:baseline;padding:15px 4px;border-top:1px solid var(--border)}
+.sel .row:first-child{border-top:none}
+.sel .k{width:230px;flex:none;font-family:var(--mono);font-size:22px;font-weight:700}
+.sel .v{font-family:var(--sans);font-size:22px;color:var(--txt);line-height:1.5}
+.sel .v b{color:var(--cyan)}
+.k.sync{color:var(--green)} .k.sweep{color:var(--amber)} .k.const{color:var(--cyan)} .k.pois{color:var(--rose)} .k.tput{color:var(--violet)}
+.title{font-family:var(--sans);font-size:26px;font-weight:800;color:var(--txt);margin-bottom:4px}
+.title .s{font-size:20px;color:var(--dim);font-weight:600;margin-left:10px}
+</style></head>
+<body>
+
+<div class="wrap"><div class="card" id="runbook">
+  <div class="chrome"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i>
+    <span class="t">bash · guidellm · goodput RUNBOOK</span></div>
+  <div class="body"><div class="log"><span class="sec"><span class="cm"># 1. Capacity sweep: plot the latency-throughput curve, find the goodput knee (--warmup drops cold start)</span>
+<span class="p">$</span> guidellm benchmark run <span class="fl">--target</span> $URL <span class="fl">--model</span> $MODEL \
+    <span class="fl">--data</span> 'prompt_tokens=512,output_tokens=128' <span class="fl">--warmup</span> 0.2 \
+    <span class="fl">--rate-type</span> concurrent <span class="fl">--rate</span> 1,2,4,8,16,32,64,128,192 <span class="fl">--max-seconds</span> 40</span><span class="sec"><span class="cm"># 2. Set an SLO (e.g. P95 ≤ 2s); goodput = max throughput within the SLO</span></span><span class="sec"><span class="cm"># 3. Validate within goodput, under realistic arrivals (run poisson, not just constant)</span>
+<span class="p">$</span> guidellm ... <span class="fl">--rate-type</span> constant <span class="fl">--rate</span> 12    <span class="note"># steady rate</span>
+<span class="p">$</span> guidellm ... <span class="fl">--rate-type</span> poisson  <span class="fl">--rate</span> 12    <span class="note"># bursty arrivals (conservative goodput)</span></span></div></div>
+</div></div>
+
+<div class="wrap"><div class="card" id="selection">
+  <div class="chrome"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i>
+    <span class="t">rate-type · which to use for goodput</span></div>
+  <div class="body sel">
+    <div class="row"><div class="k sync">synchronous</div><div class="v">one at a time → <b>latency floor</b> · single-stream baseline (best case for SLO)</div></div>
+    <div class="row"><div class="k sweep">concurrent/sweep</div><div class="v">sweep capacity → <b>plot the curve</b>, locate the goodput knee</div></div>
+    <div class="row"><div class="k const">constant</div><div class="v">fixed QPS, steady → goodput under <b>steady-state operation</b></div></div>
+    <div class="row"><div class="k pois">poisson</div><div class="v">bursty (Poisson) arrivals → <b>conservative goodput</b> (tail more likely to breach SLO)</div></div>
+    <div class="row"><div class="k tput">throughput</div><div class="v">max concurrency → <b>raw peak / hardware ceiling</b> (usually in violation; not deliverable capacity)</div></div>
+  </div>
+</div></div>
+
+</body></html>

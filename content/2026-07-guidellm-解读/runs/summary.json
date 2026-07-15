@@ -1,0 +1,60 @@
+{
+  "model": "Qwen3-32B",
+  "gateway": "Higress",
+  "data": "合成负载 · 输入 512 / 输出 128 token",
+  "duration_s": 40,
+  "rows": [
+    {
+      "key": "synchronous",
+      "label": "同步 · 一次一条",
+      "rps": 0.3,
+      "conc": 1.0,
+      "tps": 39,
+      "lat50": 3.24,
+      "lat95": 3.64,
+      "ttft50": 172,
+      "ttft95": 585,
+      "tpot": 25.3,
+      "ok": 13
+    },
+    {
+      "key": "constant",
+      "label": "恒定 · 目标 2 req/s",
+      "rps": 1.82,
+      "conc": 6.1,
+      "tps": 239,
+      "lat50": 3.33,
+      "lat95": 3.37,
+      "ttft50": 193,
+      "ttft95": 236,
+      "tpot": 26.0,
+      "ok": 73
+    },
+    {
+      "key": "poisson",
+      "label": "泊松 · 均值 2 req/s",
+      "rps": 2.62,
+      "conc": 11.1,
+      "tps": 346,
+      "lat50": 4.24,
+      "lat95": 5.54,
+      "ttft50": 785,
+      "ttft95": 2528,
+      "tpot": 33.1,
+      "ok": 105
+    },
+    {
+      "key": "throughput",
+      "label": "吞吐 · 打满并发",
+      "rps": 3.85,
+      "conc": 22.5,
+      "tps": 499,
+      "lat50": 3.76,
+      "lat95": 17.08,
+      "ttft50": 287,
+      "ttft95": 16695,
+      "tpot": 29.4,
+      "ok": 155
+    }
+  ]
+}
